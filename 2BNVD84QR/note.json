@@ -1,0 +1,75 @@
+{
+  "paragraphs": [
+    {
+      "text": "    import org.apache.spark.sql.functions._\n    val df \u003d sqlContext.createDataFrame(Seq((\"A\",\"B\"),(\"A\",\"C\"),(\"B\",\"A\"),(\"B\",\"D\")))\n    val dfAgg \u003d df.groupBy(\"_1\").agg(collect_list(\"_2\"))\n    dfAgg.show()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 29, 2016 8:34:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467225051190_2073433177",
+      "id": "20160629-203051_540666226",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.spark.sql.functions._\ndf: org.apache.spark.sql.DataFrame \u003d [_1: string, _2: string]\ndfAgg: org.apache.spark.sql.DataFrame \u003d [_1: string, collect_list(_2): array\u003cstring\u003e]\n+---+----------------+\n| _1|collect_list(_2)|\n+---+----------------+\n|  A|          [B, C]|\n|  B|          [A, D]|\n+---+----------------+\n\n"
+      },
+      "dateCreated": "Jun 29, 2016 8:30:51 PM",
+      "dateStarted": "Jun 29, 2016 8:33:41 PM",
+      "dateFinished": "Jun 29, 2016 8:33:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467225221620_176077651",
+      "id": "20160629-203341_2111074991",
+      "dateCreated": "Jun 29, 2016 8:33:41 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Untitled Note 1",
+  "id": "2BNVD84QR",
+  "angularObjects": {
+    "2BMP3CCFV:shared_process": [],
+    "2BPB7WXZ2:shared_process": [],
+    "2BNUD81ET:shared_process": [],
+    "2BM8AS7EP:shared_process": [],
+    "2BNH1VZ65:shared_process": [],
+    "2BKDF2QDU:shared_process": [],
+    "2BKHR9B5D:shared_process": [],
+    "2BK3CGU8S:shared_process": [],
+    "2BKSBSWD3:shared_process": [],
+    "2BM893U6Z:shared_process": [],
+    "2BPXXHATR:shared_process": [],
+    "2BN7SB8SP:shared_process": [],
+    "2BKE3HNSD:shared_process": [],
+    "2BNE1Q7J9:shared_process": [],
+    "2BN1HXFZD:shared_process": [],
+    "2BNKBXXCA:shared_process": [],
+    "2BMPB8UJ5:shared_process": [],
+    "2BN4NQCUN:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

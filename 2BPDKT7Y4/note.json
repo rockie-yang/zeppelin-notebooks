@@ -1,0 +1,180 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\nprint \"hello\"\ngateway \u003d SparkContext._gateway\nrandom \u003d gateway.jvm.java.util.Random().nextInt(10)\nprint random\n\n",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 1:40:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467025418920_-241300257",
+      "id": "20160627-130338_923584862",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "hello\n5\n"
+      },
+      "dateCreated": "Jun 27, 2016 1:03:38 PM",
+      "dateStarted": "Jun 27, 2016 1:40:01 PM",
+      "dateFinished": "Jun 27, 2016 1:40:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndata \u003d [(\u0027a\u0027,1),(\u0027b\u0027,2),(\u0027c\u0027,3)]\ndf \u003d sqlContext.createDataFrame(data)",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 1:40:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467027067777_1825297168",
+      "id": "20160627-133107_1459271618",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Jun 27, 2016 1:31:07 PM",
+      "dateStarted": "Jun 27, 2016 1:40:03 PM",
+      "dateFinished": "Jun 27, 2016 1:40:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts.DataFrameOps",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 1:38:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467027387384_-1981548012",
+      "id": "20160627-133627_1977453192",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import com.rockiey.zeppelin.highcharts.DataFrameOps\n"
+      },
+      "dateCreated": "Jun 27, 2016 1:36:27 PM",
+      "dateStarted": "Jun 27, 2016 1:38:32 PM",
+      "dateFinished": "Jun 27, 2016 1:38:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\njava_import(gateway.jvm, \"com.rockiey.zeppelin.highcharts.DataFrameOps\")\nops \u003d gateway.jvm.com.rockiey.zeppelin.highcharts.DataFrameOps(df._jdf)\nops.render()\n",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 1:40:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467025432900_1492408936",
+      "id": "20160627-130352_1034410966",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Traceback (most recent call last):\n  File \"/var/folders/68/4s8lld154mv_vc7nwbwxpgc40000gn/T/zeppelin_pyspark-2147350816841652199.py\", line 235, in \u003cmodule\u003e\n    eval(compiledCode)\n  File \"\u003cstring\u003e\", line 3, in \u003cmodule\u003e\n  File \"/Users/rockieyang/git/zeppelin/interpreter/spark/pyspark/py4j-0.9-src.zip/py4j/java_gateway.py\", line 813, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/Users/rockieyang/git/zeppelin/interpreter/spark/pyspark/pyspark.zip/pyspark/sql/utils.py\", line 45, in deco\n    return f(*a, **kw)\n  File \"/Users/rockieyang/git/zeppelin/interpreter/spark/pyspark/py4j-0.9-src.zip/py4j/protocol.py\", line 312, in get_return_value\n    format(target_id, \".\", name, value))\nPy4JError: An error occurred while calling o63.render. Trace:\npy4j.Py4JException: Method render([]) does not exist\n\tat py4j.reflection.ReflectionEngine.getMethod(ReflectionEngine.java:335)\n\tat py4j.reflection.ReflectionEngine.getMethod(ReflectionEngine.java:344)\n\tat py4j.Gateway.invoke(Gateway.java:252)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:133)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.GatewayConnection.run(GatewayConnection.java:209)\n\tat java.lang.Thread.run(Thread.java:745)\n\n\n"
+      },
+      "dateCreated": "Jun 27, 2016 1:03:52 PM",
+      "dateStarted": "Jun 27, 2016 1:40:19 PM",
+      "dateFinished": "Jun 27, 2016 1:40:19 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1467027041407_1523623382",
+      "id": "20160627-133041_689939924",
+      "dateCreated": "Jun 27, 2016 1:30:41 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "pysparkInvokeScala",
+  "id": "2BPDKT7Y4",
+  "angularObjects": {
+    "2BMP3CCFV:shared_process": [],
+    "2BPB7WXZ2:shared_process": [],
+    "2BNUD81ET:shared_process": [],
+    "2BM8AS7EP:shared_process": [],
+    "2BNH1VZ65:shared_process": [],
+    "2BKDF2QDU:shared_process": [],
+    "2BKHR9B5D:shared_process": [],
+    "2BK3CGU8S:shared_process": [],
+    "2BKSBSWD3:shared_process": [],
+    "2BM893U6Z:shared_process": [],
+    "2BPXXHATR:shared_process": [],
+    "2BN7SB8SP:shared_process": [],
+    "2BKE3HNSD:shared_process": [],
+    "2BNE1Q7J9:shared_process": [],
+    "2BN1HXFZD:shared_process": [],
+    "2BNKBXXCA:shared_process": [],
+    "2BMPB8UJ5:shared_process": [],
+    "2BN4NQCUN:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

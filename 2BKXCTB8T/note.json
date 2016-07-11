@@ -1,0 +1,292 @@
+{
+  "paragraphs": [
+    {
+      "title": "Basic Line",
+      "text": "import com.rockiey.zeppelin.highcharts._\n\nval title \u003d new Title(\"Monthly Average Temperature\").x(-20)\nval subtitle \u003d new Subtitle(\"Source: WorldClimate.com\").x(-20)\nval xAxis \u003d new Axis().categories(\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\",\n  \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\")\nval yAxis \u003d new Axis(\"Temperature (°C)\").plotLines(\n  Map(\"value\" -\u003e 0,\n    \"width\" -\u003e 1,\n    \"color\" -\u003e \"#808080\")\n)\nval tooltip \u003d new Tooltip().valueSuffix(\"°C\")\nval legend \u003d new Legend().\n  layout(\"vertical\").\n  align(\"right\").verticalAlign(\"middle\").borderWidth(0)\n\nval seriesTokyo \u003d Series(List(\n  7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)).\n  name(\"Tokyo\")\n\n\nval seriesNewYork \u003d Series(List(\n  -0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5)).\n  name(\"New York\")\n\nval seriesBerlin \u003d Series(List(\n  -0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0)).\n  name(\"Berlin\")\n\nval seriesLondon \u003d Series(List(\n  3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)).\n  name(\"London\")\n\nval chart \u003d new Highcharts(seriesTokyo, seriesNewYork, seriesBerlin, seriesLondon)\nchart.\n  title(title).\n  subtitle(subtitle).\n//   xAxis(xAxis).\n  yAxis(yAxis).\n  tooltip(tooltip).\n  legend(legend)\n\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 4:58:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466021910683_657873924",
+      "id": "20160615-221830_1600102223",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_341595A86485AC57B7A2A3A5BDA8D217\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"title\":{\n    \"text\":\"Monthly Average Temperature\",\n    \"x\":-20\n  },\n  \"subtitle\":{\n    \"text\":\"Source: WorldClimate.com\",\n    \"x\":-20\n  },\n  \"yAxis\":{\n    \"plotLines\":[{\n      \"value\":0,\n      \"width\":1,\n      \"color\":\"#808080\"\n    }],\n    \"title\":{\n      \"text\":\"Temperature (°C)\"\n    }\n  },\n  \"tooltip\":{\n    \"valueSuffix\":\"°C\"\n  },\n  \"legend\":{\n    \"layout\":\"vertical\",\n    \"align\":\"right\",\n    \"verticalAlign\":\"middle\",\n    \"borderWidth\":0\n  },\n  \"series\":[{\n    \"name\":\"Tokyo\",\n    \"data\":[[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6]]\n  },{\n    \"name\":\"New York\",\n    \"data\":[[-0.2,0.8,5.7,11.3,17,22,24.8,24.1,20.1,14.1,8.6,2.5]]\n  },{\n    \"name\":\"Berlin\",\n    \"data\":[[-0.9,0.6,3.5,8.4,13.5,17,18.6,17.9,14.3,9,3.9,1]]\n  },{\n    \"name\":\"London\",\n    \"data\":[[3.9,4.2,5.7,8.5,11.9,15.2,17,16.6,14.2,10.3,6.6,4.8]]\n  }]\n}\n\n$(\"#md5_341595A86485AC57B7A2A3A5BDA8D217\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 15, 2016 10:18:30 PM",
+      "dateStarted": "Jun 27, 2016 4:56:59 AM",
+      "dateFinished": "Jun 27, 2016 4:57:10 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Basic Area",
+      "text": "import com.rockiey.zeppelin.highcharts._\n\nval title \u003d new Title(\"US and USSR nuclear stockpiles\")\n\nval subtitle \u003d new Subtitle(\n  \"\"\"|Source: \u003ca href\u003d\"http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\"\u003e\n                thebulletin.metapress.com\u003c/a\u003e\n  \"\"\".stripMargin)\n// TODO labels formatter\nval xAxis \u003d new Axis()(\"allowDecimals\", false)\nxAxis.appendCode(\"labels\",\n  \"formatter\",\n  \"\"\"\nfunction () {\n   return this.value; // clean, unformatted number for year\n}\n  \"\"\".stripMargin\n)\n\nval yAxis \u003d new Axis(\"Nuclear weapon states\")\n\nval tooltip \u003d new Tooltip()(\"pointFormat\",\n  \"{series.name} produced \u003cb\u003e{point.y:,.0f}\u003c/b\u003e\u003cbr/\u003ewarheads in {point.x}\")\n\n\nval marker \u003d new Marker()(\n  \"enabled\", false)(\n  \"symbol\", \"circle\")(\n  \"radius\", \"2\").hover(\n  \"enabled\", true)\n\nval areaPlotOptions \u003d new AreaPlotOptions()(\n  \"pointStart\", 1940).marker(marker)\n\nval seriesUSA \u003d Series(List(\n  null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,\n  1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,\n  27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,\n  26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,\n  24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,\n  22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,\n  10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104)).\n  name(\"USA\")\n\n\nval seriesRussia \u003d Series(List(\n  null, null, null, null, null, null, null, null, null, null,\n  5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,\n  4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,\n  15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,\n  33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,\n  35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,\n  21000, 20000, 19000, 18000, 18000, 17000, 16000)).\n  name(\"USSR/Russia\")\n\n\nval chart \u003d new Highcharts(seriesUSA, seriesRussia)\nchart.\n  chart(new Chart(\"area\")).\n  title(title).\n  subtitle(subtitle).\n  xAxis(xAxis).\n  yAxis(yAxis).\n  tooltip(tooltip).\n  plotOptions(areaPlotOptions)\n\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 4:59:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1465864349042_278918217",
+      "id": "20160614-023229_1273064211",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_77FBB654DE2EF983D4B23FE849B06EAE\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"chart\":{\n    \"type\":\"area\"\n  },\n  \"title\":{\n    \"text\":\"US and USSR nuclear stockpiles\"\n  },\n  \"subtitle\":{\n    \"text\":\"Source: \u003ca href\u003d\\\"http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\\\"\u003e\\n                thebulletin.metapress.com\u003c/a\u003e\\n  \"\n  },\n  \"xAxis\":{\n    \"allowDecimals\":false,\n    \"labels\":{\n      \"formatter\":\nfunction () {\n   return this.value; // clean, unformatted number for year\n}\n  \n    }\n  },\n  \"yAxis\":{\n    \"title\":{\n      \"text\":\"Nuclear weapon states\"\n    }\n  },\n  \"tooltip\":{\n    \"pointFormat\":\"{series.name} produced \u003cb\u003e{point.y:,.0f}\u003c/b\u003e\u003cbr/\u003ewarheads in {point.x}\"\n  },\n  \"plotOptions\":{\n    \"area\":{\n      \"pointStart\":1940,\n      \"marker\":{\n        \"enabled\":false,\n        \"symbol\":\"circle\",\n        \"radius\":\"2\",\n        \"states\":{\n          \"hover\":{\n            \"enabled\":true\n          }\n        }\n      }\n    }\n  },\n  \"series\":[{\n    \"name\":\"USA\",\n    \"data\":[[null,null,null,null,null,6,11,32,110,235,369,640,1005,1436,2063,3057,4618,6444,9822,15468,20434,24126,27387,29459,31056,31982,32040,31233,29224,27342,26662,26956,27912,28999,28965,27826,25579,25722,24826,24605,24304,23464,23708,24099,24357,24237,24401,24344,23586,22380,21004,17287,14747,13076,12555,12144,11009,10950,10871,10824,10577,10527,10475,10421,10358,10295,10104]]\n  },{\n    \"name\":\"USSR/Russia\",\n    \"data\":[[null,null,null,null,null,null,null,null,null,null,5,25,50,120,150,200,426,660,869,1060,1605,2471,3322,4238,5221,6129,7089,8339,9399,10538,11643,13092,14478,15915,17385,19055,21205,23044,25393,27935,30062,32049,33952,35804,37431,39197,45000,43000,41000,39000,37000,35000,33000,31000,29000,27000,25000,24000,23000,22000,21000,20000,19000,18000,18000,17000,16000]]\n  }]\n}\n\n$(\"#md5_77FBB654DE2EF983D4B23FE849B06EAE\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 14, 2016 2:32:29 AM",
+      "dateStarted": "Jun 27, 2016 3:47:53 AM",
+      "dateFinished": "Jun 27, 2016 3:47:55 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Basic Bar",
+      "text": "import com.rockiey.zeppelin.highcharts._\n\nval title \u003d new Title(\"Historic World Population by Region\")\n\nval subtitle \u003d new Subtitle(\n  \"\"\"|Source: \u003ca href\u003d\u0027https://en.wikipedia.org/wiki/World_population\u0027\u003eWikipedia.org\u003c/a\u003e\n  \"\"\".stripMargin)\n\nval xAxis \u003d new Axis(null).categories(\"Africa\",\"America\",\"Asia\",\"Europe\",\"Oceania\")\n\nval yAxis \u003d new Axis(\"Population (millions)\").min(0)(\n  \"title\", \"align\", \"high\")(\n  \"labels\", \"overflow\", \"justify\")\n\nval tooltip \u003d new Tooltip().valueSuffix(\" millions\")\n\n\nval legend \u003d new Legend()(\n  \"layout\", \"vertical\")(\n  \"align\", \"right\")(\n  \"verticalAlign\", \"top\")(\n  \"x\", -40)(\n  \"y\", 80)(\n  \"floating\", true)(\n  \"borderWidth\", 1)(\n  \"shadow\",true)\n  legend.appendCode(\"backgroundColor\",\n    \"((Highcharts.theme \u0026\u0026 Highcharts.theme.legendBackgroundColor) || \u0027#FFFFFF\u0027)\")\n\n\nval barPlotOptions \u003d new BarPlotOptions()(\"dataLabels\", \"enabled\", true)\n\nval series1800 \u003d Series(107, 31, 635, 203, 2).name(\"Year 1800\")\nval series1900 \u003d Series(133, 156, 947, 408, 6).name(\"Year 1900\")\nval series2012 \u003d Series(1052, 954, 4250, 740, 38).name(\"Year 2012\")\n\n\nval chart \u003d new Highcharts(series1800, series1900, series2012)\nchart.\n  chart(new Chart(\"bar\")).\n  title(title).\n  subtitle(subtitle).\n  xAxis(xAxis).\n  yAxis(yAxis).\n  tooltip(tooltip).\n  plotOptions(barPlotOptions).\n  legend(legend)(\n    \"credits\", \"enabled\", false)\n\n\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 5:00:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "title": true,
+        "editorHide": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466021969751_-495141909",
+      "id": "20160615-221929_2096874651",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_3F700A8C29AA5B9299EA96C2F346BAAC\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"chart\":{\n    \"type\":\"bar\"\n  },\n  \"title\":{\n    \"text\":\"Historic World Population by Region\"\n  },\n  \"subtitle\":{\n    \"text\":\"Source: \u003ca href\u003d\u0027https://en.wikipedia.org/wiki/World_population\u0027\u003eWikipedia.org\u003c/a\u003e\\n  \"\n  },\n  \"xAxis\":{\n    \"categories\":[\"Africa\",\"America\",\"Asia\",\"Europe\",\"Oceania\"],\n    \"title\":{\n      \"text\":null\n    }\n  },\n  \"yAxis\":{\n    \"min\":\"0.0\",\n    \"title\":{\n      \"text\":\"Population (millions)\",\n      \"align\":\"high\"\n    },\n    \"labels\":{\n      \"overflow\":\"justify\"\n    }\n  },\n  \"tooltip\":{\n    \"valueSuffix\":\" millions\"\n  },\n  \"plotOptions\":{\n    \"bar\":{\n      \"dataLabels\":{\n        \"enabled\":true\n      }\n    }\n  },\n  \"legend\":{\n    \"layout\":\"vertical\",\n    \"align\":\"right\",\n    \"verticalAlign\":\"top\",\n    \"x\":-40,\n    \"y\":80,\n    \"floating\":true,\n    \"borderWidth\":1,\n    \"shadow\":true,\n    \"backgroundColor\":((Highcharts.theme \u0026\u0026 Highcharts.theme.legendBackgroundColor) || \u0027#FFFFFF\u0027)\n  },\n  \"series\":[{\n    \"name\":\"Year 1800\",\n    \"data\":[107,31,635,203,2]\n  },{\n    \"name\":\"Year 1900\",\n    \"data\":[133,156,947,408,6]\n  },{\n    \"name\":\"Year 2012\",\n    \"data\":[1052,954,4250,740,38]\n  }],\n  \"credits\":{\n    \"enabled\":false\n  }\n}\n\n$(\"#md5_3F700A8C29AA5B9299EA96C2F346BAAC\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 15, 2016 10:19:29 PM",
+      "dateStarted": "Jun 27, 2016 5:00:20 AM",
+      "dateFinished": "Jun 27, 2016 5:00:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts._\n\nval title \u003d new Title(\"Combination chart\")\n\nval subtitle \u003d new Subtitle(\n  \"\"\"|Source: \u003ca href\u003d\"http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\"\u003e\n                thebulletin.metapress.com\u003c/a\u003e\n  \"\"\".stripMargin)\n\nval xAxis \u003d new Axis().categories(\"Apples\", \"Oranges\", \"Pears\", \"Bananas\", \"Plums\")\n\n// TODO labels items\n\n\n\nval seriesJane \u003d Series(3, 2, 1, 3, 4).name(\"Jane\")(\"type\", \"column\")\nval seriesJohn \u003d Series(2, 3, 5, 7, 6).name(\"John\")(\"type\", \"column\")\nval seriesJoe \u003d Series(4, 3, 3, 9, 0).name(\"Joe\")(\"type\", \"column\")\n\nval seriesAverage \u003d Series(3.0, 2.67, 3, 6.33, 3.33).name(\"Average\")(\"type\", \"spline\")\nval seriesTotalConsumption \u003d Series(\n  Map(\"name\" -\u003e \"Jane\", \"y\" -\u003e 13),\n  Map(\"name\" -\u003e \"John\", \"y\" -\u003e 23),\n  Map(\"name\" -\u003e \"Joe\", \"y\" -\u003e 19)).typ(\"pie\").\n  center(100, 80).\n  size(100).\n  dataLabels(\"enabled\", true)\n\n\nval chart \u003d new Highcharts(seriesJane, seriesJohn, seriesJoe, seriesAverage,seriesTotalConsumption)\nchart.\n  title(title).\n  xAxis(xAxis)\n\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 4:59:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466051394412_-1047109090",
+      "id": "20160616-062954_1937782271",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_5AB45AB47B640648DB95D9B29124F74D\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"title\":{\n    \"text\":\"Combination chart\"\n  },\n  \"xAxis\":{\n    \"categories\":[\"Apples\",\"Oranges\",\"Pears\",\"Bananas\",\"Plums\"]\n  },\n  \"series\":[{\n    \"name\":\"Jane\",\n    \"type\":\"column\",\n    \"data\":[3,2,1,3,4]\n  },{\n    \"name\":\"John\",\n    \"type\":\"column\",\n    \"data\":[2,3,5,7,6]\n  },{\n    \"name\":\"Joe\",\n    \"type\":\"column\",\n    \"data\":[4,3,3,9,0]\n  },{\n    \"name\":\"Average\",\n    \"type\":\"spline\",\n    \"data\":[3,2.67,3,6.33,3.33]\n  },{\n    \"type\":\"pie\",\n    \"center\":[100,80],\n    \"size\":100,\n    \"data\":[{\n      \"name\":\"Jane\",\n      \"y\":13\n    },{\n      \"name\":\"John\",\n      \"y\":23\n    },{\n      \"name\":\"Joe\",\n      \"y\":19\n    }]\n  }]\n}\n\n$(\"#md5_5AB45AB47B640648DB95D9B29124F74D\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 16, 2016 6:29:54 AM",
+      "dateStarted": "Jun 27, 2016 3:48:18 AM",
+      "dateFinished": "Jun 27, 2016 3:48:20 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val seq \u003d Seq(\n      (\"Microsoft Internet Explorer\", \"v11.0\", 24.13),\n      (\"Microsoft Internet Explorer\", \"v10.0\", 5.33),\n      (\"Microsoft Internet Explorer\", \"v9.0\", 8.11),\n      (\"Microsoft Internet Explorer\", \"v8.0\", 17.2),\n      (\"Microsoft Internet Explorer\", \"v7.0\", 0.5),\n      (\"Microsoft Internet Explorer\", \"v6.0\", 1.06),\n      (\"Chrome\", \"v43.0\", 1.45),\n      (\"Chrome\", \"v42.0\", 3.68),\n      (\"Chrome\", \"v41.0\", 4.32),\n      (\"Chrome\", \"v40.0\", 5.),\n      (\"Chrome\", \"v39.0\", 2.96),\n      (\"Chrome\", \"v38.0\", 0.6),\n      (\"Chrome\", \"v36.0\", 2.53),\n      (\"Chrome\", \"v37.0\", 0.38),\n      (\"Chrome\", \"v35.0\", 0.85),\n      (\"Chrome\", \"v34.0\", 0.14),\n      (\"Chrome\", \"v33.0\", 0.19),\n      (\"Chrome\", \"v32.0\", 0.55),\n      (\"Chrome\", \"v31.0\", 1.24),\n      (\"Chrome\", \"v30.0\", 0.14),\n      (\"Firefox\", \"v38.0\", 1.02),\n      (\"Firefox\", \"v37.0\", 2.31),\n      (\"Firefox\", \"v36.0\", 2.32),\n      (\"Firefox\", \"v35.0\", 2.76),\n      (\"Firefox\", \"v34.0\", 1.27),\n      (\"Firefox\", \"v33.0\", 0.22),\n      (\"Firefox\", \"v32.0\", 0.15),\n      (\"Firefox\", \"v31.0\", 0.22),\n      (\"Safari\", \"v8.0\", 2.56),\n      (\"Safari\", \"v7.1\", 0.77),\n      (\"Safari\", \"v7.0\", 0.26),\n      (\"Safari\", \"v6.2\", 0.17),\n      (\"Safari\", \"v6.1\", 0.29),\n      (\"Safari\", \"v5.1\", 0.42),\n      (\"Safari\", \"v5.0\", 0.3),\n      (\"Opera\", \"v29\", 0.16),\n      (\"Opera\", \"v28\", 0.24),\n      (\"Opera\", \"v27\", 0.17),\n      (\"Opera\", \"v12.x\", 0.34)\n    )\n\n    val df \u003d sqlContext.createDataFrame(seq)\n\n    val ops \u003d new DataFrameOps(df)\n\n    val browserCol \u003d \"_1\"\n    val versionCol \u003d \"_2\"\n    val marketShareCol \u003d  \"_3\"\n\n    val chart \u003d ops.drilldown(\n      (browserCol, \"name\", List(\"y\" -\u003e sum(marketShareCol))),\n      (versionCol, \"name\", List(\"y\" -\u003e sum(marketShareCol))))\n\n    chart(\"chart\", \"type\", \"column\")\n    chart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 4:58:37 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466995066144_1214839996",
+      "id": "20160627-043746_966509568",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_5E78EEDC4BCE6F1782B7F60C615BF354\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"Microsoft Internet Explorer\",\n      \"drilldown\":\"_1\u003dMicrosoft Internet Explorer\",\n      \"y\":56.33\n    },{\n      \"name\":\"Firefox\",\n      \"drilldown\":\"_1\u003dFirefox\",\n      \"y\":10.27\n    },{\n      \"name\":\"Safari\",\n      \"drilldown\":\"_1\u003dSafari\",\n      \"y\":4.77\n    },{\n      \"name\":\"Opera\",\n      \"drilldown\":\"_1\u003dOpera\",\n      \"y\":0.9100000000000001\n    },{\n      \"name\":\"Chrome\",\n      \"drilldown\":\"_1\u003dChrome\",\n      \"y\":24.03\n    }]\n  }],\n  \"drilldown\":{\n    \"series\":[{\n      \"id\":\"_1\u003dMicrosoft Internet Explorer\",\n      \"data\":[{\n        \"name\":\"v9.0\",\n        \"y\":8.11\n      },{\n        \"name\":\"v8.0\",\n        \"y\":17.2\n      },{\n        \"name\":\"v11.0\",\n        \"y\":24.13\n      },{\n        \"name\":\"v7.0\",\n        \"y\":0.5\n      },{\n        \"name\":\"v10.0\",\n        \"y\":5.33\n      },{\n        \"name\":\"v6.0\",\n        \"y\":1.06\n      }]\n    },{\n      \"id\":\"_1\u003dFirefox\",\n      \"data\":[{\n        \"name\":\"v33.0\",\n        \"y\":0.22\n      },{\n        \"name\":\"v38.0\",\n        \"y\":1.02\n      },{\n        \"name\":\"v32.0\",\n        \"y\":0.15\n      },{\n        \"name\":\"v37.0\",\n        \"y\":2.31\n      },{\n        \"name\":\"v31.0\",\n        \"y\":0.22\n      },{\n        \"name\":\"v36.0\",\n        \"y\":2.32\n      },{\n        \"name\":\"v35.0\",\n        \"y\":2.76\n      },{\n        \"name\":\"v34.0\",\n        \"y\":1.27\n      }]\n    },{\n      \"id\":\"_1\u003dSafari\",\n      \"data\":[{\n        \"name\":\"v5.0\",\n        \"y\":0.3\n      },{\n        \"name\":\"v5.1\",\n        \"y\":0.42\n      },{\n        \"name\":\"v8.0\",\n        \"y\":2.56\n      },{\n        \"name\":\"v7.0\",\n        \"y\":0.26\n      },{\n        \"name\":\"v7.1\",\n        \"y\":0.77\n      },{\n        \"name\":\"v6.1\",\n        \"y\":0.29\n      },{\n        \"name\":\"v6.2\",\n        \"y\":0.17\n      }]\n    },{\n      \"id\":\"_1\u003dOpera\",\n      \"data\":[{\n        \"name\":\"v12.x\",\n        \"y\":0.34\n      },{\n        \"name\":\"v27\",\n        \"y\":0.17\n      },{\n        \"name\":\"v28\",\n        \"y\":0.24\n      },{\n        \"name\":\"v29\",\n        \"y\":0.16\n      }]\n    },{\n      \"id\":\"_1\u003dChrome\",\n      \"data\":[{\n        \"name\":\"v43.0\",\n        \"y\":1.45\n      },{\n        \"name\":\"v33.0\",\n        \"y\":0.19\n      },{\n        \"name\":\"v38.0\",\n        \"y\":0.6\n      },{\n        \"name\":\"v42.0\",\n        \"y\":3.68\n      },{\n        \"name\":\"v32.0\",\n        \"y\":0.55\n      },{\n        \"name\":\"v37.0\",\n        \"y\":0.38\n      },{\n        \"name\":\"v41.0\",\n        \"y\":4.32\n      },{\n        \"name\":\"v31.0\",\n        \"y\":1.24\n      },{\n        \"name\":\"v36.0\",\n        \"y\":2.53\n      },{\n        \"name\":\"v40.0\",\n        \"y\":5\n      },{\n        \"name\":\"v30.0\",\n        \"y\":0.14\n      },{\n        \"name\":\"v35.0\",\n        \"y\":0.85\n      },{\n        \"name\":\"v34.0\",\n        \"y\":0.14\n      },{\n        \"name\":\"v39.0\",\n        \"y\":2.96\n      }]\n    }]\n  },\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#md5_5E78EEDC4BCE6F1782B7F60C615BF354\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 27, 2016 4:37:46 AM",
+      "dateStarted": "Jun 27, 2016 4:48:44 AM",
+      "dateFinished": "Jun 27, 2016 4:48:53 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "    %angular\n    \n    \u003cdiv id\u003d\"md5_testn\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n    \n    \u003cscript type\u003d\"text/javascript\"\u003e\n    $(function () {\n    var data \u003d \n    {\n      \"series\":[{\n        \"data\":[{\n          \"name\":\"Microsoft Internet Explorer\",\n          \"drilldown\":\"_1\u003dMicrosoft Internet Explorer\",\n          \"y\":56.33\n        },{\n          \"name\":\"Firefox\",\n          \"drilldown\":\"_1\u003dFirefox\",\n          \"y\":10.270000000000001\n        },{\n          \"name\":\"Safari\",\n          \"drilldown\":\"_1\u003dSafari\",\n          \"y\":4.77\n        },{\n          \"name\":\"Opera\",\n          \"drilldown\":\"_1\u003dOpera\",\n          \"y\":0.9100000000000001\n        },{\n          \"name\":\"Chrome\",\n          \"drilldown\":\"_1\u003dChrome\",\n          \"y\":24.030000000000005\n        }]\n      }]\n      ,\n      \"chart\":{\n        \"type\":\"pie\"\n      },\n      xAxis: {\n          type: \"category\"\n      }\n    }\n    $(\"#md5_testn\").highcharts(data)\n    \n    });\n    \u003c/script\u003e",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 29, 2016 7:11:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466573576765_1270161773",
+      "id": "20160622-073256_2128812598",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\u003cdiv id\u003d\"md5_testn\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d \n{\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"Microsoft Internet Explorer\",\n      \"drilldown\":\"_1\u003dMicrosoft Internet Explorer\",\n      \"y\":56.33\n    },{\n      \"name\":\"Firefox\",\n      \"drilldown\":\"_1\u003dFirefox\",\n      \"y\":10.270000000000001\n    },{\n      \"name\":\"Safari\",\n      \"drilldown\":\"_1\u003dSafari\",\n      \"y\":4.77\n    },{\n      \"name\":\"Opera\",\n      \"drilldown\":\"_1\u003dOpera\",\n      \"y\":0.9100000000000001\n    },{\n      \"name\":\"Chrome\",\n      \"drilldown\":\"_1\u003dChrome\",\n      \"y\":24.030000000000005\n    }]\n  }]\n  ,\n  \"chart\":{\n    \"type\":\"pie\"\n  },\n  xAxis: {\n      type: \"category\"\n  }\n}\n$(\"#md5_testn\").highcharts(data)\n\n});\n\u003c/script\u003e"
+      },
+      "dateCreated": "Jun 22, 2016 7:32:56 AM",
+      "dateStarted": "Jun 29, 2016 7:10:26 AM",
+      "dateFinished": "Jun 29, 2016 7:10:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 4:58:43 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1465288930999_-639344288",
+      "id": "20160607-104210_384032861",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": ""
+      },
+      "dateCreated": "Jun 7, 2016 10:42:10 AM",
+      "dateStarted": "Jun 16, 2016 5:39:26 PM",
+      "dateFinished": "Jun 16, 2016 5:39:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Highchart Demos",
+  "id": "2BKXCTB8T",
+  "angularObjects": {
+    "2BMP3CCFV:shared_process": [],
+    "2BPB7WXZ2:shared_process": [],
+    "2BNUD81ET:shared_process": [],
+    "2BM8AS7EP:shared_process": [],
+    "2BNH1VZ65:shared_process": [],
+    "2BKDF2QDU:shared_process": [],
+    "2BKHR9B5D:shared_process": [],
+    "2BK3CGU8S:shared_process": [],
+    "2BKSBSWD3:shared_process": [],
+    "2BM893U6Z:shared_process": [],
+    "2BPXXHATR:shared_process": [],
+    "2BN7SB8SP:shared_process": [],
+    "2BKE3HNSD:shared_process": [],
+    "2BNE1Q7J9:shared_process": [],
+    "2BN1HXFZD:shared_process": [],
+    "2BNKBXXCA:shared_process": [],
+    "2BMPB8UJ5:shared_process": [],
+    "2BN4NQCUN:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}

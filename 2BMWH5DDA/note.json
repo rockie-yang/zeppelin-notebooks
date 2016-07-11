@@ -1,0 +1,330 @@
+{
+  "paragraphs": [
+    {
+      "text": "import org.apache.commons.io.IOUtils\nimport java.net.URL\nimport java.nio.charset.Charset\n\n// Zeppelin creates and injects sc (SparkContext) and sqlContext (HiveContext or SqlContext)\n// So you don\u0027t need create them manually\n\n// load bank data\n// val bankText \u003d sc.parallelize(\n//     IOUtils.toString(\n//         new URL(\"https://s3.amazonaws.com/apache-zeppelin/tutorial/bank/bank.csv\"),\n//         Charset.forName(\"utf8\")).split(\"\\n\"))\n        \nval file \u003d \"/Users/rockieyang/git/data/bank/bank.csv\"\nval source \u003d scala.io.Source.fromFile(file)\nval bankText \u003d sc.parallelize(source.getLines.toSeq)\n\n\ncase class Bank(age: Integer, job: String, marital: String, education: String, balance: Integer)\n\nval bank \u003d bankText.map(s \u003d\u003e s.split(\";\")).filter(s \u003d\u003e s(0) !\u003d \"\\\"age\\\"\").map(\n    s \u003d\u003e Bank(s(0).toInt, \n            s(1).replaceAll(\"\\\"\", \"\"),\n            s(2).replaceAll(\"\\\"\", \"\"),\n            s(3).replaceAll(\"\\\"\", \"\"),\n            s(5).replaceAll(\"\\\"\", \"\").toInt\n        )\n).toDF()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 29, 2016 7:19:45 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466091632802_-1682472743",
+      "id": "20160616-174032_974760374",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "import org.apache.commons.io.IOUtils\nimport java.net.URL\nimport java.nio.charset.Charset\nfile: String \u003d /Users/rockieyang/git/data/bank/bank.csv\nsource: scala.io.BufferedSource \u003d non-empty iterator\nbankText: org.apache.spark.rdd.RDD[String] \u003d ParallelCollectionRDD[10] at parallelize at \u003cconsole\u003e:51\ndefined class Bank\nbank: org.apache.spark.sql.DataFrame \u003d [age: int, job: string, marital: string, education: string, balance: int]\n"
+      },
+      "dateCreated": "Jun 16, 2016 5:40:32 PM",
+      "dateStarted": "Jun 29, 2016 7:19:45 AM",
+      "dateFinished": "Jun 29, 2016 7:19:50 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\n\nval toInt    \u003d udf[Int, String]( _.toInt)\nval toTys \u003d udf[String, Double](v \u003d\u003e s\"${v.toInt/10}0s\")\n\nval dfAgg \u003d bank.\n    groupBy(\"marital\", \"age\").\n    agg(max(\"balance\").alias(\"max\"), min(\"balance\").alias(\"min\"),avg(\"balance\").alias(\"avg\"))\ndfAgg.first\n\ndfAgg.columns.zipWithIndex.toMap\nval ops \u003d new DataFrameOps(dfAgg)\n\nval config \u003d Map(\"Max Balance\" -\u003e \"max\", \"Min Balance\" -\u003e \"min\", \"Average Balance\" -\u003e \"avg\")\nval chartMax \u003d ops.chart(\"line\", \"marital\", List(\"age\", \"max\"))(\"title\", \"text\", \"Maximum Balance\")(\"chart\", \"type\", \"spline\")\n// chartMax.data\n\n\nval chartMin\u003dops.chart(\"bubble\", \"marital\", List(\"age\", \"min\", \"max\"))(\"title\", \"text\", \"Minimum Balance\")\nprintln(chartMin.data)\n// val chartAvg\u003dops.chart(\"line\", \"marital\", List(\"age\", \"min\"))(\"title\", \"text\", \"Average Balance\")(\"chart\", \"type\", \"spline\")\n\n// chartMax.render()\nchartMin.render()\n// chartAvg.render()\n",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 29, 2016 7:08:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466594221030_415835996",
+      "id": "20160622-131701_1301597488",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_7F7CB7C8819230C8BB923995D36158F0\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"name\":\"divorced\",\n    \"data\":[[26,-402,74],[27,1,451],[28,101,594],[29,84,415],[30,-94,0],[31,-452,10787],[32,-399,1121],[33,-386,2411],[34,-566,13204],[35,-587,4515],[36,-435,5957],[37,0,4303],[38,-17,7929],[39,3,3575],[40,-375,4384],[41,-365,6046],[42,-280,7702],[43,-97,4094],[44,-710,2058],[45,-311,3854],[46,-852,7378],[47,-1148,8515],[48,-70,4099],[49,-701,3250],[50,-701,2706],[51,-28,10924],[52,-191,1758],[53,-905,7290],[54,-182,26306],[55,-612,9756],[56,-435,3337],[57,-331,4664],[58,-123,8218],[59,0,7813],[60,-49,2131],[61,6610,6610],[62,0,6],[63,1490,1490],[64,890,890],[65,300,1840],[68,4189,4189],[70,4531,6850],[71,261,261],[74,4079,4079],[75,852,3810],[76,86,86],[77,4659,4659],[78,229,229],[79,2628,2628],[83,0,1097],[84,639,639]]\n  },{\n    \"name\":\"single\",\n    \"data\":[[19,0,1169],[20,291,1191],[21,6,6844],[22,47,4111],[23,-306,9216],[24,-46,3298],[25,-352,16874],[26,-887,5533],[27,-195,8366],[28,-427,11555],[29,-287,15459],[30,-970,19358],[31,-502,26965],[32,-849,13711],[33,-424,23663],[34,-292,13683],[35,-51,7546],[36,-679,9149],[37,-296,20453],[38,-242,16957],[39,-401,12437],[40,-1,10378],[41,-386,4684],[42,-411,10907],[43,-1164,27733],[44,-1313,7138],[45,-183,7108],[46,46,3232],[47,0,4402],[48,-552,8106],[49,-97,25824],[50,0,3897],[51,-55,2139],[52,0,2227],[53,0,5715],[55,-703,3339],[56,237,15311],[57,254,3777],[58,2,6570],[59,351,671],[60,0,11262],[66,6483,10177],[69,2144,2144]]\n  },{\n    \"name\":\"married\",\n    \"data\":[[23,-230,1158],[24,-254,4500],[25,-589,914],[26,-759,5116],[27,-1202,4848],[28,-97,4287],[29,-478,22171],[30,-559,3134],[31,-617,22546],[32,-1053,14533],[33,-988,18347],[34,-563,8309],[35,-339,13658],[36,-872,27359],[37,-107,22856],[38,-762,12877],[39,-735,9374],[40,-1212,13669],[41,-516,21515],[42,-1310,42045],[43,-932,17555],[44,-1746,17361],[45,-839,13117],[46,-1400,12186],[47,-938,7708],[48,-583,10655],[49,-1680,14440],[50,-568,26394],[51,-2082,21244],[52,-1224,14363],[53,-626,22370],[54,-932,8295],[55,-966,8894],[56,-1206,22196],[57,-3313,27069],[58,-27,16264],[59,-47,9976],[60,-396,71188],[61,76,6016],[62,0,1859],[63,133,8044],[64,43,2923],[65,300,4717],[66,206,4785],[67,696,16353],[68,19317,19317],[69,279,745],[70,616,15834],[71,353,14220],[72,763,4415],[73,19,1388],[74,921,935],[75,3771,26452],[76,2590,2590],[77,0,7802],[78,226,499],[79,429,8556],[80,0,8304],[81,1,1],[83,0,425],[86,1503,1503],[87,230,230]]\n  }],\n  \"title\":{\n    \"text\":\"Minimum Balance\"\n  }\n}\n\n$(\"#md5_7F7CB7C8819230C8BB923995D36158F0\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 22, 2016 1:17:01 PM",
+      "dateStarted": "Jun 27, 2016 3:49:53 AM",
+      "dateFinished": "Jun 27, 2016 3:50:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "    import com.rockiey.zeppelin.highcharts._\n    import org.apache.spark.sql._\n    import org.apache.spark.sql.functions._\n    \n    val dfAgg \u003d bank.\n        groupBy(\"marital\").\n        agg(max(\"balance\").alias(\"max\"), min(\"balance\").alias(\"min\"),avg(\"balance\").alias(\"avg\"))\n    \n    val chart \u003d new DataFrameOps(dfAgg).bar(\"marital\", \"max\", \"min\", \"avg\")(\"title\", \"text\", \"Balance By Marital\")(\"chart\", \"type\", \"bar\")\n    chart.data\n    chart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 29, 2016 7:24:29 AM",
+      "config": {
+        "colWidth": 8.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466091674240_-1557167195",
+      "id": "20160616-174114_1920125148",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_F5E16EB62200AC66F0407FAF324B65D8\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"xAxis\":{\n    \"categories\":[\"divorced\",\"single\",\"married\"],\n    \"title\":{\n      \"text\":\"marital\"\n    }\n  },\n  \"series\":[{\n    \"name\":\"max\",\n    \"data\":[26306,27733,71188]\n  },{\n    \"name\":\"min\",\n    \"data\":[-1148,-1313,-3313]\n  },{\n    \"name\":\"avg\",\n    \"data\":[1122.3901515151515,1460.4147157190635,1463.195566678584]\n  }],\n  \"title\":{\n    \"text\":\"Balance By Marital\"\n  },\n  \"chart\":{\n    \"type\":\"bar\"\n  }\n}\n\n$(\"#md5_F5E16EB62200AC66F0407FAF324B65D8\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 16, 2016 5:41:14 PM",
+      "dateStarted": "Jun 29, 2016 7:24:30 AM",
+      "dateFinished": "Jun 29, 2016 7:24:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\n\nval toInt    \u003d udf[Int, String]( _.toInt)\n\nval dfAgg \u003d bank.\n    groupBy(\"education\").\n    agg(max(\"balance\").alias(\"max\"), min(\"balance\").alias(\"min\"),avg(\"balance\").alias(\"avg\"))\ndfAgg.first\nval ops \u003d new DataFrameOps(dfAgg)\n\nval config \u003d Map(\"Max Balance\" -\u003e \"max\", \"Min Balance\" -\u003e \"min\", \"Average Balance\" -\u003e \"avg\")\nval chart \u003d ops.bar(\"education\", \"max\", \"min\", \"avg\")(\"title\", \"text\", \"Balance by Education\")(\"chart\", \"type\", \"bar\")\nchart.data\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 17, 2016 10:58:44 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466132876360_-583302759",
+      "id": "20160617-050756_548078491",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_905944E106DA7DC4BB7C6034E3ECC510\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"xAxis\":{\n    \"categories\":[\"unknown\",\"primary\",\"secondary\",\"tertiary\"],\n    \"title\":{\n      \"text\":\"education\"\n    }\n  },\n  \"series\":[{\n    \"name\":\"max\",\n    \"data\":[21244,71188,26452,42045]\n  },{\n    \"name\":\"min\",\n    \"data\":[-715,-966,-2082,-3313]\n  },{\n    \"name\":\"avg\",\n    \"data\":[1701.2459893048128,1411.5442477876106,1196.8143972246314,1775.4237037037037]\n  }],\n  \"title\":{\n    \"text\":\"Balance by Education\"\n  },\n  \"chart\":{\n    \"type\":\"bar\"\n  }\n}\n\n$(\"#md5_905944E106DA7DC4BB7C6034E3ECC510\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 17, 2016 5:07:56 AM",
+      "dateStarted": "Jun 17, 2016 10:57:35 AM",
+      "dateFinished": "Jun 17, 2016 10:57:50 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\n\nval toInt    \u003d udf[Int, String]( _.toInt)\n\nval dfAgg \u003d bank.\n    groupBy(\"job\").\n    agg(max(\"balance\").alias(\"max\"), min(\"balance\").alias(\"min\"),avg(\"balance\").alias(\"avg\"))\ndfAgg.first\nval ops \u003d new DataFrameOps(dfAgg)\n\nval config \u003d Map(\"Max Balance\" -\u003e \"max\", \"Min Balance\" -\u003e \"min\", \"Average Balance\" -\u003e \"avg\")\nval chart \u003d ops.bar(\"job\", \"max\", \"min\", \"avg\")(\"title\", \"text\", \"Balance by Job\")(\"chart\", \"type\", \"bar\")\nchart.data\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 29, 2016 7:19:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466867719871_1022591191",
+      "id": "20160625-171519_1797570484",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\ntoInt: org.apache.spark.sql.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,IntegerType,List(StringType))\n\u003cconsole\u003e:42: error: not found: value bank\n         val dfAgg \u003d bank.\n                     ^\n"
+      },
+      "dateCreated": "Jun 25, 2016 5:15:19 PM",
+      "dateStarted": "Jun 29, 2016 7:19:32 AM",
+      "dateFinished": "Jun 29, 2016 7:19:37 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\n\nval toInt    \u003d udf[Int, String]( _.toInt)\n\nval dfAgg \u003d bank.\n    groupBy(\"job\").\n    agg(max(\"balance\").alias(\"max\"), min(\"balance\").alias(\"min\"),avg(\"balance\").alias(\"avg\"))\ndfAgg.first\nval ops \u003d new DataFrameOps(dfAgg)\n\nval config \u003d Map(\"Max Balance\" -\u003e \"max\", \"Min Balance\" -\u003e \"min\", \"Average Balance\" -\u003e \"avg\")\nval chart \u003d ops.bar(\"job\", \"max\", \"min\", \"avg\")(\"title\", \"text\", \"Balance by Job\")(\"chart\", \"type\", \"bar\")\nchart.data\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 23, 2016 2:59:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466153921205_1104172651",
+      "id": "20160617-105841_1163510576",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_679798BDD4F39803DFB7384471F226E3\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"xAxis\":{\n    \"categories\":[\"unemployed\",\"services\",\"blue-collar\",\"unknown\",\"housemaid\",\"entrepreneur\",\"self-employed\",\"retired\",\"admin.\",\"management\",\"technician\",\"student\"],\n    \"title\":{\n      \"text\":\"job\"\n    }\n  },\n  \"series\":[{\n    \"name\":\"max\",\n    \"data\":[9019,26394,16353,7337,26965,42045,16430,71188,22171,27359,27733,11555]\n  },{\n    \"name\":\"min\",\n    \"data\":[-872,-1202,-1400,0,-759,-2082,-3313,-1206,-967,-1746,-1680,-230]\n  },{\n    \"name\":\"avg\",\n    \"data\":[1089.421875,1103.9568345323742,1085.161733615222,1501.7105263157894,2083.8035714285716,1645.125,1392.4098360655737,2319.191304347826,1226.73640167364,1766.9287925696594,1330.99609375,1543.8214285714287]\n  }],\n  \"title\":{\n    \"text\":\"Balance by Job\"\n  },\n  \"chart\":{\n    \"type\":\"bar\"\n  }\n}\n\n$(\"#md5_679798BDD4F39803DFB7384471F226E3\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 17, 2016 10:58:41 AM",
+      "dateStarted": "Jun 17, 2016 10:59:12 AM",
+      "dateFinished": "Jun 17, 2016 10:59:30 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\n\nval toInt    \u003d udf[Int, String]( _.toInt)\n\n// age: int, job: string, marital: string, education: string, balance: int\n\nval ops \u003d new DataFrameOps(bank)\n\nval chart \u003d ops.drilldown(\n      (\"marital\", \"name\", List(\"y\" -\u003e avg(\"balance\"))),\n      (\"education\", \"name\", List(\"y\" -\u003e max(\"balance\"))),\n      (\"job\", \"name\", List(\"y\"-\u003emax(\"balance\"))))(\"chart\", \"type\", \"column\")(\"xAxis\", \"type\", \"category\")\n// println(chart.data)\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 4:41:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466153629236_62042766",
+      "id": "20160617-105349_1024819399",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_4A333AAB274A4A537AF7C12BFB2C4A30\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"divorced\",\n      \"drilldown\":\"marital\u003ddivorced\",\n      \"y\":1122.3901515151515\n    },{\n      \"name\":\"single\",\n      \"drilldown\":\"marital\u003dsingle\",\n      \"y\":1460.4147157190635\n    },{\n      \"name\":\"married\",\n      \"drilldown\":\"marital\u003dmarried\",\n      \"y\":1463.195566678584\n    }]\n  }],\n  \"drilldown\":{\n    \"series\":[{\n      \"id\":\"education\u003dunknown\",\n      \"data\":[{\n        \"name\":\"services\",\n        \"y\":4384\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":10287\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":-701\n      },{\n        \"name\":\"retired\",\n        \"y\":5920\n      },{\n        \"name\":\"admin.\",\n        \"y\":4012\n      },{\n        \"name\":\"management\",\n        \"y\":7702\n      },{\n        \"name\":\"technician\",\n        \"y\":2706\n      }]\n    },{\n      \"id\":\"education\u003dprimary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":1770\n      },{\n        \"name\":\"services\",\n        \"y\":3854\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":8218\n      },{\n        \"name\":\"housemaid\",\n        \"y\":1238\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":278\n      },{\n        \"name\":\"self-employed\",\n        \"y\":10924\n      },{\n        \"name\":\"retired\",\n        \"y\":7179\n      },{\n        \"name\":\"admin.\",\n        \"y\":179\n      },{\n        \"name\":\"management\",\n        \"y\":255\n      },{\n        \"name\":\"technician\",\n        \"y\":7290\n      }]\n    },{\n      \"id\":\"education\u003dsecondary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":4094\n      },{\n        \"name\":\"services\",\n        \"y\":4906\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":3573\n      },{\n        \"name\":\"housemaid\",\n        \"y\":9228\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":1588\n      },{\n        \"name\":\"self-employed\",\n        \"y\":8515\n      },{\n        \"name\":\"retired\",\n        \"y\":6850\n      },{\n        \"name\":\"admin.\",\n        \"y\":7378\n      },{\n        \"name\":\"management\",\n        \"y\":1897\n      },{\n        \"name\":\"technician\",\n        \"y\":10787\n      }]\n    },{\n      \"id\":\"education\u003dtertiary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":780\n      },{\n        \"name\":\"services\",\n        \"y\":1983\n      },{\n        \"name\":\"unknown\",\n        \"y\":137\n      },{\n        \"name\":\"housemaid\",\n        \"y\":370\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":7929\n      },{\n        \"name\":\"self-employed\",\n        \"y\":6610\n      },{\n        \"name\":\"retired\",\n        \"y\":6102\n      },{\n        \"name\":\"admin.\",\n        \"y\":4303\n      },{\n        \"name\":\"management\",\n        \"y\":26306\n      },{\n        \"name\":\"technician\",\n        \"y\":7190\n      }]\n    },{\n      \"id\":\"marital\u003ddivorced\",\n      \"data\":[{\n        \"name\":\"unknown\",\n        \"drilldown\":\"education\u003dunknown\",\n        \"y\":10287\n      },{\n        \"name\":\"primary\",\n        \"drilldown\":\"education\u003dprimary\",\n        \"y\":10924\n      },{\n        \"name\":\"secondary\",\n        \"drilldown\":\"education\u003dsecondary\",\n        \"y\":10787\n      },{\n        \"name\":\"tertiary\",\n        \"drilldown\":\"education\u003dtertiary\",\n        \"y\":26306\n      }]\n    },{\n      \"id\":\"education\u003dunknown\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":3274\n      },{\n        \"name\":\"services\",\n        \"y\":6145\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":4684\n      },{\n        \"name\":\"unknown\",\n        \"y\":181\n      },{\n        \"name\":\"housemaid\",\n        \"y\":0\n      },{\n        \"name\":\"self-employed\",\n        \"y\":0\n      },{\n        \"name\":\"retired\",\n        \"y\":62\n      },{\n        \"name\":\"admin.\",\n        \"y\":2227\n      },{\n        \"name\":\"management\",\n        \"y\":3196\n      },{\n        \"name\":\"technician\",\n        \"y\":7108\n      },{\n        \"name\":\"student\",\n        \"y\":10788\n      }]\n    },{\n      \"id\":\"education\u003dprimary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":4232\n      },{\n        \"name\":\"services\",\n        \"y\":3777\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":8627\n      },{\n        \"name\":\"housemaid\",\n        \"y\":26965\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":4\n      },{\n        \"name\":\"self-employed\",\n        \"y\":217\n      },{\n        \"name\":\"retired\",\n        \"y\":25824\n      },{\n        \"name\":\"admin.\",\n        \"y\":0\n      },{\n        \"name\":\"management\",\n        \"y\":4897\n      },{\n        \"name\":\"technician\",\n        \"y\":11262\n      },{\n        \"name\":\"student\",\n        \"y\":3472\n      }]\n    },{\n      \"id\":\"education\u003dsecondary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":3945\n      },{\n        \"name\":\"services\",\n        \"y\":11386\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":13683\n      },{\n        \"name\":\"unknown\",\n        \"y\":914\n      },{\n        \"name\":\"housemaid\",\n        \"y\":1924\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":20453\n      },{\n        \"name\":\"self-employed\",\n        \"y\":3672\n      },{\n        \"name\":\"retired\",\n        \"y\":1640\n      },{\n        \"name\":\"admin.\",\n        \"y\":10218\n      },{\n        \"name\":\"management\",\n        \"y\":10378\n      },{\n        \"name\":\"technician\",\n        \"y\":11269\n      },{\n        \"name\":\"student\",\n        \"y\":11555\n      }]\n    },{\n      \"id\":\"education\u003dtertiary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":9019\n      },{\n        \"name\":\"services\",\n        \"y\":3516\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":14058\n      },{\n        \"name\":\"unknown\",\n        \"y\":6836\n      },{\n        \"name\":\"housemaid\",\n        \"y\":23663\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":16874\n      },{\n        \"name\":\"self-employed\",\n        \"y\":5462\n      },{\n        \"name\":\"retired\",\n        \"y\":2144\n      },{\n        \"name\":\"admin.\",\n        \"y\":3672\n      },{\n        \"name\":\"management\",\n        \"y\":19358\n      },{\n        \"name\":\"technician\",\n        \"y\":27733\n      },{\n        \"name\":\"student\",\n        \"y\":7513\n      }]\n    },{\n      \"id\":\"marital\u003dsingle\",\n      \"data\":[{\n        \"name\":\"unknown\",\n        \"drilldown\":\"education\u003dunknown\",\n        \"y\":10788\n      },{\n        \"name\":\"primary\",\n        \"drilldown\":\"education\u003dprimary\",\n        \"y\":26965\n      },{\n        \"name\":\"secondary\",\n        \"drilldown\":\"education\u003dsecondary\",\n        \"y\":20453\n      },{\n        \"name\":\"tertiary\",\n        \"drilldown\":\"education\u003dtertiary\",\n        \"y\":27733\n      }]\n    },{\n      \"id\":\"education\u003dunknown\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":4565\n      },{\n        \"name\":\"services\",\n        \"y\":7864\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":9328\n      },{\n        \"name\":\"unknown\",\n        \"y\":7337\n      },{\n        \"name\":\"housemaid\",\n        \"y\":21244\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":1956\n      },{\n        \"name\":\"self-employed\",\n        \"y\":2094\n      },{\n        \"name\":\"retired\",\n        \"y\":2923\n      },{\n        \"name\":\"admin.\",\n        \"y\":4629\n      },{\n        \"name\":\"management\",\n        \"y\":18347\n      },{\n        \"name\":\"technician\",\n        \"y\":14533\n      },{\n        \"name\":\"student\",\n        \"y\":1387\n      }]\n    },{\n      \"id\":\"education\u003dprimary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":5462\n      },{\n        \"name\":\"services\",\n        \"y\":6904\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":13117\n      },{\n        \"name\":\"unknown\",\n        \"y\":732\n      },{\n        \"name\":\"housemaid\",\n        \"y\":14752\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":2643\n      },{\n        \"name\":\"self-employed\",\n        \"y\":2077\n      },{\n        \"name\":\"retired\",\n        \"y\":71188\n      },{\n        \"name\":\"admin.\",\n        \"y\":3913\n      },{\n        \"name\":\"management\",\n        \"y\":22856\n      },{\n        \"name\":\"technician\",\n        \"y\":6839\n      }]\n    },{\n      \"id\":\"education\u003dsecondary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":8131\n      },{\n        \"name\":\"services\",\n        \"y\":26394\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":16353\n      },{\n        \"name\":\"unknown\",\n        \"y\":2727\n      },{\n        \"name\":\"housemaid\",\n        \"y\":14363\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":8104\n      },{\n        \"name\":\"self-employed\",\n        \"y\":11494\n      },{\n        \"name\":\"retired\",\n        \"y\":26452\n      },{\n        \"name\":\"admin.\",\n        \"y\":22171\n      },{\n        \"name\":\"management\",\n        \"y\":17555\n      },{\n        \"name\":\"technician\",\n        \"y\":16063\n      },{\n        \"name\":\"student\",\n        \"y\":1694\n      }]\n    },{\n      \"id\":\"education\u003dtertiary\",\n      \"data\":[{\n        \"name\":\"unemployed\",\n        \"y\":7744\n      },{\n        \"name\":\"services\",\n        \"y\":12223\n      },{\n        \"name\":\"blue-collar\",\n        \"y\":1784\n      },{\n        \"name\":\"unknown\",\n        \"y\":1937\n      },{\n        \"name\":\"housemaid\",\n        \"y\":11219\n      },{\n        \"name\":\"entrepreneur\",\n        \"y\":42045\n      },{\n        \"name\":\"self-employed\",\n        \"y\":16430\n      },{\n        \"name\":\"retired\",\n        \"y\":15834\n      },{\n        \"name\":\"admin.\",\n        \"y\":5426\n      },{\n        \"name\":\"management\",\n        \"y\":27359\n      },{\n        \"name\":\"technician\",\n        \"y\":27069\n      },{\n        \"name\":\"student\",\n        \"y\":10\n      }]\n    },{\n      \"id\":\"marital\u003dmarried\",\n      \"data\":[{\n        \"name\":\"unknown\",\n        \"drilldown\":\"education\u003dunknown\",\n        \"y\":21244\n      },{\n        \"name\":\"primary\",\n        \"drilldown\":\"education\u003dprimary\",\n        \"y\":71188\n      },{\n        \"name\":\"secondary\",\n        \"drilldown\":\"education\u003dsecondary\",\n        \"y\":26452\n      },{\n        \"name\":\"tertiary\",\n        \"drilldown\":\"education\u003dtertiary\",\n        \"y\":42045\n      }]\n    }]\n  },\n  \"chart\":{\n    \"type\":\"column\"\n  },\n  \"xAxis\":{\n    \"type\":\"category\"\n  }\n}\n\n$(\"#md5_4A333AAB274A4A537AF7C12BFB2C4A30\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 17, 2016 10:53:49 AM",
+      "dateStarted": "Jun 27, 2016 4:41:56 AM",
+      "dateFinished": "Jun 27, 2016 4:42:09 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Bank Data",
+      "text": "import com.rockiey.zeppelin.highcharts._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\n\nval toInt    \u003d udf[Int, String]( _.toInt)\nval toStr    \u003d udf[String, Any]( _.toString)\nval toTys \u003d udf[String, Double](v \u003d\u003e s\"${v.toInt/10}0s\")\n\nval dfAgg \u003d bank.filter(\"Age\", toStr($\"age\"/10)).\n    groupBy(\"Age\").\n    agg(max(\"balance\").alias(\"max\"), min(\"balance\").alias(\"min\"),avg(\"balance\").alias(\"avg\")).\n    orderBy(\"Age\")\ndfAgg.first\nval ops \u003d new DataFrameOps(dfAgg)\n\nval chart \u003d ops.bar(\"Age\", \"max\", \"min\", \"avg\")(\"title\", \"text\", \"Bank Data\")(\"chart\", \"type\", \"column\")\nchart.data\nchart.render()",
+      "authenticationInfo": {},
+      "dateUpdated": "Jun 27, 2016 3:50:25 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "tableHide": true,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466132262527_2031212681",
+      "id": "20160617-045742_1183028117",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"md5_C8C4E3CE384DBBB87FBB66E3AF0BA4F0\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"xAxis\":{\n    \"categories\":[\"1.9\",\"2.0\",\"2.1\",\"2.2\",\"2.3\",\"2.4\",\"2.5\",\"2.6\",\"2.7\",\"2.8\",\"2.9\",\"3.0\",\"3.1\",\"3.2\",\"3.3\",\"3.4\",\"3.5\",\"3.6\",\"3.7\",\"3.8\",\"3.9\",\"4.0\",\"4.1\",\"4.2\",\"4.3\",\"4.4\",\"4.5\",\"4.6\",\"4.7\",\"4.8\",\"4.9\",\"5.0\",\"5.1\",\"5.2\",\"5.3\",\"5.4\",\"5.5\",\"5.6\",\"5.7\",\"5.8\",\"5.9\",\"6.0\",\"6.1\",\"6.2\",\"6.3\",\"6.4\",\"6.5\",\"6.6\",\"6.7\",\"6.8\",\"6.9\",\"7.0\",\"7.1\",\"7.2\",\"7.3\",\"7.4\",\"7.5\",\"7.6\",\"7.7\",\"7.8\",\"7.9\",\"8.0\",\"8.1\",\"8.3\",\"8.4\",\"8.6\",\"8.7\"],\n    \"title\":{\n      \"text\":\"Age\"\n    }\n  },\n  \"series\":[{\n    \"name\":\"max\",\n    \"data\":[1169,1191,6844,4111,9216,4500,16874,5533,8366,11555,22171,19358,26965,14533,23663,13683,13658,27359,22856,16957,12437,13669,21515,42045,27733,17361,13117,12186,8515,10655,25824,26394,21244,14363,22370,26306,9756,22196,27069,16264,9976,71188,6610,1859,8044,2923,4717,10177,16353,19317,2144,15834,14220,4415,1388,4079,26452,2590,7802,499,8556,8304,1,1097,639,1503,230]\n  },{\n    \"name\":\"min\",\n    \"data\":[0,291,6,47,-306,-254,-589,-887,-1202,-427,-478,-970,-617,-1053,-988,-566,-587,-872,-296,-762,-735,-1212,-516,-1310,-1164,-1746,-839,-1400,-1148,-583,-1680,-701,-2082,-1224,-905,-932,-966,-1206,-3313,-123,-47,-396,76,0,133,43,300,206,696,4189,279,616,261,763,19,921,852,86,0,226,429,0,1,0,639,1503,230]\n  },{\n    \"name\":\"avg\",\n    \"data\":[393.5,661.3333333333334,1774.2857142857142,1455.3333333333333,2117.95,634.625,1240.0681818181818,788.5584415584416,851.7765957446809,1025.0970873786407,1261.8762886597938,1113.0333333333333,1288.4824120603016,1256.549107142857,1545.4139784946237,1111.5367965367966,1192.8277777777778,1226.8936170212767,1463.9192546583852,1718.993710691824,1104.8615384615384,1399.5070422535211,1505.7925925925927,1612.3617021276596,1807.8347826086956,1836.5523809523809,1187.3660714285713,998.7731092436975,1363.0462962962963,1462.359649122807,1591.107142857143,1645.0594059405942,1528.5714285714287,782.2906976744187,1588.3085106382978,1656.661971830986,1244.9444444444443,2120.135135135135,1665.6263736263736,1755.0823529411764,1582.4788732394366,2964.574468085106,2407.5,516.1428571428571,2286.375,1103.2857142857142,1638.1666666666667,3313.8888888888887,4149.4,11753,774.3333333333334,5084.571428571428,3787.3333333333335,2526,525.8333333333334,1978.3333333333333,7046.5,1338,2405.1666666666665,318,4087.75,4183.5,1,380.5,639,1503,230]\n  }],\n  \"title\":{\n    \"text\":\"Bank Data\"\n  },\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#md5_C8C4E3CE384DBBB87FBB66E3AF0BA4F0\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Jun 17, 2016 4:57:42 AM",
+      "dateStarted": "Jun 17, 2016 5:06:50 AM",
+      "dateFinished": "Jun 17, 2016 5:07:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1466098136836_-397629089",
+      "id": "20160616-192856_1051221908",
+      "dateCreated": "Jun 16, 2016 7:28:56 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DataFrame Demos",
+  "id": "2BMWH5DDA",
+  "angularObjects": {
+    "2BMP3CCFV:shared_process": [],
+    "2BPB7WXZ2:shared_process": [],
+    "2BNUD81ET:shared_process": [],
+    "2BM8AS7EP:shared_process": [],
+    "2BNH1VZ65:shared_process": [],
+    "2BKDF2QDU:shared_process": [],
+    "2BKHR9B5D:shared_process": [],
+    "2BK3CGU8S:shared_process": [],
+    "2BKSBSWD3:shared_process": [],
+    "2BM893U6Z:shared_process": [],
+    "2BPXXHATR:shared_process": [],
+    "2BN7SB8SP:shared_process": [],
+    "2BKE3HNSD:shared_process": [],
+    "2BNE1Q7J9:shared_process": [],
+    "2BN1HXFZD:shared_process": [],
+    "2BNKBXXCA:shared_process": [],
+    "2BMPB8UJ5:shared_process": [],
+    "2BN4NQCUN:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
