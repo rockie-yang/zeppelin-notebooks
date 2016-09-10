@@ -1,0 +1,307 @@
+{
+  "paragraphs": [
+    {
+      "title": "Load Data",
+      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval testcaseFile \u003d \"/usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\"\n\nval testcaseDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"false\").schema(testcaseSchema).load(testcaseFile).cache\ntestcaseDF.first",
+      "dateUpdated": "Sep 10, 2016 2:01:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": true,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473353569087_-781118581",
+      "id": "20160908-165249_182106313",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\ntestcaseFile: String \u003d /usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\n\ntestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres0: org.apache.spark.sql.Row \u003d [2016/09/08 15:31:51,PASSED,0.783,5010,,,angular.js-angular-master,$anchorScroll.basic functionality,should scroll to #bottom when clicking #top and vice versa]\n"
+      },
+      "dateCreated": "Sep 8, 2016 4:52:49 AM",
+      "dateStarted": "Sep 9, 2016 6:31:34 AM",
+      "dateFinished": "Sep 9, 2016 6:31:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "testcaseDF.select(\"testCaseStatus\").distinct.collect\ntestcaseDF.groupBy(\"testCaseStatus\").count.show",
+      "dateUpdated": "Sep 9, 2016 6:32:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473359600125_-902013761",
+      "id": "20160908-183320_1020371154",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres2: Array[org.apache.spark.sql.Row] \u003d Array([PASSED], [FAILED], [FIXED])\n+--------------+-----+\n|testCaseStatus|count|\n+--------------+-----+\n|        PASSED|75696|\n|        FAILED|    3|\n|         FIXED|    3|\n+--------------+-----+\n\n"
+      },
+      "dateCreated": "Sep 8, 2016 6:33:20 AM",
+      "dateStarted": "Sep 9, 2016 6:32:06 AM",
+      "dateFinished": "Sep 9, 2016 6:32:12 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "TestCase Status",
+      "text": "highcharts(testcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.column).plot()",
+      "dateUpdated": "Sep 10, 2016 2:02:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473355125039_-1866870707",
+      "id": "20160908-171845_1807217920",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"highcharts_1ffe54c3-bd49-481b-ba0e-bae42824fb0e\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"FIXED\",\n      \"y\":3\n    },{\n      \"name\":\"PASSED\",\n      \"y\":75696\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_1ffe54c3-bd49-481b-ba0e-bae42824fb0e\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Sep 8, 2016 5:18:45 AM",
+      "dateStarted": "Sep 8, 2016 6:35:35 AM",
+      "dateFinished": "Sep 8, 2016 6:35:36 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "TestCase Status",
+      "text": "highcharts(testcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.pie).plot()",
+      "dateUpdated": "Sep 10, 2016 2:02:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473359480336_-566682930",
+      "id": "20160908-183120_890752108",
+      "result": {
+        "code": "SUCCESS",
+        "type": "ANGULAR",
+        "msg": "\n\u003cdiv id\u003d\"highcharts_a8a88fb8-6542-48d5-9547-4b95a64c2631\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"FIXED\",\n      \"y\":3\n    },{\n      \"name\":\"PASSED\",\n      \"y\":75696\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"pie\"\n  }\n}\n\n$(\"#highcharts_a8a88fb8-6542-48d5-9547-4b95a64c2631\").highcharts(data)\n});\n\u003c/script\u003e\n"
+      },
+      "dateCreated": "Sep 8, 2016 6:31:20 AM",
+      "dateStarted": "Sep 8, 2016 6:35:47 AM",
+      "dateFinished": "Sep 8, 2016 6:35:48 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Not Passed TestCase",
+      "text": "// testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\").show\nval notpassed \u003d testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\")\nprintln(notpassed.collect.mkString(\"\\n\"))",
+      "dateUpdated": "Sep 10, 2016 2:03:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 266.5340881347656,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473359746990_-940691154",
+      "id": "20160908-183546_360566884",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "notpassed: org.apache.spark.sql.DataFrame \u003d [buildTimestamp: string, testCaseStatus: string, duration: double, buildNumber: int, builtOn: string, sut: string, jobName: string, className: string, testCaseName: string]\n[2016/07/20 21:57:18,FIXED,0.003,613,,,angular.js-angular-v1.2.x,jqLite Safari 6.2.8 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 21:57:18,FIXED,0.007,613,,,angular.js-angular-v1.2.x,jqLite Firefox 47.0.0 (Mac OS X 10.8.0).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 21:57:18,FIXED,0.008,613,,,angular.js-angular-v1.2.x,jqLite Chrome 49.0.2623 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.005,612,,,angular.js-angular-v1.2.x,jqLite Safari 6.2.8 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.013,612,,,angular.js-angular-v1.2.x,jqLite Chrome 49.0.2623 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.009,612,,,angular.js-angular-v1.2.x,jqLite Firefox 47.0.0 (Mac OS X 10.8.0).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n"
+      },
+      "dateCreated": "Sep 8, 2016 6:35:46 AM",
+      "dateStarted": "Sep 8, 2016 7:00:43 AM",
+      "dateFinished": "Sep 8, 2016 7:00:44 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Total TestCase Execution",
+      "text": "testcaseDF.select(\"testCaseName\").distinct.count",
+      "dateUpdated": "Sep 10, 2016 2:03:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473404356533_-1679902026",
+      "id": "20160909-065916_1812979618",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres13: Long \u003d 2751\n"
+      },
+      "dateCreated": "Sep 9, 2016 6:59:16 AM",
+      "dateStarted": "Sep 9, 2016 7:19:13 AM",
+      "dateFinished": "Sep 9, 2016 7:19:15 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "TestCase Execution Statistics",
+      "text": "testcaseDF.groupBy(\"testCaseName\").agg(\n    min($\"duration\").alias(\"min\"), \n    max($\"duration\").alias(\"max\"), \n    mean($\"duration\").alias(\"mean\"), \n    stddev($\"duration\").alias(\"stddev\")).orderBy($\"stddev\".desc).show",
+      "dateUpdated": "Sep 10, 2016 2:04:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473360931141_-298624626",
+      "id": "20160908-185531_178829130",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.sql.functions._\n+--------------------+-----+-----+-------------------+-------------------+\n|        testCaseName|  min|  max|               mean|             stddev|\n+--------------------+-----+-----+-------------------+-------------------+\n|should load and c...|0.511|2.557| 1.2036315789473688| 0.5777075117417179|\n|should change the...|1.281|2.891| 1.7419000000000002|  0.534955966605567|\n|should properly a...|0.002|1.271|0.06728571428571427|0.27584871630245855|\n|should have the i...|0.218|1.092|0.45192592592592584| 0.2562965449197584|\n|should make an xh...|0.473|2.066| 0.6402105263157895| 0.2421646924400425|\n|should be resilie...|0.686|1.475| 0.9596333333333332| 0.2368531457331276|\n|should warn when ...|0.684| 1.81| 0.8828157894736841|0.22486558811193735|\n|should display an...|0.591|1.224| 0.8587333333333333| 0.2015679800333194|\n|should sort frien...|0.766|1.738| 0.9872500000000004|0.17349544662612904|\n|should check ng-c...|0.481|1.573| 0.6423421052631578|0.16800567498712807|\n|should make JSONP...|0.549|0.944| 0.7348157894736841|0.15588628136217586|\n|should display fo...|0.553|1.064| 0.7478333333333331| 0.1467129694413512|\n|       should update|0.448|2.033| 0.6455460526315792|0.13241860370367775|\n|should linkify th...|0.306|1.123| 0.4676315789473686|0.12154043283473924|\n| should auto compile|0.495|1.005| 0.6757631578947368|0.12089249953496796|\n|should be able to...|0.356| 0.81| 0.5301111111111111|0.11907442189117672|\n|should check cont...|0.722|1.357| 0.8641315789473685|0.11778155939099588|\n|should show off b...|0.437|1.219| 0.5512368421052634|0.11717264559718991|\n|should change $lo...|1.052|1.477| 1.2304078947368418|0.11640311308913569|\n|should check ng-bind|0.392|0.927| 0.6116973684210526|0.11613716255495392|\n+--------------------+-----+-----+-------------------+-------------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 8, 2016 6:55:31 AM",
+      "dateStarted": "Sep 9, 2016 6:57:57 AM",
+      "dateFinished": "Sep 9, 2016 6:58:01 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "dateUpdated": "Sep 9, 2016 6:30:37 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473361498489_503937509",
+      "id": "20160908-190458_2081256583",
+      "dateCreated": "Sep 8, 2016 7:04:58 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "angularjs-jenkins-testcase",
+  "id": "angularjs-jenkins-testcase-2BWU3721R",
+  "angularObjects": {
+    "2BVNAKQM2:shared_process": [],
+    "2BXX7MRMF:shared_process": [],
+    "2BY1YW5VG:shared_process": [],
+    "2BXDVMHDE:shared_process": [],
+    "2BV6ANS5B:shared_process": [],
+    "2BW1FETTK:shared_process": [],
+    "2BX7RHTRY:shared_process": [],
+    "2BW6PC8RZ:shared_process": [],
+    "2BWB1ZHBK:shared_process": [],
+    "2BVBFU3ZJ:shared_process": [],
+    "2BVAMJ94N:shared_process": [],
+    "2BXJGDYDN:shared_process": [],
+    "2BY4VXMA8:shared_process": [],
+    "2BVW1NUSV:shared_process": [],
+    "2BWNGAUVU:shared_process": [],
+    "2BUYGXEWF:shared_process": [],
+    "2BXJ1CKJ9:shared_process": [],
+    "2BVN6XNJJ:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default"
+  },
+  "info": {}
+}
