@@ -2,8 +2,8 @@
   "paragraphs": [
     {
       "title": "Load Data",
-      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval testcaseFile \u003d \"/usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\"\n\nval testcaseDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"false\").schema(testcaseSchema).load(testcaseFile).cache\ntestcaseDF.first",
-      "dateUpdated": "Sep 10, 2016 2:01:43 PM",
+      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval ngTestcaseFile \u003d \"/usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\"\n\nval ngTestcaseCompleteDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"false\").schema(testcaseSchema).load(ngTestcaseFile).cache\nngTestcaseCompleteDF.first",
+      "dateUpdated": "Sep 11, 2016 11:47:00 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -18,7 +18,7 @@
         "enabled": true,
         "editorMode": "ace/mode/scala",
         "title": true,
-        "editorHide": true,
+        "editorHide": false,
         "tableHide": true
       },
       "settings": {
@@ -30,17 +30,46 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\ntestcaseFile: String \u003d /usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\n\ntestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres0: org.apache.spark.sql.Row \u003d [2016/09/08 15:31:51,PASSED,0.783,5010,,,angular.js-angular-master,$anchorScroll.basic functionality,should scroll to #bottom when clicking #top and vice versa]\n"
+        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\nngTestcaseFile: String \u003d /usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\n\nngTestcaseCompleteDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres111: org.apache.spark.sql.Row \u003d [2016/09/08 15:31:51,PASSED,0.783,5010,,,angular.js-angular-master,$anchorScroll.basic functionality,should scroll to #bottom when clicking #top and vice versa]\n"
       },
       "dateCreated": "Sep 8, 2016 4:52:49 AM",
-      "dateStarted": "Sep 9, 2016 6:31:34 AM",
-      "dateFinished": "Sep 9, 2016 6:31:56 AM",
+      "dateStarted": "Sep 11, 2016 11:47:00 AM",
+      "dateFinished": "Sep 11, 2016 11:47:05 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "testcaseDF.select(\"testCaseStatus\").distinct.collect\ntestcaseDF.groupBy(\"testCaseStatus\").count.show",
-      "dateUpdated": "Sep 9, 2016 6:32:05 AM",
+      "title": "Unpersist",
+      "text": "ngTestcaseCompleteDF.unpersist",
+      "dateUpdated": "Sep 11, 2016 11:17:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473592665012_-1825674135",
+      "id": "20160911-111745_76010853",
+      "dateCreated": "Sep 11, 2016 11:17:45 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "ngTestcaseCompleteDF.select(\"testCaseStatus\").distinct.collect\nngTestcaseCompleteDF.groupBy(\"testCaseStatus\").count.show",
+      "dateUpdated": "Sep 11, 2016 11:46:54 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -64,18 +93,81 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nres2: Array[org.apache.spark.sql.Row] \u003d Array([PASSED], [FAILED], [FIXED])\n+--------------+-----+\n|testCaseStatus|count|\n+--------------+-----+\n|        PASSED|75696|\n|        FAILED|    3|\n|         FIXED|    3|\n+--------------+-----+\n\n"
+        "msg": "\nres59: Array[org.apache.spark.sql.Row] \u003d Array([PASSED], [FAILED], [FIXED])\n+--------------+-----+\n|testCaseStatus|count|\n+--------------+-----+\n|        PASSED|75696|\n|        FAILED|    3|\n|         FIXED|    3|\n+--------------+-----+\n\n"
       },
       "dateCreated": "Sep 8, 2016 6:33:20 AM",
-      "dateStarted": "Sep 9, 2016 6:32:06 AM",
-      "dateFinished": "Sep 9, 2016 6:32:12 AM",
+      "dateStarted": "Sep 11, 2016 10:56:29 AM",
+      "dateFinished": "Sep 11, 2016 10:56:31 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Unpersist",
+      "text": "ngTestcaseCompleteDF.unpersist",
+      "dateUpdated": "Sep 11, 2016 11:46:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473594396766_930638276",
+      "id": "20160911-114636_938535241",
+      "dateCreated": "Sep 11, 2016 11:46:36 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ngTestcaseDF \u003d ngTestcaseCompleteDF",
+      "dateUpdated": "Sep 11, 2016 11:47:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473594382608_669162266",
+      "id": "20160911-114622_927262691",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nngTestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n"
+      },
+      "dateCreated": "Sep 11, 2016 11:46:22 AM",
+      "dateStarted": "Sep 11, 2016 11:47:09 AM",
+      "dateFinished": "Sep 11, 2016 11:47:15 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "TestCase Status",
-      "text": "highcharts(testcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.column).plot()",
-      "dateUpdated": "Sep 10, 2016 2:02:39 PM",
+      "text": "highcharts(ngTestcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.column).plot()",
+      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -110,8 +202,8 @@
     },
     {
       "title": "TestCase Status",
-      "text": "highcharts(testcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.pie).plot()",
-      "dateUpdated": "Sep 10, 2016 2:02:51 PM",
+      "text": "highcharts(ngTestcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.pie).plot()",
+      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -124,7 +216,8 @@
           "scatter": {}
         },
         "enabled": true,
-        "title": true
+        "title": true,
+        "editorMode": "ace/mode/scala"
       },
       "settings": {
         "params": {},
@@ -145,8 +238,8 @@
     },
     {
       "title": "Not Passed TestCase",
-      "text": "// testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\").show\nval notpassed \u003d testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\")\nprintln(notpassed.collect.mkString(\"\\n\"))",
-      "dateUpdated": "Sep 10, 2016 2:03:36 PM",
+      "text": "// testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\").show\nval notpassed \u003d ngTestcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\")\nprintln(notpassed.collect.mkString(\"\\n\"))",
+      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -181,8 +274,8 @@
     },
     {
       "title": "Total TestCase Execution",
-      "text": "testcaseDF.select(\"testCaseName\").distinct.count",
-      "dateUpdated": "Sep 10, 2016 2:03:31 PM",
+      "text": "ngTestcaseDF.select(\"testCaseName\").distinct.count",
+      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -217,8 +310,8 @@
     },
     {
       "title": "TestCase Execution Statistics",
-      "text": "testcaseDF.groupBy(\"testCaseName\").agg(\n    min($\"duration\").alias(\"min\"), \n    max($\"duration\").alias(\"max\"), \n    mean($\"duration\").alias(\"mean\"), \n    stddev($\"duration\").alias(\"stddev\")).orderBy($\"stddev\".desc).show",
-      "dateUpdated": "Sep 10, 2016 2:04:17 PM",
+      "text": "ngTestcaseDF.groupBy(\"testCaseName\").agg(\n    min($\"duration\").alias(\"min\"), \n    max($\"duration\").alias(\"max\"), \n    mean($\"duration\").alias(\"mean\"), \n    stddev($\"duration\").alias(\"stddev\")).orderBy($\"stddev\".desc).show",
+      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {

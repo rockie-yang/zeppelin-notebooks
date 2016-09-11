@@ -2,8 +2,8 @@
   "paragraphs": [
     {
       "title": "Load Data",
-      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", StringType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval testcaseFile \u003d \"/usr/zeppelin/testCase.csv\"\n\nval testcaseDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").\n    option(\"header\", \"false\").option(\"mode\", \"DROPMALFORMED\").\n    schema(testcaseSchema).load(testcaseFile).cache\ntestcaseDF.first\n",
-      "dateUpdated": "Sep 10, 2016 1:59:57 PM",
+      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval testcaseFile \u003d \"/usr/zeppelin/data/apache-jenkins-data/testCase.csv.gz\"\n\nval apacheTestcaseCompleteDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").\n    option(\"header\", \"false\").option(\"mode\", \"DROPMALFORMED\").\n    schema(testcaseSchema).load(testcaseFile).cache\napacheTestcaseCompleteDF.first\n",
+      "dateUpdated": "Sep 11, 2016 11:35:50 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -18,8 +18,8 @@
         "enabled": true,
         "editorMode": "ace/mode/scala",
         "title": true,
-        "editorHide": true,
-        "tableHide": true
+        "editorHide": false,
+        "tableHide": false
       },
       "settings": {
         "params": {},
@@ -30,18 +30,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,StringType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\ntestcaseFile: String \u003d /usr/zeppelin/testCase.csv\n\ntestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres28: org.apache.spark.sql.Row \u003d [2016/06/16 13:32:08,PASSED,1.323,336,beam1,,ACE-trunk,org.apache.ace.agent.itest.CustomAgentControllerTest,testCustomController]\n"
+        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\ntestcaseFile: String \u003d /usr/zeppelin/data/apache-jenkins-data/testCase.csv.gz\n\napacheTestcaseCompleteDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres85: org.apache.spark.sql.Row \u003d [2016/09/10 21:46:22,PASSED,0.435,14,H4,,Ambari-branch-2.5,org.apache.ambari.groovy.client.AmbariBlueprintsTest,test get the name of the cluster]\n"
       },
       "dateCreated": "Sep 10, 2016 12:19:24 PM",
-      "dateStarted": "Sep 10, 2016 12:37:16 PM",
-      "dateFinished": "Sep 10, 2016 12:37:27 PM",
+      "dateStarted": "Sep 11, 2016 11:35:50 AM",
+      "dateFinished": "Sep 11, 2016 11:36:03 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "title": "unpersist",
-      "text": "testcaseDF.unpersist",
-      "dateUpdated": "Sep 10, 2016 2:00:43 PM",
+      "title": "Unpersist",
+      "text": "apacheTestcaseCompleteDF.unpersist",
+      "dateUpdated": "Sep 11, 2016 11:35:45 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -56,7 +56,7 @@
         "enabled": true,
         "editorMode": "ace/mode/scala",
         "title": true,
-        "editorHide": true,
+        "editorHide": false,
         "tableHide": true
       },
       "settings": {
@@ -68,17 +68,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nres26: testcaseDF.type \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n"
+        "msg": "\nres83: apacheTestcaseCompleteDF.type \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n"
       },
       "dateCreated": "Sep 10, 2016 12:36:41 PM",
-      "dateStarted": "Sep 10, 2016 12:37:10 PM",
-      "dateFinished": "Sep 10, 2016 12:37:11 PM",
+      "dateStarted": "Sep 11, 2016 11:35:45 AM",
+      "dateFinished": "Sep 11, 2016 11:35:46 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "testcaseDF.groupBy(\"testCaseStatus\").count.show",
-      "dateUpdated": "Sep 10, 2016 12:26:56 PM",
+      "text": "val apacheTestcaseDF \u003d apacheTestcaseCompleteDF",
+      "dateUpdated": "Sep 11, 2016 11:30:18 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -90,7 +90,192 @@
           "groups": [],
           "scatter": {}
         },
-        "enabled": true
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473551338691_-1668328435",
+      "id": "20160910-234858_1411732374",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\napacheTestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n"
+      },
+      "dateCreated": "Sep 10, 2016 11:48:58 PM",
+      "dateStarted": "Sep 11, 2016 11:30:18 AM",
+      "dateFinished": "Sep 11, 2016 11:30:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val interestingJobs \u003d Seq(\"ActiveMQ-Java8\", \"Ambari-branch-2.5\", \"flink-github-ci\", \"Flume-trunk-hbase-1\", \"Hadoop-trunk-Commit\", \n    \"kafka-trunk-jdk8\", \"Lucene-Solr-Tests-master\", \"Sqoop2\", \"ZooKeeper-trunk\").zipWithIndex.map{case (x,y) \u003d\u003e (y.toString, x)}\n    \nval index \u003d z.select(\"job\", \"1\", interestingJobs)\nval job \u003d interestingJobs(index.toString.toInt)._2 \nval apacheTestcaseDF \u003d apacheTestcaseCompleteDF.where($\"jobName\" \u003d\u003d\u003d job)",
+      "dateUpdated": "Sep 11, 2016 11:36:48 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {
+          "job": "1"
+        },
+        "forms": {
+          "job": {
+            "name": "job",
+            "displayName": "job",
+            "type": "select",
+            "defaultValue": "1",
+            "options": [
+              {
+                "value": "0",
+                "displayName": "ActiveMQ-Java8"
+              },
+              {
+                "value": "1",
+                "displayName": "Ambari-branch-2.5"
+              },
+              {
+                "value": "2",
+                "displayName": "flink-github-ci"
+              },
+              {
+                "value": "3",
+                "displayName": "Flume-trunk-hbase-1"
+              },
+              {
+                "value": "4",
+                "displayName": "Hadoop-trunk-Commit"
+              },
+              {
+                "value": "5",
+                "displayName": "kafka-trunk-jdk8"
+              },
+              {
+                "value": "6",
+                "displayName": "Lucene-Solr-Tests-master"
+              },
+              {
+                "value": "7",
+                "displayName": "Sqoop2"
+              },
+              {
+                "value": "8",
+                "displayName": "ZooKeeper-trunk"
+              }
+            ],
+            "hidden": false
+          }
+        }
+      },
+      "jobName": "paragraph_1473551378543_80031864",
+      "id": "20160910-234938_219926391",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\ninterestingJobs: Seq[(String, String)] \u003d List((0,ActiveMQ-Java8), (1,Ambari-branch-2.5), (2,flink-github-ci), (3,Flume-trunk-hbase-1), (4,Hadoop-trunk-Commit), (5,kafka-trunk-jdk8), (6,Lucene-Solr-Tests-master), (7,Sqoop2), (8,ZooKeeper-trunk))\n\nindex: Object \u003d 1\n\njob: String \u003d Ambari-branch-2.5\n\napacheTestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n"
+      },
+      "dateCreated": "Sep 10, 2016 11:49:38 PM",
+      "dateStarted": "Sep 11, 2016 11:36:48 AM",
+      "dateFinished": "Sep 11, 2016 11:36:52 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "apacheTestcaseCompleteDF.select(\"jobName\").distinct.show",
+      "dateUpdated": "Sep 11, 2016 11:36:25 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473593710062_-1398423605",
+      "id": "20160911-113510_2028996278",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+\n|             jobName|\n+--------------------+\n|     ZooKeeper-trunk|\n|   Ambari-branch-2.5|\n|    kafka-trunk-jdk8|\n|Lucene-Solr-Tests...|\n+--------------------+\n\n"
+      },
+      "dateCreated": "Sep 11, 2016 11:35:10 AM",
+      "dateStarted": "Sep 11, 2016 11:36:25 AM",
+      "dateFinished": "Sep 11, 2016 11:36:26 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "apacheTestcaseDF.count",
+      "dateUpdated": "Sep 11, 2016 11:36:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473593454408_798924981",
+      "id": "20160911-113054_1016537809",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres93: Long \u003d 68413\n"
+      },
+      "dateCreated": "Sep 11, 2016 11:30:54 AM",
+      "dateStarted": "Sep 11, 2016 11:36:56 AM",
+      "dateFinished": "Sep 11, 2016 11:36:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "apacheTestcaseDF.groupBy(\"testCaseStatus\").count.show",
+      "dateUpdated": "Sep 11, 2016 11:30:41 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
       },
       "settings": {
         "params": {},
@@ -101,18 +286,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "+--------------+-------+\n|testCaseStatus|  count|\n+--------------+-------+\n|        PASSED|3436444|\n|        FAILED|   3998|\n|       SKIPPED|  36965|\n|         FIXED|   3913|\n|    REGRESSION|   1473|\n+--------------+-------+\n\n"
+        "msg": "+--------------+-----+\n|testCaseStatus|count|\n+--------------+-----+\n+--------------+-----+\n\n"
       },
       "dateCreated": "Sep 10, 2016 12:19:42 PM",
-      "dateStarted": "Sep 10, 2016 12:26:56 PM",
-      "dateFinished": "Sep 10, 2016 12:27:17 PM",
+      "dateStarted": "Sep 11, 2016 11:30:41 AM",
+      "dateFinished": "Sep 11, 2016 11:30:43 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "TestCase Execution Status Demographics",
-      "text": "highcharts(\n    testcaseDF.series(\n        \"name\" -\u003e \"testCaseStatus\", \n        \"y\" -\u003e count(\"testCaseStatus\"))\n    ).chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:23:11 PM",
+      "text": "highcharts(\n    apacheTestcaseDF.series(\n        \"name\" -\u003e \"testCaseStatus\", \n        \"y\" -\u003e count(\"testCaseStatus\"))\n    ).chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:42:40 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -137,18 +322,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_b2bd3336-8149-42d0-bf15-87507eeecb8b\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"PASSED\",\n      \"y\":3436444\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3998\n    },{\n      \"name\":\"SKIPPED\",\n      \"y\":36965\n    },{\n      \"name\":\"FIXED\",\n      \"y\":3913\n    },{\n      \"name\":\"REGRESSION\",\n      \"y\":1473\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_b2bd3336-8149-42d0-bf15-87507eeecb8b\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_68ecb80e-25b5-4bdc-aa87-3042a9eeda84\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"PASSED\",\n      \"y\":67733\n    },{\n      \"name\":\"SKIPPED\",\n      \"y\":672\n    },{\n      \"name\":\"FIXED\",\n      \"y\":4\n    },{\n      \"name\":\"REGRESSION\",\n      \"y\":4\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_68ecb80e-25b5-4bdc-aa87-3042a9eeda84\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 12:33:07 PM",
-      "dateStarted": "Sep 10, 2016 12:33:14 PM",
-      "dateFinished": "Sep 10, 2016 12:33:17 PM",
+      "dateStarted": "Sep 11, 2016 11:42:40 AM",
+      "dateFinished": "Sep 11, 2016 11:42:46 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "TestCase Execution Status Demographics",
-      "text": "highcharts(\n    testcaseDF.series(\n        \"name\" -\u003e \"testCaseStatus\", \n        \"y\" -\u003e count(\"testCaseStatus\"))\n    ).chart(Chart.pie).plot",
-      "dateUpdated": "Sep 10, 2016 1:23:05 PM",
+      "text": "highcharts(\n    apacheTestcaseDF.series(\n        \"name\" -\u003e \"testCaseStatus\", \n        \"y\" -\u003e count(\"testCaseStatus\"))\n    ).chart(Chart.pie).plot",
+      "dateUpdated": "Sep 11, 2016 11:43:01 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -173,18 +358,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_d238a862-37d0-4053-9b97-1e3f8b44b0b6\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"PASSED\",\n      \"y\":3436444\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3998\n    },{\n      \"name\":\"SKIPPED\",\n      \"y\":36965\n    },{\n      \"name\":\"FIXED\",\n      \"y\":3913\n    },{\n      \"name\":\"REGRESSION\",\n      \"y\":1473\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"pie\"\n  }\n}\n\n$(\"#highcharts_d238a862-37d0-4053-9b97-1e3f8b44b0b6\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_2b22b98b-bb63-48ae-abf8-2c7566ae8a4e\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"PASSED\",\n      \"y\":67733\n    },{\n      \"name\":\"SKIPPED\",\n      \"y\":672\n    },{\n      \"name\":\"FIXED\",\n      \"y\":4\n    },{\n      \"name\":\"REGRESSION\",\n      \"y\":4\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"pie\"\n  }\n}\n\n$(\"#highcharts_2b22b98b-bb63-48ae-abf8-2c7566ae8a4e\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 12:20:28 PM",
-      "dateStarted": "Sep 10, 2016 12:30:41 PM",
-      "dateFinished": "Sep 10, 2016 12:30:45 PM",
+      "dateStarted": "Sep 11, 2016 11:43:01 AM",
+      "dateFinished": "Sep 11, 2016 11:43:03 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Top Failing TestCases",
-      "text": "highcharts(testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\").series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e max($\"duration\")).\n    orderBy(max($\"duration\").desc).\n    take(15)).\n    chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:22:37 PM",
+      "text": "highcharts(apacheTestcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\").series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e max($\"duration\")).\n    orderBy(max($\"duration\").desc).\n    take(15)).\n    chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:43:09 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -209,18 +394,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_c57e3fe6-9f90-4d3e-a70e-ae4f7d65c2ff\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testMessageConcurrencyAfterConsumption\",\n      \"y\":940.245\n    },{\n      \"name\":\"testBlockInvalidationWhenRBWReplicaMissedInDN\",\n      \"y\":600.053\n    },{\n      \"name\":\"testLargeCount\",\n      \"y\":530.365\n    },{\n      \"name\":\"testConflictResolution\",\n      \"y\":492.593\n    },{\n      \"name\":\"testPromptnessOfExecution\",\n      \"y\":482.357\n    },{\n      \"name\":\"testReserveFileIdValuesOnBackup\",\n      \"y\":421.838\n    },{\n      \"name\":\"testFilePersistenceXAStream[storeType\u003dDATABASE]\",\n      \"y\":403.566\n    },{\n      \"name\":\"testCompressedStream\",\n      \"y\":389.885\n    },{\n      \"name\":\"testBffp\",\n      \"y\":386.023\n    },{\n      \"name\":\"testFilePersistenceXAStreamRestart[storeType\u003dDATABASE]\",\n      \"y\":362.653\n    },{\n      \"name\":\"testCompactionMany\",\n      \"y\":351.926\n    },{\n      \"name\":\"testThrottling\",\n      \"y\":310.519\n    },{\n      \"name\":\"testOnlineSnapshotDeleteIndependent\",\n      \"y\":302.011\n    },{\n      \"name\":\"testOfflineSnapshotDeleteIndependent\",\n      \"y\":301.633\n    },{\n      \"name\":\"testBalancerWithKeytabs\",\n      \"y\":300.524\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_c57e3fe6-9f90-4d3e-a70e-ae4f7d65c2ff\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_a28a6b1c-8ccb-453d-8ee5-06e8c2483491\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testGetConfigGroupAsClusterOperator\",\n      \"y\":7.19\n    },{\n      \"name\":\"testGetConfigGroupAsServiceAdministrator\",\n      \"y\":0.46\n    },{\n      \"name\":\"testGetConfigGroupAsServiceOperator\",\n      \"y\":0.332\n    },{\n      \"name\":\"testGetConfigGroupAsClusterUser\",\n      \"y\":0.231\n    },{\n      \"name\":\"testUpgrade[2]\",\n      \"y\":0\n    },{\n      \"name\":\"testServiceComponentHostUpdateStackIdError\",\n      \"y\":0\n    },{\n      \"name\":\"testUpgrade[5]\",\n      \"y\":0\n    },{\n      \"name\":\"testUpgrade[1]\",\n      \"y\":0\n    },{\n      \"name\":\"testCreateUserDefaultParams\",\n      \"y\":0\n    },{\n      \"name\":\"org.apache.ambari.server.cleanup.CleanupServiceFunctionalTest\",\n      \"y\":0\n    },{\n      \"name\":\"testWorkerLevelAggregatedMapMetricMetricSubmission\",\n      \"y\":0\n    },{\n      \"name\":\"testUpgrade[6]\",\n      \"y\":0\n    },{\n      \"name\":\"testMapMetricMetricSubmission\",\n      \"y\":0\n    },{\n      \"name\":\"testUpdateClusterVersionCombinations\",\n      \"y\":0\n    },{\n      \"name\":\"testDoFilter\",\n      \"y\":0\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_a28a6b1c-8ccb-453d-8ee5-06e8c2483491\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
-      "dateCreated": "Sep 10, 2016 1:21:00 PM",
-      "dateStarted": "Sep 10, 2016 1:22:09 PM",
-      "dateFinished": "Sep 10, 2016 1:22:12 PM",
+      "dateCreated": "Sep 10, 2016 1:21:00 AM",
+      "dateStarted": "Sep 11, 2016 11:43:09 AM",
+      "dateFinished": "Sep 11, 2016 11:43:18 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Top Passing TestCases",
-      "text": "highcharts(testcaseDF.filter($\"testCaseStatus\" \u003d\u003d\u003d \"PASSED\").series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e max($\"duration\")).\n    orderBy(max($\"duration\").desc).\n    take(15)).\n    chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:27:34 PM",
+      "text": "highcharts(apacheTestcaseDF.filter($\"testCaseStatus\" \u003d\u003d\u003d \"PASSED\").series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e max($\"duration\")).\n    orderBy(max($\"duration\").desc).\n    take(15)).\n    chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:43:31 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -245,52 +430,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_2c37ca1f-1b7f-4280-835e-9e3a51bf6545\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testFormat\",\n      \"y\":875.217\n    },{\n      \"name\":\"testNetworkServerSecurityMechanism\",\n      \"y\":872.226\n    },{\n      \"name\":\"testUpdateMapIncr\",\n      \"y\":741.993\n    },{\n      \"name\":\"testConcurrentProduceCreateAndDelete\",\n      \"y\":590.991\n    },{\n      \"name\":\"testReceiveMultipleMessages[storeType\u003dDATABASE]\",\n      \"y\":588.244\n    },{\n      \"name\":\"testLargeSort\",\n      \"y\":584.418\n    },{\n      \"name\":\"testWALfencingWithWALRolling\",\n      \"y\":569.945\n    },{\n      \"name\":\"testDurableSubscriptionRemovalRaceCondition\",\n      \"y\":563.088\n    },{\n      \"name\":\"testReplication_Local_1_Indexing\",\n      \"y\":559.217\n    },{\n      \"name\":\"testLargeCount\",\n      \"y\":553.077\n    },{\n      \"name\":\"testConflictResolution\",\n      \"y\":539.591\n    },{\n      \"name\":\"testAllOpsWithFailover\",\n      \"y\":527.691\n    },{\n      \"name\":\"testCompressedStream\",\n      \"y\":502.127\n    },{\n      \"name\":\"testAuthorizationOfDefaultServlets\",\n      \"y\":495.819\n    },{\n      \"name\":\"testPromptnessOfExecution\",\n      \"y\":482.147\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_2c37ca1f-1b7f-4280-835e-9e3a51bf6545\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_ef2f215b-d94c-4765-8d61-23b38fda3e44\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testDeadlockWhileRestartingComponents\",\n      \"y\":98.787\n    },{\n      \"name\":\"testDeadlockWhileMappingHostsWithExistingServices\",\n      \"y\":41.069\n    },{\n      \"name\":\"testAMSPropertyProviderAsServiceAdministrator\",\n      \"y\":38.713\n    },{\n      \"name\":\"testConcurrentWriteDeadlock\",\n      \"y\":31.82\n    },{\n      \"name\":\"testDeadlockWhileUnmappingHosts\",\n      \"y\":31.443\n    },{\n      \"name\":\"testDeadlockWhileMappingHosts\",\n      \"y\":27.769\n    },{\n      \"name\":\"testRun\",\n      \"y\":23.438\n    },{\n      \"name\":\"testAddingHostComponentsWhileReading\",\n      \"y\":22.478\n    },{\n      \"name\":\"testDeadlockWithConfigsUpdate\",\n      \"y\":22.157\n    },{\n      \"name\":\"testDeadlockBetweenImplementations\",\n      \"y\":21.284\n    },{\n      \"name\":\"testMultiThreaded\",\n      \"y\":21.076\n    },{\n      \"name\":\"testCreateResourcesWithAutoSkipManualVerification\",\n      \"y\":20.892\n    },{\n      \"name\":\"testCreateResourcesWithAutoSkipFailures\",\n      \"y\":20.815\n    },{\n      \"name\":\"testGet1000TasksFromOracleDB\",\n      \"y\":20.732\n    },{\n      \"name\":\"testCreateIntraStackUpgrade\",\n      \"y\":20.713\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_ef2f215b-d94c-4765-8d61-23b38fda3e44\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
-      "dateCreated": "Sep 10, 2016 1:27:04 PM",
-      "dateStarted": "Sep 10, 2016 1:27:34 PM",
-      "dateFinished": "Sep 10, 2016 1:27:44 PM",
-      "status": "FINISHED",
-      "progressUpdateIntervalMs": 500
-    },
-    {
-      "text": "testcaseDF.groupBy(\"className\", \"testCaseName\").agg(max($\"duration\").alias(\"max\")).orderBy($\"max\".desc).show",
-      "dateUpdated": "Sep 10, 2016 12:46:46 PM",
-      "config": {
-        "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala"
-      },
-      "settings": {
-        "params": {},
-        "forms": {}
-      },
-      "jobName": "paragraph_1473511523479_-226301225",
-      "id": "20160910-124523_2041842992",
-      "result": {
-        "code": "SUCCESS",
-        "type": "TEXT",
-        "msg": "+--------------------+--------------------+-------+\n|           className|        testCaseName|    max|\n+--------------------+--------------------+-------+\n|org.apache.active...|testMessageConcur...|940.245|\n|org.apache.hadoop...|          testFormat|875.217|\n|org.apache.derbyT...|testNetworkServer...|872.226|\n|org.apache.hadoop...|   testUpdateMapIncr|741.993|\n|org.apache.hadoop...|testBlockInvalida...|600.053|\n|org.apache.active...|testConcurrentPro...|590.991|\n|org.apache.active...|testReceiveMultip...|588.244|\n|org.apache.hadoop...|       testLargeSort|584.418|\n|org.apache.hadoop...|testWALfencingWit...|569.945|\n|org.apache.active...|testDurableSubscr...|563.088|\n|org.apache.derbyT...|testReplication_L...|559.217|\n|org.apache.cassan...|      testLargeCount|553.077|\n|org.apache.cassan...|testConflictResol...|539.591|\n|com.gemstone.gemf...|testAllOpsWithFai...|527.691|\n|org.apache.cassan...|testCompressedStream|502.127|\n|org.apache.hadoop...|testAuthorization...|495.819|\n|org.apache.cassan...|testPromptnessOfE...|482.357|\n|com.gemstone.gemf...|testAllOpsWithFai...|469.792|\n|org.apache.cassan...|  testCompactionMany|453.952|\n|org.apache.hadoop...|  perfZKRMStateStore|453.888|\n+--------------------+--------------------+-------+\nonly showing top 20 rows\n\n"
-      },
-      "dateCreated": "Sep 10, 2016 12:45:23 PM",
-      "dateStarted": "Sep 10, 2016 12:46:47 PM",
-      "dateFinished": "Sep 10, 2016 12:47:04 PM",
+      "dateCreated": "Sep 10, 2016 1:27:04 AM",
+      "dateStarted": "Sep 11, 2016 11:43:32 AM",
+      "dateFinished": "Sep 11, 2016 11:43:34 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Max Individual Execution Duration TestCases ",
-      "text": "highcharts(testcaseDF.series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e max($\"duration\")).\n    orderBy(max($\"duration\").desc).\n    take(15)).\n    chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:25:07 PM",
+      "text": "highcharts(apacheTestcaseDF.series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e max($\"duration\")).\n    orderBy(max($\"duration\").desc).\n    take(15)).\n    chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:44:06 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -315,18 +466,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_1348c538-f858-4fef-9fe0-84417c81c090\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testMessageConcurrencyAfterConsumption\",\n      \"y\":940.245\n    },{\n      \"name\":\"testFormat\",\n      \"y\":875.217\n    },{\n      \"name\":\"testNetworkServerSecurityMechanism\",\n      \"y\":872.226\n    },{\n      \"name\":\"testUpdateMapIncr\",\n      \"y\":741.993\n    },{\n      \"name\":\"testBlockInvalidationWhenRBWReplicaMissedInDN\",\n      \"y\":600.053\n    },{\n      \"name\":\"testConcurrentProduceCreateAndDelete\",\n      \"y\":590.991\n    },{\n      \"name\":\"testReceiveMultipleMessages[storeType\u003dDATABASE]\",\n      \"y\":588.244\n    },{\n      \"name\":\"testLargeSort\",\n      \"y\":584.418\n    },{\n      \"name\":\"testWALfencingWithWALRolling\",\n      \"y\":569.945\n    },{\n      \"name\":\"testDurableSubscriptionRemovalRaceCondition\",\n      \"y\":563.088\n    },{\n      \"name\":\"testReplication_Local_1_Indexing\",\n      \"y\":559.217\n    },{\n      \"name\":\"testLargeCount\",\n      \"y\":553.077\n    },{\n      \"name\":\"testConflictResolution\",\n      \"y\":539.591\n    },{\n      \"name\":\"testAllOpsWithFailover\",\n      \"y\":527.691\n    },{\n      \"name\":\"testCompressedStream\",\n      \"y\":502.127\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_1348c538-f858-4fef-9fe0-84417c81c090\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_ff87a3c9-3a33-4133-806d-ce0c5711fc7d\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testDeadlockWhileRestartingComponents\",\n      \"y\":98.787\n    },{\n      \"name\":\"testDeadlockWhileMappingHostsWithExistingServices\",\n      \"y\":41.069\n    },{\n      \"name\":\"testAMSPropertyProviderAsServiceAdministrator\",\n      \"y\":38.713\n    },{\n      \"name\":\"testConcurrentWriteDeadlock\",\n      \"y\":31.82\n    },{\n      \"name\":\"testDeadlockWhileUnmappingHosts\",\n      \"y\":31.443\n    },{\n      \"name\":\"testDeadlockWhileMappingHosts\",\n      \"y\":27.769\n    },{\n      \"name\":\"testRun\",\n      \"y\":23.438\n    },{\n      \"name\":\"testAddingHostComponentsWhileReading\",\n      \"y\":22.478\n    },{\n      \"name\":\"testDeadlockWithConfigsUpdate\",\n      \"y\":22.157\n    },{\n      \"name\":\"testDeadlockBetweenImplementations\",\n      \"y\":21.284\n    },{\n      \"name\":\"testMultiThreaded\",\n      \"y\":21.076\n    },{\n      \"name\":\"testCreateResourcesWithAutoSkipManualVerification\",\n      \"y\":20.892\n    },{\n      \"name\":\"testCreateResourcesWithAutoSkipFailures\",\n      \"y\":20.815\n    },{\n      \"name\":\"testGet1000TasksFromOracleDB\",\n      \"y\":20.732\n    },{\n      \"name\":\"testCreateIntraStackUpgrade\",\n      \"y\":20.713\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_ff87a3c9-3a33-4133-806d-ce0c5711fc7d\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 12:52:00 PM",
-      "dateStarted": "Sep 10, 2016 12:58:11 PM",
-      "dateFinished": "Sep 10, 2016 12:58:23 PM",
+      "dateStarted": "Sep 11, 2016 11:44:06 AM",
+      "dateFinished": "Sep 11, 2016 11:44:09 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Max Sum Execution Duration TestCases ",
-      "text": "highcharts(testcaseDF.series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e sum($\"duration\")/60).\n    orderBy(sum($\"duration\").desc).\n    take(50)).\n    chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:25:33 PM",
+      "text": "highcharts(apacheTestcaseDF.series(\n    \"name\" -\u003e \"testCaseName\",\n    \"y\" -\u003e sum($\"duration\")/60).\n    orderBy(sum($\"duration\").desc).\n    take(50)).\n    chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:44:30 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -351,18 +502,53 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_66971fe0-4dac-4a40-95c3-16c9f9b45397\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testit\",\n      \"y\":309.0449833333339\n    },{\n      \"name\":\"testOrdering\",\n      \"y\":297.2885666666667\n    },{\n      \"name\":\"testConflictResolution\",\n      \"y\":273.0896333333333\n    },{\n      \"name\":\"testBffp\",\n      \"y\":270.8498166666667\n    },{\n      \"name\":\"testCompressedStream\",\n      \"y\":252.35018333333335\n    },{\n      \"name\":\"testAll\",\n      \"y\":216.2733666666666\n    },{\n      \"name\":\"testPromptnessOfExecution\",\n      \"y\":215.81610000000006\n    },{\n      \"name\":\"testMultipleReducers\",\n      \"y\":202.07818333333327\n    },{\n      \"name\":\"testCompactionMany\",\n      \"y\":200.58031666666665\n    },{\n      \"name\":\"testNamenodeRestart\",\n      \"y\":197.23718333333343\n    },{\n      \"name\":\"testLazyOutput\",\n      \"y\":191.21689999999998\n    },{\n      \"name\":\"testReadsAllowedDuringCheckpoint\",\n      \"y\":188.1602166666666\n    },{\n      \"name\":\"testNetworkServerSecurityMechanism\",\n      \"y\":185.63946666666672\n    },{\n      \"name\":\"testThrottling\",\n      \"y\":181.04205000000007\n    },{\n      \"name\":\"testLargeCount\",\n      \"y\":176.40391666666667\n    },{\n      \"name\":\"testRandomized\",\n      \"y\":174.47593333333327\n    },{\n      \"name\":\"testWithMapReduceMultiRegion\",\n      \"y\":164.28688333333338\n    },{\n      \"name\":\"testConcurrency\",\n      \"y\":155.42033333333333\n    },{\n      \"name\":\"testScanEmptyToEmpty\",\n      \"y\":142.9580166666668\n    },{\n      \"name\":\"testMRIncrementalLoadWithSplit\",\n      \"y\":142.52020000000002\n    },{\n      \"name\":\"testFormat\",\n      \"y\":141.11168333333333\n    },{\n      \"name\":\"testLargeSort\",\n      \"y\":141.08641666666668\n    },{\n      \"name\":\"testAllTypes\",\n      \"y\":140.4579666666667\n    },{\n      \"name\":\"testAllTypes-compression\",\n      \"y\":138.16105000000002\n    },{\n      \"name\":\"testReadWriteOps\",\n      \"y\":134.36380000000003\n    },{\n      \"name\":\"testExcludeMinorCompaction\",\n      \"y\":132.31629999999998\n    },{\n      \"name\":\"testWithMapReduceAndOfflineHBaseMultiRegion\",\n      \"y\":129.77808333333334\n    },{\n      \"name\":\"testMRIncrementalLoad\",\n      \"y\":128.89059999999998\n    },{\n      \"name\":\"testGetColumnsModify\",\n      \"y\":128.40118333333314\n    },{\n      \"name\":\"testUpdateMapIncr\",\n      \"y\":126.45221666666664\n    },{\n      \"name\":\"testNewCluster\",\n      \"y\":125.15586666666668\n    },{\n      \"name\":\"testRollback\",\n      \"y\":124.93648333333333\n    },{\n      \"name\":\"test\",\n      \"y\":116.40441666666676\n    },{\n      \"name\":\"testSnapshot\",\n      \"y\":115.09156666666658\n    },{\n      \"name\":\"testWithMapReduceSingleRegion\",\n      \"y\":113.93406666666664\n    },{\n      \"name\":\"testResponseCode\",\n      \"y\":112.52411666666664\n    },{\n      \"name\":\"testDiscardedRun\",\n      \"y\":111.32809999999998\n    },{\n      \"name\":\"testDurableSubscriptionRemovalRaceCondition\",\n      \"y\":111.23469999999999\n    },{\n      \"name\":\"testRecoverAfterDoubleFailures\",\n      \"y\":109.5173666666667\n    },{\n      \"name\":\"runCorruptionTest\",\n      \"y\":106.50335000000003\n    },{\n      \"name\":\"testWriteReadCycle\",\n      \"y\":105.46468333333335\n    },{\n      \"name\":\"testGzipLongOverflow\",\n      \"y\":104.49348333333329\n    },{\n      \"name\":\"testParallelLeveledCompaction\",\n      \"y\":102.58193333333331\n    },{\n      \"name\":\"testMajorLeveledCompactionWriter\",\n      \"y\":102.26373333333338\n    },{\n      \"name\":\"testGetAndRollSecrets\",\n      \"y\":100.52711666666669\n    },{\n      \"name\":\"testMultipleMapsPerNode\",\n      \"y\":100.06515000000005\n    },{\n      \"name\":\"testEndToEnd\",\n      \"y\":99.79468333333332\n    },{\n      \"name\":\"testMultiRegionTable\",\n      \"y\":99.60543333333331\n    },{\n      \"name\":\"testMROnTable\",\n      \"y\":99.40404999999996\n    },{\n      \"name\":\"testMajorLeveledCompactionWriter-compression\",\n      \"y\":99.15551666666668\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_66971fe0-4dac-4a40-95c3-16c9f9b45397\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_48e6f1a2-92d8-44bd-9a65-adadfb72c3b2\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testServiceState_STARTED\",\n      \"y\":20.851399999999995\n    },{\n      \"name\":\"testDeadlockWhileRestartingComponents\",\n      \"y\":17.5977\n    },{\n      \"name\":\"testFindAll\",\n      \"y\":12.790566666666665\n    },{\n      \"name\":\"testServiceState_STOPPED\",\n      \"y\":11.7832\n    },{\n      \"name\":\"testExecuteDMLUpdates\",\n      \"y\":11.494433333333323\n    },{\n      \"name\":\"testGetResources\",\n      \"y\":9.335049999999995\n    },{\n      \"name\":\"testAMSPropertyProviderAsServiceAdministrator\",\n      \"y\":8.75455\n    },{\n      \"name\":\"testDeadlockWhileMappingHostsWithExistingServices\",\n      \"y\":7.886083333333334\n    },{\n      \"name\":\"testConcurrentWriteDeadlock\",\n      \"y\":6.977999999999999\n    },{\n      \"name\":\"testExecuteDDLUpdates\",\n      \"y\":6.875233333333337\n    },{\n      \"name\":\"testFindByCluster\",\n      \"y\":6.464616666666668\n    },{\n      \"name\":\"testCreate\",\n      \"y\":6.207466666666664\n    },{\n      \"name\":\"testRun\",\n      \"y\":5.4064\n    },{\n      \"name\":\"testCreateRequestSchedule\",\n      \"y\":5.273866666666666\n    },{\n      \"name\":\"testDeadlockWhileMappingHosts\",\n      \"y\":4.66395\n    },{\n      \"name\":\"testCreateIntraStackUpgrade\",\n      \"y\":4.6254333333333335\n    },{\n      \"name\":\"testMerge\",\n      \"y\":4.508533333333334\n    },{\n      \"name\":\"testCreateResourcesAsAdministrator\",\n      \"y\":4.243783333333331\n    },{\n      \"name\":\"testDeadlockWhileUnmappingHosts\",\n      \"y\":4.064366666666667\n    },{\n      \"name\":\"testGetAndSetConfigs\",\n      \"y\":3.8738333333333332\n    },{\n      \"name\":\"testMultiThreaded\",\n      \"y\":3.8587333333333333\n    },{\n      \"name\":\"testFindByStackAndVersion\",\n      \"y\":3.8538333333333328\n    },{\n      \"name\":\"test220Cardinality\",\n      \"y\":3.8369166666666663\n    },{\n      \"name\":\"testConcurrentServiceConfigVersions\",\n      \"y\":3.7667999999999995\n    },{\n      \"name\":\"testGetUpgradeSummary\",\n      \"y\":3.581766666666667\n    },{\n      \"name\":\"test\",\n      \"y\":3.57235\n    },{\n      \"name\":\"testDeadlockBetweenImplementations\",\n      \"y\":3.5459166666666677\n    },{\n      \"name\":\"testSaveMetricsMetadata\",\n      \"y\":3.534566666666666\n    },{\n      \"name\":\"testRebalanceHdfsCustomCommand\",\n      \"y\":3.5120000000000005\n    },{\n      \"name\":\"testConfigurationDefinitionsExist\",\n      \"y\":3.4701000000000004\n    },{\n      \"name\":\"testFindByName\",\n      \"y\":3.417083333333333\n    },{\n      \"name\":\"testInitialAlertEvent\",\n      \"y\":3.39645\n    },{\n      \"name\":\"testValidateOrder\",\n      \"y\":3.3739500000000002\n    },{\n      \"name\":\"testCRUD\",\n      \"y\":3.3466666666666662\n    },{\n      \"name\":\"testUpgradeStack\",\n      \"y\":3.302966666666667\n    },{\n      \"name\":\"testDesiredConfigurationsAfterApplyingLatestForStackInOtherThreads\",\n      \"y\":3.2951166666666665\n    },{\n      \"name\":\"testAddServerActionCommand_userName\",\n      \"y\":3.2672666666666674\n    },{\n      \"name\":\"testService\",\n      \"y\":3.239649999999997\n    },{\n      \"name\":\"testStagePredicate\",\n      \"y\":3.238133333333333\n    },{\n      \"name\":\"testPersist\",\n      \"y\":3.202233333333332\n    },{\n      \"name\":\"testAuthenticate\",\n      \"y\":3.1747000000000005\n    },{\n      \"name\":\"testGetStagesInProgressWithManyCommands\",\n      \"y\":3.148133333333334\n    },{\n      \"name\":\"testConvertToResponse\",\n      \"y\":3.148116666666667\n    },{\n      \"name\":\"testFindByPK\",\n      \"y\":3.1447500000000006\n    },{\n      \"name\":\"testMatchingVersions\",\n      \"y\":3.1133499999999996\n    },{\n      \"name\":\"testNormal\",\n      \"y\":3.05985\n    },{\n      \"name\":\"testCreateResources\",\n      \"y\":3.0476166666666673\n    },{\n      \"name\":\"testCreateNewConfigGroup\",\n      \"y\":3.0248999999999997\n    },{\n      \"name\":\"testAlertNoticeCreationFromEvent\",\n      \"y\":3.0059333333333336\n    },{\n      \"name\":\"testAndFindAll\",\n      \"y\":2.983683333333333\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_48e6f1a2-92d8-44bd-9a65-adadfb72c3b2\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 12:58:42 PM",
-      "dateStarted": "Sep 10, 2016 1:01:17 PM",
-      "dateFinished": "Sep 10, 2016 1:01:22 PM",
+      "dateStarted": "Sep 11, 2016 11:44:30 AM",
+      "dateFinished": "Sep 11, 2016 11:44:33 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "apacheTestcaseDF.groupBy(\"className\", \"testCaseName\").agg(max($\"duration\").alias(\"max\")).orderBy($\"max\".desc).show",
+      "dateUpdated": "Sep 11, 2016 11:43:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473511523479_-226301225",
+      "id": "20160910-124523_2041842992",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+--------------------+-------+\n|           className|        testCaseName|    max|\n+--------------------+--------------------+-------+\n|org.apache.active...|testMessageConcur...|940.245|\n|org.apache.hadoop...|          testFormat|875.217|\n|org.apache.derbyT...|testNetworkServer...|872.226|\n|org.apache.hadoop...|   testUpdateMapIncr|741.993|\n|org.apache.hadoop...|testBlockInvalida...|600.053|\n|org.apache.active...|testConcurrentPro...|590.991|\n|org.apache.active...|testReceiveMultip...|588.244|\n|org.apache.hadoop...|       testLargeSort|584.418|\n|org.apache.hadoop...|testWALfencingWit...|569.945|\n|org.apache.active...|testDurableSubscr...|563.088|\n|org.apache.derbyT...|testReplication_L...|559.217|\n|org.apache.cassan...|      testLargeCount|553.077|\n|org.apache.cassan...|testConflictResol...|539.591|\n|com.gemstone.gemf...|testAllOpsWithFai...|527.691|\n|org.apache.cassan...|testCompressedStream|502.127|\n|org.apache.hadoop...|testAuthorization...|495.819|\n|org.apache.cassan...|testPromptnessOfE...|482.357|\n|com.gemstone.gemf...|testAllOpsWithFai...|469.792|\n|org.apache.cassan...|  testCompactionMany|453.952|\n|org.apache.hadoop...|  perfZKRMStateStore|453.888|\n+--------------------+--------------------+-------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 10, 2016 12:45:23 PM",
+      "dateStarted": "Sep 10, 2016 12:46:47 PM",
+      "dateFinished": "Sep 10, 2016 12:47:04 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Max Sum Execution Duration TestCases Histogram",
-      "text": "highcharts(testcaseDF.series(\n        \"name\" -\u003e \"testCaseName\",\n        \"y\" -\u003e sum($\"duration\")/60).\n    orderBy(sum($\"duration\").desc).\n    take(50)).\n    plotOptions(PlotOptions.column.groupPadding(0).pointPadding(0).borderWidth(0)).\n    chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:25:41 PM",
+      "text": "highcharts(apacheTestcaseDF.series(\n        \"name\" -\u003e \"testCaseName\",\n        \"y\" -\u003e sum($\"duration\")/60).\n    orderBy(sum($\"duration\").desc).\n    take(50)).\n    plotOptions(PlotOptions.column.groupPadding(0).pointPadding(0).borderWidth(0)).\n    chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:44:51 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -387,18 +573,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_f610d56e-b2d3-4ae1-805f-0442c7e4936a\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testit\",\n      \"y\":309.0449833333339\n    },{\n      \"name\":\"testOrdering\",\n      \"y\":297.2885666666667\n    },{\n      \"name\":\"testConflictResolution\",\n      \"y\":273.0896333333333\n    },{\n      \"name\":\"testBffp\",\n      \"y\":270.8498166666667\n    },{\n      \"name\":\"testCompressedStream\",\n      \"y\":252.35018333333335\n    },{\n      \"name\":\"testAll\",\n      \"y\":216.2733666666666\n    },{\n      \"name\":\"testPromptnessOfExecution\",\n      \"y\":215.81610000000006\n    },{\n      \"name\":\"testMultipleReducers\",\n      \"y\":202.07818333333327\n    },{\n      \"name\":\"testCompactionMany\",\n      \"y\":200.58031666666665\n    },{\n      \"name\":\"testNamenodeRestart\",\n      \"y\":197.23718333333343\n    },{\n      \"name\":\"testLazyOutput\",\n      \"y\":191.21689999999998\n    },{\n      \"name\":\"testReadsAllowedDuringCheckpoint\",\n      \"y\":188.1602166666666\n    },{\n      \"name\":\"testNetworkServerSecurityMechanism\",\n      \"y\":185.63946666666672\n    },{\n      \"name\":\"testThrottling\",\n      \"y\":181.04205000000007\n    },{\n      \"name\":\"testLargeCount\",\n      \"y\":176.40391666666667\n    },{\n      \"name\":\"testRandomized\",\n      \"y\":174.47593333333327\n    },{\n      \"name\":\"testWithMapReduceMultiRegion\",\n      \"y\":164.28688333333338\n    },{\n      \"name\":\"testConcurrency\",\n      \"y\":155.42033333333333\n    },{\n      \"name\":\"testScanEmptyToEmpty\",\n      \"y\":142.9580166666668\n    },{\n      \"name\":\"testMRIncrementalLoadWithSplit\",\n      \"y\":142.52020000000002\n    },{\n      \"name\":\"testFormat\",\n      \"y\":141.11168333333333\n    },{\n      \"name\":\"testLargeSort\",\n      \"y\":141.08641666666668\n    },{\n      \"name\":\"testAllTypes\",\n      \"y\":140.4579666666667\n    },{\n      \"name\":\"testAllTypes-compression\",\n      \"y\":138.16105000000002\n    },{\n      \"name\":\"testReadWriteOps\",\n      \"y\":134.36380000000003\n    },{\n      \"name\":\"testExcludeMinorCompaction\",\n      \"y\":132.31629999999998\n    },{\n      \"name\":\"testWithMapReduceAndOfflineHBaseMultiRegion\",\n      \"y\":129.77808333333334\n    },{\n      \"name\":\"testMRIncrementalLoad\",\n      \"y\":128.89059999999998\n    },{\n      \"name\":\"testGetColumnsModify\",\n      \"y\":128.40118333333314\n    },{\n      \"name\":\"testUpdateMapIncr\",\n      \"y\":126.45221666666664\n    },{\n      \"name\":\"testNewCluster\",\n      \"y\":125.15586666666668\n    },{\n      \"name\":\"testRollback\",\n      \"y\":124.93648333333333\n    },{\n      \"name\":\"test\",\n      \"y\":116.40441666666676\n    },{\n      \"name\":\"testSnapshot\",\n      \"y\":115.09156666666658\n    },{\n      \"name\":\"testWithMapReduceSingleRegion\",\n      \"y\":113.93406666666664\n    },{\n      \"name\":\"testResponseCode\",\n      \"y\":112.52411666666664\n    },{\n      \"name\":\"testDiscardedRun\",\n      \"y\":111.32809999999998\n    },{\n      \"name\":\"testDurableSubscriptionRemovalRaceCondition\",\n      \"y\":111.23469999999999\n    },{\n      \"name\":\"testRecoverAfterDoubleFailures\",\n      \"y\":109.5173666666667\n    },{\n      \"name\":\"runCorruptionTest\",\n      \"y\":106.50335000000003\n    },{\n      \"name\":\"testWriteReadCycle\",\n      \"y\":105.46468333333335\n    },{\n      \"name\":\"testGzipLongOverflow\",\n      \"y\":104.49348333333329\n    },{\n      \"name\":\"testParallelLeveledCompaction\",\n      \"y\":102.58193333333331\n    },{\n      \"name\":\"testMajorLeveledCompactionWriter\",\n      \"y\":102.26373333333338\n    },{\n      \"name\":\"testGetAndRollSecrets\",\n      \"y\":100.52711666666669\n    },{\n      \"name\":\"testMultipleMapsPerNode\",\n      \"y\":100.06515000000005\n    },{\n      \"name\":\"testEndToEnd\",\n      \"y\":99.79468333333332\n    },{\n      \"name\":\"testMultiRegionTable\",\n      \"y\":99.60543333333331\n    },{\n      \"name\":\"testMROnTable\",\n      \"y\":99.40404999999996\n    },{\n      \"name\":\"testMajorLeveledCompactionWriter-compression\",\n      \"y\":99.15551666666668\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  },\n  \"plotOptions\":{\n    \"column\":{\n      \"groupPadding\":0,\n      \"pointPadding\":0,\n      \"borderWidth\":0\n    }\n  }\n}\n\n$(\"#highcharts_f610d56e-b2d3-4ae1-805f-0442c7e4936a\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_b200391a-ec6d-4a3f-a2fa-36bc9a9f9314\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"testServiceState_STARTED\",\n      \"y\":20.851399999999995\n    },{\n      \"name\":\"testDeadlockWhileRestartingComponents\",\n      \"y\":17.5977\n    },{\n      \"name\":\"testFindAll\",\n      \"y\":12.790566666666665\n    },{\n      \"name\":\"testServiceState_STOPPED\",\n      \"y\":11.7832\n    },{\n      \"name\":\"testExecuteDMLUpdates\",\n      \"y\":11.494433333333323\n    },{\n      \"name\":\"testGetResources\",\n      \"y\":9.335049999999995\n    },{\n      \"name\":\"testAMSPropertyProviderAsServiceAdministrator\",\n      \"y\":8.75455\n    },{\n      \"name\":\"testDeadlockWhileMappingHostsWithExistingServices\",\n      \"y\":7.886083333333334\n    },{\n      \"name\":\"testConcurrentWriteDeadlock\",\n      \"y\":6.977999999999999\n    },{\n      \"name\":\"testExecuteDDLUpdates\",\n      \"y\":6.875233333333337\n    },{\n      \"name\":\"testFindByCluster\",\n      \"y\":6.464616666666668\n    },{\n      \"name\":\"testCreate\",\n      \"y\":6.207466666666664\n    },{\n      \"name\":\"testRun\",\n      \"y\":5.4064\n    },{\n      \"name\":\"testCreateRequestSchedule\",\n      \"y\":5.273866666666666\n    },{\n      \"name\":\"testDeadlockWhileMappingHosts\",\n      \"y\":4.66395\n    },{\n      \"name\":\"testCreateIntraStackUpgrade\",\n      \"y\":4.6254333333333335\n    },{\n      \"name\":\"testMerge\",\n      \"y\":4.508533333333334\n    },{\n      \"name\":\"testCreateResourcesAsAdministrator\",\n      \"y\":4.243783333333331\n    },{\n      \"name\":\"testDeadlockWhileUnmappingHosts\",\n      \"y\":4.064366666666667\n    },{\n      \"name\":\"testGetAndSetConfigs\",\n      \"y\":3.8738333333333332\n    },{\n      \"name\":\"testMultiThreaded\",\n      \"y\":3.8587333333333333\n    },{\n      \"name\":\"testFindByStackAndVersion\",\n      \"y\":3.8538333333333328\n    },{\n      \"name\":\"test220Cardinality\",\n      \"y\":3.8369166666666663\n    },{\n      \"name\":\"testConcurrentServiceConfigVersions\",\n      \"y\":3.7667999999999995\n    },{\n      \"name\":\"testGetUpgradeSummary\",\n      \"y\":3.581766666666667\n    },{\n      \"name\":\"test\",\n      \"y\":3.57235\n    },{\n      \"name\":\"testDeadlockBetweenImplementations\",\n      \"y\":3.5459166666666677\n    },{\n      \"name\":\"testSaveMetricsMetadata\",\n      \"y\":3.534566666666666\n    },{\n      \"name\":\"testRebalanceHdfsCustomCommand\",\n      \"y\":3.5120000000000005\n    },{\n      \"name\":\"testConfigurationDefinitionsExist\",\n      \"y\":3.4701000000000004\n    },{\n      \"name\":\"testFindByName\",\n      \"y\":3.417083333333333\n    },{\n      \"name\":\"testInitialAlertEvent\",\n      \"y\":3.39645\n    },{\n      \"name\":\"testValidateOrder\",\n      \"y\":3.3739500000000002\n    },{\n      \"name\":\"testCRUD\",\n      \"y\":3.3466666666666662\n    },{\n      \"name\":\"testUpgradeStack\",\n      \"y\":3.302966666666667\n    },{\n      \"name\":\"testDesiredConfigurationsAfterApplyingLatestForStackInOtherThreads\",\n      \"y\":3.2951166666666665\n    },{\n      \"name\":\"testAddServerActionCommand_userName\",\n      \"y\":3.2672666666666674\n    },{\n      \"name\":\"testService\",\n      \"y\":3.239649999999997\n    },{\n      \"name\":\"testStagePredicate\",\n      \"y\":3.238133333333333\n    },{\n      \"name\":\"testPersist\",\n      \"y\":3.202233333333332\n    },{\n      \"name\":\"testAuthenticate\",\n      \"y\":3.1747000000000005\n    },{\n      \"name\":\"testGetStagesInProgressWithManyCommands\",\n      \"y\":3.148133333333334\n    },{\n      \"name\":\"testConvertToResponse\",\n      \"y\":3.148116666666667\n    },{\n      \"name\":\"testFindByPK\",\n      \"y\":3.1447500000000006\n    },{\n      \"name\":\"testMatchingVersions\",\n      \"y\":3.1133499999999996\n    },{\n      \"name\":\"testNormal\",\n      \"y\":3.05985\n    },{\n      \"name\":\"testCreateResources\",\n      \"y\":3.0476166666666673\n    },{\n      \"name\":\"testCreateNewConfigGroup\",\n      \"y\":3.0248999999999997\n    },{\n      \"name\":\"testAlertNoticeCreationFromEvent\",\n      \"y\":3.0059333333333336\n    },{\n      \"name\":\"testAndFindAll\",\n      \"y\":2.983683333333333\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  },\n  \"plotOptions\":{\n    \"column\":{\n      \"groupPadding\":0,\n      \"pointPadding\":0,\n      \"borderWidth\":0\n    }\n  }\n}\n\n$(\"#highcharts_b200391a-ec6d-4a3f-a2fa-36bc9a9f9314\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
-      "dateCreated": "Sep 10, 2016 1:01:09 PM",
-      "dateStarted": "Sep 10, 2016 1:01:20 PM",
-      "dateFinished": "Sep 10, 2016 1:01:28 PM",
+      "dateCreated": "Sep 10, 2016 1:01:09 AM",
+      "dateStarted": "Sep 11, 2016 11:44:51 AM",
+      "dateFinished": "Sep 11, 2016 11:44:53 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Max Sum Execution Duration TestCases Drilldown",
-      "text": "highcharts(testcaseDF.series(\n        \"name\" -\u003e \"testCaseStatus\",\n        \"y\" -\u003e count(\"testCaseStatus\")).\n    drilldown(\n        \"name\" -\u003e \"testCaseName\",\n        \"y\" -\u003e sum($\"duration\")).\n    orderBy(sum($\"duration\").desc).\n    take(50)\n    ).plotOptions(PlotOptions.column.groupPadding(0).pointPadding(0).borderWidth(0)).\n    chart(Chart.column).plot",
-      "dateUpdated": "Sep 10, 2016 1:26:17 PM",
+      "text": "highcharts(apacheTestcaseDF.series(\n        \"name\" -\u003e \"testCaseStatus\",\n        \"y\" -\u003e count(\"testCaseStatus\")).\n    drilldown(\n        \"name\" -\u003e \"testCaseName\",\n        \"y\" -\u003e sum($\"duration\")).\n    orderBy(sum($\"duration\").desc).\n    take(50)\n    ).plotOptions(PlotOptions.column.groupPadding(0).pointPadding(0).borderWidth(0)).\n    chart(Chart.column).plot",
+      "dateUpdated": "Sep 11, 2016 11:45:11 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -423,17 +609,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_4d761d42-0368-42e6-9fc7-5de0e8c75e9b\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"drilldown\":\"testCaseStatus\u003dPASSED\",\n      \"name\":\"PASSED\",\n      \"y\":3436444\n    },{\n      \"drilldown\":\"testCaseStatus\u003dFAILED\",\n      \"name\":\"FAILED\",\n      \"y\":3998\n    },{\n      \"drilldown\":\"testCaseStatus\u003dSKIPPED\",\n      \"name\":\"SKIPPED\",\n      \"y\":36965\n    },{\n      \"drilldown\":\"testCaseStatus\u003dFIXED\",\n      \"name\":\"FIXED\",\n      \"y\":3913\n    },{\n      \"drilldown\":\"testCaseStatus\u003dREGRESSION\",\n      \"name\":\"REGRESSION\",\n      \"y\":1473\n    }]\n  }],\n  \"drilldown\":{\n    \"series\":[{\n      \"id\":\"testCaseStatus\u003dPASSED\",\n      \"name\":\"testCaseStatus\u003dPASSED\",\n      \"data\":[{\n        \"name\":\"testit\",\n        \"y\":18538.392000000036\n      },{\n        \"name\":\"testOrdering\",\n        \"y\":17837.314000000002\n      },{\n        \"name\":\"testBffp\",\n        \"y\":15578.530000000002\n      },{\n        \"name\":\"testConflictResolution\",\n        \"y\":15181.854\n      },{\n        \"name\":\"testCompressedStream\",\n        \"y\":14751.126000000002\n      },{\n        \"name\":\"testAll\",\n        \"y\":12860.860999999995\n      },{\n        \"name\":\"testNamenodeRestart\",\n        \"y\":11834.231000000005\n      },{\n        \"name\":\"testMultipleReducers\",\n        \"y\":11492.337999999996\n      },{\n        \"name\":\"testReadsAllowedDuringCheckpoint\",\n        \"y\":11289.612999999996\n      },{\n        \"name\":\"testNetworkServerSecurityMechanism\",\n        \"y\":11111.676000000001\n      },{\n        \"name\":\"testLazyOutput\",\n        \"y\":11030.877999999999\n      },{\n        \"name\":\"testCompactionMany\",\n        \"y\":10874.517\n      },{\n        \"name\":\"testRandomized\",\n        \"y\":10468.555999999997\n      },{\n        \"name\":\"testWithMapReduceMultiRegion\",\n        \"y\":9857.213000000003\n      },{\n        \"name\":\"testConcurrency\",\n        \"y\":9325.22\n      },{\n        \"name\":\"testThrottling\",\n        \"y\":8796.962000000001\n      },{\n        \"name\":\"testScanEmptyToEmpty\",\n        \"y\":8577.481000000007\n      },{\n        \"name\":\"testMRIncrementalLoadWithSplit\",\n        \"y\":8551.212000000001\n      },{\n        \"name\":\"testFormat\",\n        \"y\":8466.701\n      },{\n        \"name\":\"testLargeSort\",\n        \"y\":8242.912\n      },{\n        \"name\":\"testReadWriteOps\",\n        \"y\":8061.828000000001\n      },{\n        \"name\":\"testExcludeMinorCompaction\",\n        \"y\":7938.977999999999\n      },{\n        \"name\":\"testWithMapReduceAndOfflineHBaseMultiRegion\",\n        \"y\":7786.685000000001\n      },{\n        \"name\":\"testMRIncrementalLoad\",\n        \"y\":7733.435999999998\n      },{\n        \"name\":\"testGetColumnsModify\",\n        \"y\":7619.224999999989\n      },{\n        \"name\":\"testUpdateMapIncr\",\n        \"y\":7587.132999999999\n      },{\n        \"name\":\"testNewCluster\",\n        \"y\":7509.352000000001\n      },{\n        \"name\":\"testRollback\",\n        \"y\":7262.758000000001\n      },{\n        \"name\":\"testAllTypes\",\n        \"y\":7221.023000000001\n      },{\n        \"name\":\"test\",\n        \"y\":6920.235000000006\n      },{\n        \"name\":\"testAllTypes-compression\",\n        \"y\":6908.150000000002\n      },{\n        \"name\":\"testSnapshot\",\n        \"y\":6905.490999999995\n      },{\n        \"name\":\"testWithMapReduceSingleRegion\",\n        \"y\":6836.043999999998\n      },{\n        \"name\":\"testResponseCode\",\n        \"y\":6751.446999999998\n      },{\n        \"name\":\"testDiscardedRun\",\n        \"y\":6679.685999999999\n      },{\n        \"name\":\"testDurableSubscriptionRemovalRaceCondition\",\n        \"y\":6674.081999999999\n      },{\n        \"name\":\"testRecoverAfterDoubleFailures\",\n        \"y\":6571.042000000002\n      },{\n        \"name\":\"runCorruptionTest\",\n        \"y\":6390.201000000002\n      },{\n        \"name\":\"testWriteReadCycle\",\n        \"y\":6327.881000000001\n      },{\n        \"name\":\"testGzipLongOverflow\",\n        \"y\":6269.608999999998\n      },{\n        \"name\":\"testMajorLeveledCompactionWriter\",\n        \"y\":6135.822000000002\n      },{\n        \"name\":\"testGetAndRollSecrets\",\n        \"y\":6031.627000000001\n      },{\n        \"name\":\"testEndToEnd\",\n        \"y\":5987.681\n      },{\n        \"name\":\"testMajorLeveledCompactionWriter-compression\",\n        \"y\":5949.331000000001\n      },{\n        \"name\":\"testMultiRegionTable\",\n        \"y\":5919.499999999998\n      },{\n        \"name\":\"testParallelLeveledCompaction\",\n        \"y\":5906.484999999999\n      },{\n        \"name\":\"testMROnTable\",\n        \"y\":5867.5549999999985\n      },{\n        \"name\":\"testMultipleMapsPerNode\",\n        \"y\":5847.246000000002\n      },{\n        \"name\":\"testPromptnessOfExecution\",\n        \"y\":5771.929\n      },{\n        \"name\":\"testRunShellTests\",\n        \"y\":5680.321\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dFAILED\",\n      \"name\":\"testCaseStatus\u003dFAILED\",\n      \"data\":[{\n        \"name\":\"testReserveFileIdValuesOnBackup\",\n        \"y\":2502.254\n      },{\n        \"name\":\"testHBaseInputOutput\",\n        \"y\":2260.741\n      },{\n        \"name\":\"testSegmentFlaggingOnCreation-cdc\",\n        \"y\":1559.288\n      },{\n        \"name\":\"testPromptnessOfExecution\",\n        \"y\":1310.108\n      },{\n        \"name\":\"testContainerManager[0]\",\n        \"y\":815.658\n      },{\n        \"name\":\"testRevocation\",\n        \"y\":726.5029999999999\n      },{\n        \"name\":\"testPinning\",\n        \"y\":720.467\n      },{\n        \"name\":\"testAllocate\",\n        \"y\":665.618\n      },{\n        \"name\":\"testServerOptions\",\n        \"y\":540.3069999999999\n      },{\n        \"name\":\"testCDCWriteTimeout-cdc\",\n        \"y\":385.26800000000003\n      },{\n        \"name\":\"testAllTypes-compression\",\n        \"y\":375.725\n      },{\n        \"name\":\"testAllocShm\",\n        \"y\":360.205\n      },{\n        \"name\":\"testShmBasedStaleness\",\n        \"y\":360.08899999999994\n      },{\n        \"name\":\"org.apache.hadoop.hdfs.TestParallelShortCircuitReadNoChecksum\",\n        \"y\":341.034\n      },{\n        \"name\":\"testTaskOldEnv\",\n        \"y\":324.927\n      },{\n        \"name\":\"testUpdateNodeUtilization\",\n        \"y\":305.674\n      },{\n        \"name\":\"testOnlineSnapshotDeleteIndependent\",\n        \"y\":302.011\n      },{\n        \"name\":\"testOfflineSnapshotDeleteIndependent\",\n        \"y\":301.108\n      },{\n        \"name\":\"testReadFileWithMissingBlocks\",\n        \"y\":300.011\n      },{\n        \"name\":\"testThreadDumpOnTaskTimeout\",\n        \"y\":262.325\n      },{\n        \"name\":\"org.apache.hadoop.hdfs.TestParallelShortCircuitReadUnCached\",\n        \"y\":251.78199999999998\n      },{\n        \"name\":\"testTaskEnv\",\n        \"y\":249.20000000000002\n      },{\n        \"name\":\"testCLSMCDCDiscardLogic-cdc\",\n        \"y\":222.41600000000003\n      },{\n        \"name\":\"org.apache.hadoop.hdfs.TestParallelUnixDomainRead\",\n        \"y\":221.691\n      },{\n        \"name\":\"testValueSize\",\n        \"y\":216.69299999999998\n      },{\n        \"name\":\"org.apache.hadoop.hdfs.TestParallelShortCircuitRead\",\n        \"y\":198.879\n      },{\n        \"name\":\"testMultipleAppendsDuringCatchupTailing\",\n        \"y\":177.621\n      },{\n        \"name\":\"testMRTimelineEventHandling\",\n        \"y\":154.687\n      },{\n        \"name\":\"testContainerManager[1]\",\n        \"y\":144.213\n      },{\n        \"name\":\"testModifyCacheDirectiveInfo\",\n        \"y\":129.392\n      },{\n        \"name\":\"testBlockReportSucceedsWithLargerLengthLimit\",\n        \"y\":127.38499999999999\n      },{\n        \"name\":\"testModifyCachePool\",\n        \"y\":126.616\n      },{\n        \"name\":\"testMapreduceJobTimelineServiceEnabled\",\n        \"y\":120.993\n      },{\n        \"name\":\"testNonTransactional\",\n        \"y\":120.81899999999999\n      },{\n        \"name\":\"testUnknownDatanodeSimple\",\n        \"y\":100.38\n      },{\n        \"name\":\"testKillMultipleOpportunisticContainers\",\n        \"y\":96.50999999999999\n      },{\n        \"name\":\"testAddBlockWhenNoSufficientParityNumOfNodes\",\n        \"y\":90.015\n      },{\n        \"name\":\"testKeySize\",\n        \"y\":86.867\n      },{\n        \"name\":\"testDSRestartWithPreviousRunningContainers\",\n        \"y\":84.10300000000001\n      },{\n        \"name\":\"testStaticColumnPurging-compression\",\n        \"y\":81.424\n      },{\n        \"name\":\"testAllTypes\",\n        \"y\":80.516\n      },{\n        \"name\":\"testGracefulFailoverMultipleZKfcs\",\n        \"y\":70.449\n      },{\n        \"name\":\"testStopAllStartAll\",\n        \"y\":69.642\n      },{\n        \"name\":\"testRemoveCacheDescriptor\",\n        \"y\":69.134\n      },{\n        \"name\":\"testPublisherRecoverAfterBlock\",\n        \"y\":64.524\n      },{\n        \"name\":\"testReadThroughputLatency\",\n        \"y\":64.472\n      },{\n        \"name\":\"testBookie\",\n        \"y\":63.403\n      },{\n        \"name\":\"testShortCircuitCacheTemporaryFailure\",\n        \"y\":63.078\n      },{\n        \"name\":\"testAsyncPublisherRecoverAfterBlock\",\n        \"y\":62.235\n      },{\n        \"name\":\"testStaticColumnPurging\",\n        \"y\":62.19299999999999\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dSKIPPED\",\n      \"name\":\"testCaseStatus\u003dSKIPPED\",\n      \"data\":[{\n        \"name\":\"testTgDbInputGremlin\",\n        \"y\":61.263\n      },{\n        \"name\":\"testNeoDbInputGremlin\",\n        \"y\":61.261\n      },{\n        \"name\":\"testOrientDbInputGremlin\",\n        \"y\":58.73800000000001\n      },{\n        \"name\":\"testEmptyDbInputGremlin\",\n        \"y\":56.825\n      },{\n        \"name\":\"testDisableAndDeleteStates\",\n        \"y\":27.733000000000004\n      },{\n        \"name\":\"testConfigsAttachedToServiceNotCluster\",\n        \"y\":25.374999999999996\n      },{\n        \"name\":\"testServiceComponentHostUpdateStackIdError\",\n        \"y\":24.656\n      },{\n        \"name\":\"testServiceComponentHostUpdateStackId\",\n        \"y\":24.654999999999998\n      },{\n        \"name\":\"testCascadeDeleteStages\",\n        \"y\":23.321\n      },{\n        \"name\":\"testDeleteUsers\",\n        \"y\":23.293\n      },{\n        \"name\":\"testLaunch\",\n        \"y\":22.707\n      },{\n        \"name\":\"testUpdateClusterVersionCombinations\",\n        \"y\":22.392\n      },{\n        \"name\":\"testUpdateClusterVersionBasic\",\n        \"y\":22.331\n      },{\n        \"name\":\"testCreateCrossStackUpgrade\",\n        \"y\":18.499000000000002\n      },{\n        \"name\":\"testCreateUserDefaultParams\",\n        \"y\":17.488\n      },{\n        \"name\":\"testCacheLoaderWithNetSearch\",\n        \"y\":13.042\n      },{\n        \"name\":\"test_list\",\n        \"y\":10.829999999999998\n      },{\n        \"name\":\"testTXNonblockingGetInitialImage\",\n        \"y\":9.312999999999999\n      },{\n        \"name\":\"test_newrelic_set_transaction_name\",\n        \"y\":9.305\n      },{\n        \"name\":\"test_convert_markup\",\n        \"y\":9.042999999999997\n      },{\n        \"name\":\"test_convert_markup_with_mediawiki2markdown\",\n        \"y\":8.815999999999999\n      },{\n        \"name\":\"test_convert_textile_special_tag\",\n        \"y\":8.633\n      },{\n        \"name\":\"testCacheLoaderWithNetLoad\",\n        \"y\":8.633\n      },{\n        \"name\":\"test_convert_markup_with_amp_in_links\",\n        \"y\":8.568\n      },{\n        \"name\":\"test_convert_markup_textile\",\n        \"y\":8.556\n      },{\n        \"name\":\"test_convert_textile_no_leading_tabs\",\n        \"y\":8.103\n      },{\n        \"name\":\"testGetExecutionCommandWithClusterEnvForRetry\",\n        \"y\":7.647\n      },{\n        \"name\":\"test_with_history_mediawiki\",\n        \"y\":7.4030000000000005\n      },{\n        \"name\":\"testTXMultiRegion\",\n        \"y\":7.381999999999998\n      },{\n        \"name\":\"testTXRmtMirror\",\n        \"y\":7.331\n      },{\n        \"name\":\"testClusterRecovery\",\n        \"y\":6.24\n      },{\n        \"name\":\"testServerCertGen\",\n        \"y\":5.5280000000000005\n      },{\n        \"name\":\"testQueryForResources\",\n        \"y\":5.292\n      },{\n        \"name\":\"testJasonToExecutionCommand\",\n        \"y\":5.0809999999999995\n      },{\n        \"name\":\"testJaxbToString\",\n        \"y\":5.079999999999999\n      },{\n        \"name\":\"testGetATestStage\",\n        \"y\":5.077999999999999\n      },{\n        \"name\":\"testDowngradeToBase\",\n        \"y\":4.927\n      },{\n        \"name\":\"testCreatePartialDowngrade\",\n        \"y\":4.927\n      },{\n        \"name\":\"testGetClusterHostInfo\",\n        \"y\":4.442\n      },{\n        \"name\":\"testDirectionUpgrade\",\n        \"y\":4.015\n      },{\n        \"name\":\"testUpgradeOrchestrationFullTask\",\n        \"y\":3.76\n      },{\n        \"name\":\"testSnapshotFailureHandler\",\n        \"y\":3.687999999999996\n      },{\n        \"name\":\"testGetResources\",\n        \"y\":3.507\n      },{\n        \"name\":\"nonHAFunctionResultCollectorIsPassedPartialResultsAfterBucketMove\",\n        \"y\":2.8039999999999994\n      },{\n        \"name\":\"testSnapshotFailureHandler-cdc\",\n        \"y\":2.7049999999999974\n      },{\n        \"name\":\"testSnapshotFailureHandler-compression\",\n        \"y\":1.9249999999999994\n      },{\n        \"name\":\"testCompactionHook\",\n        \"y\":1.6939999999999986\n      },{\n        \"name\":\"testScrubCorruptedRowInSmallFile-compression\",\n        \"y\":1.3190000000000006\n      },{\n        \"name\":\"testEntryVersionRollover\",\n        \"y\":1.2840000000000003\n      },{\n        \"name\":\"testUpgrade[7]\",\n        \"y\":1.209\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dFIXED\",\n      \"name\":\"testCaseStatus\u003dFIXED\",\n      \"data\":[{\n        \"name\":\"testLargeCount\",\n        \"y\":5033.762\n      },{\n        \"name\":\"testPromptnessOfExecution\",\n        \"y\":4809.468\n      },{\n        \"name\":\"testConflictResolution\",\n        \"y\":1199.223\n      },{\n        \"name\":\"testCompactionMany\",\n        \"y\":1160.2959999999998\n      },{\n        \"name\":\"testThrottling\",\n        \"y\":987.1780000000001\n      },{\n        \"name\":\"testAllTypes\",\n        \"y\":742.3380000000001\n      },{\n        \"name\":\"testBffp\",\n        \"y\":672.4580000000001\n      },{\n        \"name\":\"testAllTypes-compression\",\n        \"y\":566.484\n      },{\n        \"name\":\"testMapreduceJobTimelineServiceEnabled\",\n        \"y\":550.507\n      },{\n        \"name\":\"testMultipleReducers\",\n        \"y\":529.357\n      },{\n        \"name\":\"testFixedSize\",\n        \"y\":418.895\n      },{\n        \"name\":\"testCompressedStream\",\n        \"y\":389.885\n      },{\n        \"name\":\"testAsyncWithHAFailover\",\n        \"y\":306.367\n      },{\n        \"name\":\"testMRTimelineEventHandling\",\n        \"y\":287.995\n      },{\n        \"name\":\"testLazyOutput\",\n        \"y\":260.259\n      },{\n        \"name\":\"testFilePersistenceXAStream[storeType\u003dDATABASE]\",\n        \"y\":257.361\n      },{\n        \"name\":\"testFilePersistenceXAStreamRestart[storeType\u003dDATABASE]\",\n        \"y\":251.862\n      },{\n        \"name\":\"testParallelLeveledCompaction\",\n        \"y\":248.431\n      },{\n        \"name\":\"testReplaySubmit\",\n        \"y\":227.062\n      },{\n        \"name\":\"testSerialSubmit\",\n        \"y\":224.204\n      },{\n        \"name\":\"testLeveledScanner\",\n        \"y\":203.149\n      },{\n        \"name\":\"testSimpleHFileSplit\",\n        \"y\":198.031\n      },{\n        \"name\":\"testRegionCrossingHFileSplitRowColBloom\",\n        \"y\":194.438\n      },{\n        \"name\":\"testRegionCrossingHFileSplit\",\n        \"y\":191.103\n      },{\n        \"name\":\"testRegionCrossingHFileSplitRowBloom\",\n        \"y\":190.58100000000002\n      },{\n        \"name\":\"testKillMultipleOpportunisticContainers\",\n        \"y\":177.06599999999997\n      },{\n        \"name\":\"testLoadLegacyCqlTablesShallow\",\n        \"y\":165.574\n      },{\n        \"name\":\"testSingleReducer\",\n        \"y\":153.634\n      },{\n        \"name\":\"testRollback\",\n        \"y\":152.637\n      },{\n        \"name\":\"testLargeSort\",\n        \"y\":149.848\n      },{\n        \"name\":\"testStressSubmit\",\n        \"y\":137.164\n      },{\n        \"name\":\"testReduceFromPartialMem\",\n        \"y\":136.077\n      },{\n        \"name\":\"testFlowControlLargeMessages7\",\n        \"y\":133.829\n      },{\n        \"name\":\"lostDeletesTest-cdc\",\n        \"y\":131.939\n      },{\n        \"name\":\"testTypeAlterUsedInFunction\",\n        \"y\":128.394\n      },{\n        \"name\":\"testDefaultCleanupAndAbort\",\n        \"y\":124.617\n      },{\n        \"name\":\"testCustomAbort\",\n        \"y\":124.544\n      },{\n        \"name\":\"testAll\",\n        \"y\":115.54099999999998\n      },{\n        \"name\":\"pagingOnRegularColumn-cdc\",\n        \"y\":106.66600000000001\n      },{\n        \"name\":\"testLosingFileDuringScan\",\n        \"y\":103.029\n      },{\n        \"name\":\"testDerby2026LoginTimeout\",\n        \"y\":100.057\n      },{\n        \"name\":\"testCqlStatementTracing-compression\",\n        \"y\":100.049\n      },{\n        \"name\":\"testAggressiveConcurrentAsyncAPI\",\n        \"y\":100.029\n      },{\n        \"name\":\"testMultipleMapsPerNode\",\n        \"y\":99.438\n      },{\n        \"name\":\"testMROnTable\",\n        \"y\":96.68800000000002\n      },{\n        \"name\":\"testLosingFileAfterScannerInit\",\n        \"y\":92.426\n      },{\n        \"name\":\"testMapReduceRestarting\",\n        \"y\":85.845\n      },{\n        \"name\":\"testChild\",\n        \"y\":85.167\n      },{\n        \"name\":\"testNMClient\",\n        \"y\":85.09\n      },{\n        \"name\":\"testGetColumnsModify\",\n        \"y\":84.846\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dREGRESSION\",\n      \"name\":\"testCaseStatus\u003dREGRESSION\",\n      \"data\":[{\n        \"name\":\"testMessageConcurrencyAfterConsumption\",\n        \"y\":1588.6860000000001\n      },{\n        \"name\":\"testThrottling\",\n        \"y\":1078.383\n      },{\n        \"name\":\"testPromptnessOfExecution\",\n        \"y\":1057.461\n      },{\n        \"name\":\"testFilePersistenceXAStream[storeType\u003dDATABASE]\",\n        \"y\":748.751\n      },{\n        \"name\":\"testFilePersistenceXAStreamRestart[storeType\u003dDATABASE]\",\n        \"y\":711.606\n      },{\n        \"name\":\"testBalancerWithKeytabs\",\n        \"y\":600.8589999999999\n      },{\n        \"name\":\"testBlockInvalidationWhenRBWReplicaMissedInDN\",\n        \"y\":600.053\n      },{\n        \"name\":\"testAllTypes-compression\",\n        \"y\":439.30400000000003\n      },{\n        \"name\":\"testAllTypes\",\n        \"y\":383.601\n      },{\n        \"name\":\"testOfflineSnapshotDeleteIndependent\",\n        \"y\":310.68399999999997\n      },{\n        \"name\":\"testMultipleAppendsDuringCatchupTailing\",\n        \"y\":310.1\n      },{\n        \"name\":\"testRegionCrossingHFileSplit\",\n        \"y\":300.319\n      },{\n        \"name\":\"testRegionCrossingHFileSplitRowColBloom\",\n        \"y\":300.215\n      },{\n        \"name\":\"testSimpleHFileSplit\",\n        \"y\":300.173\n      },{\n        \"name\":\"testReadFileWithMissingBlocks\",\n        \"y\":300.01\n      },{\n        \"name\":\"testRegionCrossingHFileSplitRowBloom\",\n        \"y\":299.842\n      },{\n        \"name\":\"testMapreduceJobTimelineServiceEnabled\",\n        \"y\":225.67999999999998\n      },{\n        \"name\":\"testSerialSubmit\",\n        \"y\":216.52300000000002\n      },{\n        \"name\":\"testMRTimelineEventHandling\",\n        \"y\":211.71200000000002\n      },{\n        \"name\":\"testLazyOutput\",\n        \"y\":181.877\n      },{\n        \"name\":\"testKillMultipleOpportunisticContainers\",\n        \"y\":160.851\n      },{\n        \"name\":\"testJobClient\",\n        \"y\":143.618\n      },{\n        \"name\":\"testCloseDuringOp[0]\",\n        \"y\":122.938\n      },{\n        \"name\":\"testBridgeServerRunningInSynchPersistOnlyForIOExceptionCase\",\n        \"y\":120.265\n      },{\n        \"name\":\"testBridgeServerStoppingInSynchPersistOnlyForIOExceptionCase\",\n        \"y\":120.149\n      },{\n        \"name\":\"testAggressiveConcurrentAsyncAPI\",\n        \"y\":120.05799999999999\n      },{\n        \"name\":\"testAggressiveConcurrentAsyncRenameWithOverwrite\",\n        \"y\":120.003\n      },{\n        \"name\":\"testReduceFromPartialMem\",\n        \"y\":117.607\n      },{\n        \"name\":\"testDeadlockWhileMappingHostsWithExistingServices\",\n        \"y\":112.189\n      },{\n        \"name\":\"testInvalidatePreparedStatementsOnDrop\",\n        \"y\":111.16399999999999\n      },{\n        \"name\":\"testCqlStatementTracing-compression\",\n        \"y\":105.584\n      },{\n        \"name\":\"testMultipleReducers\",\n        \"y\":102.99600000000001\n      },{\n        \"name\":\"testWithFlush[1]\",\n        \"y\":102.076\n      },{\n        \"name\":\"testUnknownDatanodeSimple\",\n        \"y\":100.832\n      },{\n        \"name\":\"testReplaySubmit\",\n        \"y\":94.089\n      },{\n        \"name\":\"testMapReduceRestarting\",\n        \"y\":92.089\n      },{\n        \"name\":\"testTransitionedToStandbyShouldNotHang\",\n        \"y\":90.022\n      },{\n        \"name\":\"testGroupByWithPaging\",\n        \"y\":88.917\n      },{\n        \"name\":\"testLeveledScanner\",\n        \"y\":88.792\n      },{\n        \"name\":\"testEcTasks\",\n        \"y\":87.284\n      },{\n        \"name\":\"testDefaultCleanupAndAbort\",\n        \"y\":83.957\n      },{\n        \"name\":\"testCustomAbort\",\n        \"y\":83.31\n      },{\n        \"name\":\"testResourceRequestRecoveryToTheRightAppAttempt\",\n        \"y\":81.066\n      },{\n        \"name\":\"testRollback\",\n        \"y\":80.794\n      },{\n        \"name\":\"testInvalidatePreparedStatementsOnDrop-compression\",\n        \"y\":79.599\n      },{\n        \"name\":\"testComplexNameWithRegex\",\n        \"y\":78.222\n      },{\n        \"name\":\"testMerge\",\n        \"y\":76.809\n      },{\n        \"name\":\"testLargeSort\",\n        \"y\":72.425\n      },{\n        \"name\":\"testCommandLine\",\n        \"y\":71.995\n      },{\n        \"name\":\"testChild\",\n        \"y\":71.105\n      }]\n    }]\n  },\n  \"chart\":{\n    \"type\":\"column\"\n  },\n  \"plotOptions\":{\n    \"column\":{\n      \"groupPadding\":0,\n      \"pointPadding\":0,\n      \"borderWidth\":0\n    }\n  }\n}\n\n$(\"#highcharts_4d761d42-0368-42e6-9fc7-5de0e8c75e9b\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_7f4d2155-4c88-4244-af39-ed31d4db13fb\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"drilldown\":\"testCaseStatus\u003dPASSED\",\n      \"name\":\"PASSED\",\n      \"y\":67733\n    },{\n      \"drilldown\":\"testCaseStatus\u003dSKIPPED\",\n      \"name\":\"SKIPPED\",\n      \"y\":672\n    },{\n      \"drilldown\":\"testCaseStatus\u003dFIXED\",\n      \"name\":\"FIXED\",\n      \"y\":4\n    },{\n      \"drilldown\":\"testCaseStatus\u003dREGRESSION\",\n      \"name\":\"REGRESSION\",\n      \"y\":4\n    }]\n  }],\n  \"drilldown\":{\n    \"series\":[{\n      \"id\":\"testCaseStatus\u003dPASSED\",\n      \"name\":\"testCaseStatus\u003dPASSED\",\n      \"data\":[{\n        \"name\":\"testServiceState_STARTED\",\n        \"y\":1251.0839999999996\n      },{\n        \"name\":\"testDeadlockWhileRestartingComponents\",\n        \"y\":1055.862\n      },{\n        \"name\":\"testFindAll\",\n        \"y\":767.4339999999999\n      },{\n        \"name\":\"testServiceState_STOPPED\",\n        \"y\":706.9920000000001\n      },{\n        \"name\":\"testExecuteDMLUpdates\",\n        \"y\":689.6659999999994\n      },{\n        \"name\":\"testGetResources\",\n        \"y\":560.1029999999997\n      },{\n        \"name\":\"testAMSPropertyProviderAsServiceAdministrator\",\n        \"y\":525.273\n      },{\n        \"name\":\"testDeadlockWhileMappingHostsWithExistingServices\",\n        \"y\":473.165\n      },{\n        \"name\":\"testConcurrentWriteDeadlock\",\n        \"y\":418.67999999999995\n      },{\n        \"name\":\"testExecuteDDLUpdates\",\n        \"y\":412.5140000000002\n      },{\n        \"name\":\"testFindByCluster\",\n        \"y\":387.87700000000007\n      },{\n        \"name\":\"testCreate\",\n        \"y\":372.44799999999987\n      },{\n        \"name\":\"testRun\",\n        \"y\":324.38399999999996\n      },{\n        \"name\":\"testCreateRequestSchedule\",\n        \"y\":316.43199999999996\n      },{\n        \"name\":\"testDeadlockWhileMappingHosts\",\n        \"y\":279.837\n      },{\n        \"name\":\"testCreateIntraStackUpgrade\",\n        \"y\":277.526\n      },{\n        \"name\":\"testMerge\",\n        \"y\":270.51200000000006\n      },{\n        \"name\":\"testCreateResourcesAsAdministrator\",\n        \"y\":254.6269999999999\n      },{\n        \"name\":\"testDeadlockWhileUnmappingHosts\",\n        \"y\":243.86200000000002\n      },{\n        \"name\":\"testGetAndSetConfigs\",\n        \"y\":232.43\n      },{\n        \"name\":\"testMultiThreaded\",\n        \"y\":231.524\n      },{\n        \"name\":\"testFindByStackAndVersion\",\n        \"y\":231.22999999999996\n      },{\n        \"name\":\"test220Cardinality\",\n        \"y\":230.21499999999997\n      },{\n        \"name\":\"testConcurrentServiceConfigVersions\",\n        \"y\":226.00799999999998\n      },{\n        \"name\":\"testGetUpgradeSummary\",\n        \"y\":214.90600000000003\n      },{\n        \"name\":\"test\",\n        \"y\":214.341\n      },{\n        \"name\":\"testDeadlockBetweenImplementations\",\n        \"y\":212.75500000000005\n      },{\n        \"name\":\"testSaveMetricsMetadata\",\n        \"y\":212.07399999999998\n      },{\n        \"name\":\"testRebalanceHdfsCustomCommand\",\n        \"y\":210.72000000000003\n      },{\n        \"name\":\"testConfigurationDefinitionsExist\",\n        \"y\":208.20600000000002\n      },{\n        \"name\":\"testFindByName\",\n        \"y\":205.02499999999998\n      },{\n        \"name\":\"testInitialAlertEvent\",\n        \"y\":203.787\n      },{\n        \"name\":\"testValidateOrder\",\n        \"y\":202.437\n      },{\n        \"name\":\"testCRUD\",\n        \"y\":200.79999999999998\n      },{\n        \"name\":\"testUpgradeStack\",\n        \"y\":198.178\n      },{\n        \"name\":\"testDesiredConfigurationsAfterApplyingLatestForStackInOtherThreads\",\n        \"y\":197.707\n      },{\n        \"name\":\"testAddServerActionCommand_userName\",\n        \"y\":196.03600000000006\n      },{\n        \"name\":\"testService\",\n        \"y\":194.37899999999982\n      },{\n        \"name\":\"testStagePredicate\",\n        \"y\":194.28799999999998\n      },{\n        \"name\":\"testPersist\",\n        \"y\":192.13399999999993\n      },{\n        \"name\":\"testAuthenticate\",\n        \"y\":190.48200000000003\n      },{\n        \"name\":\"testGetStagesInProgressWithManyCommands\",\n        \"y\":188.88800000000003\n      },{\n        \"name\":\"testConvertToResponse\",\n        \"y\":188.88700000000003\n      },{\n        \"name\":\"testFindByPK\",\n        \"y\":188.68500000000003\n      },{\n        \"name\":\"testMatchingVersions\",\n        \"y\":186.801\n      },{\n        \"name\":\"testNormal\",\n        \"y\":183.591\n      },{\n        \"name\":\"testCreateResources\",\n        \"y\":182.85700000000003\n      },{\n        \"name\":\"testCreateNewConfigGroup\",\n        \"y\":181.49399999999997\n      },{\n        \"name\":\"testAlertNoticeCreationFromEvent\",\n        \"y\":180.35600000000002\n      },{\n        \"name\":\"testAndFindAll\",\n        \"y\":179.021\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dSKIPPED\",\n      \"name\":\"testCaseStatus\u003dSKIPPED\",\n      \"data\":[{\n        \"name\":\"testUpgrade[5]\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[2]\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[1]\",\n        \"y\":0\n      },{\n        \"name\":\"org.apache.ambari.server.cleanup.CleanupServiceFunctionalTest\",\n        \"y\":0\n      },{\n        \"name\":\"testWorkerLevelAggregatedNumericMetricMetricSubmission\",\n        \"y\":0\n      },{\n        \"name\":\"testWorkerLevelAggregatedMapMetricMetricSubmission\",\n        \"y\":0\n      },{\n        \"name\":\"testServiceComponentHostUpdateStackIdError\",\n        \"y\":0\n      },{\n        \"name\":\"testCreateUserDefaultParams\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[6]\",\n        \"y\":0\n      },{\n        \"name\":\"testDoFilter\",\n        \"y\":0\n      },{\n        \"name\":\"org.apache.ambari.server.stack.KerberosDescriptorTest\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[7]\",\n        \"y\":0\n      },{\n        \"name\":\"testGetExecutionCommandWithClusterEnvForRetry\",\n        \"y\":0\n      },{\n        \"name\":\"testMapMetricMetricSubmission\",\n        \"y\":0\n      },{\n        \"name\":\"testLaunch\",\n        \"y\":0\n      },{\n        \"name\":\"testUpdateClusterVersionCombinations\",\n        \"y\":0\n      },{\n        \"name\":\"testPartitionLevelKafkaOffsetMetricSubmission\",\n        \"y\":0\n      },{\n        \"name\":\"testUpdateClustersWithNullConfigPropertyValues\",\n        \"y\":0\n      },{\n        \"name\":\"testLive\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[3]\",\n        \"y\":0\n      },{\n        \"name\":\"testCascadeDeleteStages\",\n        \"y\":0\n      },{\n        \"name\":\"testServerKeystoreGen\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[4]\",\n        \"y\":0\n      },{\n        \"name\":\"testUpgrade[0]\",\n        \"y\":0\n      },{\n        \"name\":\"testNotAFunction\",\n        \"y\":0\n      },{\n        \"name\":\"testFindAll\",\n        \"y\":0\n      },{\n        \"name\":\"org.apache.hadoop.yarn.server.applicationhistoryservice.TestApplicationHistoryClientService\",\n        \"y\":0\n      },{\n        \"name\":\"org.apache.ambari.server.security.ldap.LdapPerformanceTest\",\n        \"y\":0\n      },{\n        \"name\":\"testTopicLevelKafkaOffsetMetricSubmission\",\n        \"y\":0\n      },{\n        \"name\":\"testMassiveWriteContainerHistory\",\n        \"y\":0\n      },{\n        \"name\":\"testQueryForResources\",\n        \"y\":0\n      },{\n        \"name\":\"org.apache.hadoop.yarn.server.applicationhistoryservice.metrics.timeline.TestClusterSuite\",\n        \"y\":0\n      },{\n        \"name\":\"testDeleteUsers\",\n        \"y\":0\n      },{\n        \"name\":\"testRevokeExistingAgentCert\",\n        \"y\":0\n      },{\n        \"name\":\"testUpdateClusterVersionBasic\",\n        \"y\":0\n      },{\n        \"name\":\"testServerCertGen\",\n        \"y\":0\n      },{\n        \"name\":\"testValidate__Live\",\n        \"y\":0\n      },{\n        \"name\":\"testServiceComponentHostUpdateStackId\",\n        \"y\":0\n      },{\n        \"name\":\"org.apache.ambari.server.serveraction.ServerActionExecutorTest\",\n        \"y\":0\n      },{\n        \"name\":\"testCheckDBVersionInvalid\",\n        \"y\":0\n      },{\n        \"name\":\"testDisableAndDeleteStates\",\n        \"y\":0\n      },{\n        \"name\":\"testApplicationReport\",\n        \"y\":0\n      },{\n        \"name\":\"testCheckDBVersion_Valid\",\n        \"y\":0\n      },{\n        \"name\":\"testConfigsAttachedToServiceNotCluster\",\n        \"y\":0\n      },{\n        \"name\":\"testTestAdministratorCredentialsLive\",\n        \"y\":0\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dFIXED\",\n      \"name\":\"testCaseStatus\u003dFIXED\",\n      \"data\":[{\n        \"name\":\"testGetConfigGroupAsClusterUser\",\n        \"y\":0.156\n      },{\n        \"name\":\"testGetConfigGroupAsServiceAdministrator\",\n        \"y\":0.152\n      },{\n        \"name\":\"testGetConfigGroupAsClusterOperator\",\n        \"y\":0.147\n      },{\n        \"name\":\"testGetConfigGroupAsServiceOperator\",\n        \"y\":0.145\n      }]\n    },{\n      \"id\":\"testCaseStatus\u003dREGRESSION\",\n      \"name\":\"testCaseStatus\u003dREGRESSION\",\n      \"data\":[{\n        \"name\":\"testGetConfigGroupAsClusterOperator\",\n        \"y\":7.19\n      },{\n        \"name\":\"testGetConfigGroupAsServiceAdministrator\",\n        \"y\":0.46\n      },{\n        \"name\":\"testGetConfigGroupAsServiceOperator\",\n        \"y\":0.332\n      },{\n        \"name\":\"testGetConfigGroupAsClusterUser\",\n        \"y\":0.231\n      }]\n    }]\n  },\n  \"chart\":{\n    \"type\":\"column\"\n  },\n  \"plotOptions\":{\n    \"column\":{\n      \"groupPadding\":0,\n      \"pointPadding\":0,\n      \"borderWidth\":0\n    }\n  }\n}\n\n$(\"#highcharts_7f4d2155-4c88-4244-af39-ed31d4db13fb\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
-      "dateCreated": "Sep 10, 2016 1:02:39 PM",
-      "dateStarted": "Sep 10, 2016 1:10:39 PM",
-      "dateFinished": "Sep 10, 2016 1:10:51 PM",
+      "dateCreated": "Sep 10, 2016 1:02:39 AM",
+      "dateStarted": "Sep 11, 2016 11:45:11 AM",
+      "dateFinished": "Sep 11, 2016 11:45:17 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "testcaseDF.groupBy(\"testCaseName\").count.show",
-      "dateUpdated": "Sep 10, 2016 12:35:08 PM",
+      "text": "apacheTestcaseDF.groupBy(\"testCaseName\").count.show",
+      "dateUpdated": "Sep 11, 2016 11:20:29 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -466,8 +652,8 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "println(testcaseDF.filter($\"testCaseName\" \u003d\u003d\u003d \"testFilterForgets\").collect.mkString(\"\\n\"))",
-      "dateUpdated": "Sep 10, 2016 12:44:29 PM",
+      "text": "println(apacheTestcaseDF.filter($\"testCaseName\" \u003d\u003d\u003d \"testFilterForgets\").collect.mkString(\"\\n\"))",
+      "dateUpdated": "Sep 11, 2016 11:20:29 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -500,8 +686,8 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "testcaseDF.groupBy(\"testCaseName\").agg(\n    min($\"duration\").alias(\"min\"), \n    max($\"duration\").alias(\"max\"), \n    mean($\"duration\").alias(\"mean\"), \n    stddev($\"duration\").alias(\"stddev\")).orderBy($\"stddev\".desc).show",
-      "dateUpdated": "Sep 10, 2016 12:37:27 PM",
+      "text": "apacheTestcaseDF.groupBy(\"testCaseName\").agg(\n    min($\"duration\").alias(\"min\"), \n    max($\"duration\").alias(\"max\"), \n    mean($\"duration\").alias(\"mean\"), \n    stddev($\"duration\").alias(\"stddev\")).orderBy($\"stddev\".desc).show",
+      "dateUpdated": "Sep 11, 2016 11:20:29 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -513,7 +699,8 @@
           "groups": [],
           "scatter": {}
         },
-        "enabled": true
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
       },
       "settings": {
         "params": {},
@@ -533,8 +720,8 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "",
-      "dateUpdated": "Sep 10, 2016 12:34:02 PM",
+      "text": "val latestBuildDF \u003d apacheTestcaseDF.select(\"jobName\", \"buildNumber\").groupBy(\"jobName\").agg(max($\"buildNumber\").alias(\"buildNumber\"))",
+      "dateUpdated": "Sep 11, 2016 11:20:29 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -555,7 +742,143 @@
       },
       "jobName": "paragraph_1473510831886_1126693212",
       "id": "20160910-123351_1361489637",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nlatestBuildDF: org.apache.spark.sql.DataFrame \u003d [jobName: string, buildNumber: int]\n"
+      },
       "dateCreated": "Sep 10, 2016 12:33:51 PM",
+      "dateStarted": "Sep 10, 2016 8:43:57 PM",
+      "dateFinished": "Sep 10, 2016 8:43:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "latestBuildDF.show",
+      "dateUpdated": "Sep 10, 2016 8:39:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473539921791_873939497",
+      "id": "20160910-203841_493547314",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "+--------------------+----------------+\n|             jobName|max(buildNumber)|\n+--------------------+----------------+\n|Hadoop-Yarn-trunk...|            1574|\n|   Groovy Github PRs|             264|\n|          HBase-0.98|            1169|\n|Hama-Nightly-for-...|             729|\n|           HBase-1.0|            1163|\n| core-it-maven-3-win|            1335|\n|    Giraph-1.1.0-old|              10|\n| Groovy Ubuntu 2_4_X|               2|\n|Giraph-trunk-defa...|             203|\n|   Ambari-branch-2.5|              12|\n| Ambari-trunk-Commit|            5646|\n|Geode-spark-conne...|              63|\n|       Chukwa-master|             573|\n|     HBase-0.94-JDK7|             253|\n|  Empire-db snapshot|             863|\n|hadoop-qbt-osx-java8|              36|\n|DeltaSpike-PR-Bui...|              25|\n|FlexJS Compiler (...|             219|\n|hadoop-trunk-osx-...|              86|\n|              Aurora|            1603|\n+--------------------+----------------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 10, 2016 8:38:41 PM",
+      "dateStarted": "Sep 10, 2016 8:39:38 PM",
+      "dateFinished": "Sep 10, 2016 8:39:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val lastFailedDF \u003d apacheTestcaseDF.filter($\"testCaseStatus\" \u003d\u003d\u003d \"FAILED\").\n    select(\"className\", \"testCaseName\", \"jobName\", \"buildNumber\").\n    join(latestBuildDF, apacheTestcaseDF(\"jobName\") \u003c\u003d\u003e latestBuildDF(\"jobName\") \u0026\u0026 apacheTestcaseDF(\"buildNumber\") \u003c\u003d\u003e latestBuildDF(\"buildNumber\")).cache",
+      "dateUpdated": "Sep 11, 2016 11:20:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473539978862_-928331621",
+      "id": "20160910-203938_1527096954",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nlastFailedDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [className: string, testCaseName: string ... 4 more fields]\n"
+      },
+      "dateCreated": "Sep 10, 2016 8:39:38 PM",
+      "dateStarted": "Sep 10, 2016 8:52:30 PM",
+      "dateFinished": "Sep 10, 2016 8:52:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lastFailedDF.count\nlastFailedDF.show",
+      "dateUpdated": "Sep 10, 2016 8:52:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473540481306_382828045",
+      "id": "20160910-204801_1926842914",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres13: Long \u003d 1005\n+--------------------+--------------------+-------------------+-----------+--------------+-----------+\n|           className|        testCaseName|            jobName|buildNumber|       jobName|buildNumber|\n+--------------------+--------------------+-------------------+-----------+--------------+-----------+\n|org.apache.hadoop...|testLosingFileAft...|         HBase-0.94|       1483|    HBase-0.94|       1483|\n|junit.framework.T...|org.apache.cassan...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|      testLargeCount| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testClusteringKey...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testClusteringKey...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testPrimaryKeyOnl...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testDeleteSingleC...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testIndexesOnClus...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testUpdatesToMemt...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|         testAmokUDF| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testDropKeyspaceC...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|   testJavaAggregate| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|     testEmptyValues| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testFilteringOnCo...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|filteringOnCluste...| Cassandra-test-all|         31|AntLib-antunit|         31|\n|org.apache.cassan...|  testSearchIterator|Cassandra-test-burn|         31|AntLib-antunit|         31|\n|org.apache.cassan...|        testAllocate|Cassandra-test-burn|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testClusteringKey...| Cassandra-test-cdc|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testDeleteSingleC...| Cassandra-test-cdc|         31|AntLib-antunit|         31|\n|org.apache.cassan...|testSyntaxVariati...| Cassandra-test-cdc|         31|AntLib-antunit|         31|\n+--------------------+--------------------+-------------------+-----------+--------------+-----------+\nonly showing top 20 rows\n\n"
+      },
+      "dateCreated": "Sep 10, 2016 8:48:01 PM",
+      "dateStarted": "Sep 10, 2016 8:52:35 PM",
+      "dateFinished": "Sep 10, 2016 8:52:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "dateUpdated": "Sep 10, 2016 8:48:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1473540501913_-1905531",
+      "id": "20160910-204821_864145688",
+      "dateCreated": "Sep 10, 2016 8:48:21 PM",
       "status": "READY",
       "progressUpdateIntervalMs": 500
     }
