@@ -1,8 +1,8 @@
 {
   "paragraphs": [
     {
-      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testReportSchema \u003d StructType(Array(\nStructField(\"timestamp\", StringType, nullable\u003dtrue),\n    StructField(\"failCount\", IntegerType, nullable\u003dtrue),\n    StructField(\"passCount\", IntegerType, nullable\u003dtrue),\n    StructField(\"skipCount\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"numTestSuites\", StringType, nullable\u003dtrue),\n    StructField(\"numTestCases\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue)\n  ))\n  \nval testReportFile \u003d \"/usr/zeppelin/data/apache-jenkins-data/testReport.csv\"\n\nval apacheTestReportCompleteDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").\n    option(\"header\", \"false\").option(\"mode\", \"DROPMALFORMED\").\n    schema(testReportSchema).load(testReportFile).cache\napacheTestReportCompleteDF.first",
-      "dateUpdated": "Sep 11, 2016 11:48:57 AM",
+      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.spark.highcharts._\nimport com.knockdata.spark.highcharts.model._\n\n\nval testReportSchema \u003d StructType(Array(\nStructField(\"timestamp\", StringType, nullable\u003dtrue),\n    StructField(\"failCount\", IntegerType, nullable\u003dtrue),\n    StructField(\"passCount\", IntegerType, nullable\u003dtrue),\n    StructField(\"skipCount\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"numTestSuites\", StringType, nullable\u003dtrue),\n    StructField(\"numTestCases\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue)\n  ))\n  \nval testReportFile \u003d \"/usr/zeppelin/data/apache-jenkins-data/testReport.csv\"\n\nval apacheTestReportCompleteDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").\n    option(\"header\", \"false\").option(\"mode\", \"DROPMALFORMED\").\n    schema(testReportSchema).load(testReportFile).cache\napacheTestReportCompleteDF.first",
+      "dateUpdated": "Sep 12, 2016 5:29:22 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -26,17 +26,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestReportSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(timestamp,StringType,true), StructField(failCount,IntegerType,true), StructField(passCount,IntegerType,true), StructField(skipCount,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(buildNumber,IntegerType,true), StructField(duration,DoubleType,true), StructField(numTestSuites,StringType,true), StructField(numTestCases,StringType,true), StructField(jobName,StringType,true))\n\ntestReportFile: String \u003d /usr/zeppelin/data/apache-jenkins-data/testReport.csv\n\napacheTestReportCompleteDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [timestamp: string, failCount: int ... 9 more fields]\n\nres114: org.apache.spark.sql.Row \u003d [2016/09/10 08:30:54,4,null,198,ubuntu-5,,822,null,0,0,ActiveMQ-Java8]\n"
+        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.spark.highcharts._\n\nimport com.knockdata.spark.highcharts.model._\n\ntestReportSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(timestamp,StringType,true), StructField(failCount,IntegerType,true), StructField(passCount,IntegerType,true), StructField(skipCount,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(buildNumber,IntegerType,true), StructField(duration,DoubleType,true), StructField(numTestSuites,StringType,true), StructField(numTestCases,StringType,true), StructField(jobName,StringType,true))\n\ntestReportFile: String \u003d /usr/zeppelin/data/apache-jenkins-data/testReport.csv\n\napacheTestReportCompleteDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [timestamp: string, failCount: int ... 9 more fields]\n\nres13: org.apache.spark.sql.Row \u003d [2016/09/10 08:30:54,4,null,198,ubuntu-5,,822,null,914,8675,ActiveMQ-Java8]\n"
       },
       "dateCreated": "Sep 10, 2016 1:29:29 AM",
-      "dateStarted": "Sep 11, 2016 11:48:57 AM",
-      "dateFinished": "Sep 11, 2016 11:49:10 AM",
+      "dateStarted": "Sep 12, 2016 5:29:22 AM",
+      "dateFinished": "Sep 12, 2016 5:29:26 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "val apacheTestReportDF \u003d apacheTestReportCompleteDF",
-      "dateUpdated": "Sep 11, 2016 11:49:12 AM",
+      "dateUpdated": "Sep 12, 2016 5:29:30 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -63,15 +63,15 @@
         "msg": "\napacheTestReportDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [timestamp: string, failCount: int ... 9 more fields]\n"
       },
       "dateCreated": "Sep 11, 2016 11:48:09 AM",
-      "dateStarted": "Sep 11, 2016 11:49:12 AM",
-      "dateFinished": "Sep 11, 2016 11:49:13 AM",
+      "dateStarted": "Sep 12, 2016 5:29:30 AM",
+      "dateFinished": "Sep 12, 2016 5:29:30 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "All Fail Job",
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003e 0 \u0026\u0026 $\"passCount\" \u003d\u003d\u003d 0).\n    series(\n        \"name\" -\u003e \"jobName\",\n        \"y\" -\u003e sum(\"failCount\"))\n    .orderBy(sum(\"failCount\").desc)\n    .take(20)).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:20 AM",
+      "dateUpdated": "Sep 12, 2016 5:29:34 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -96,18 +96,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_040ce98d-6a4d-465f-8543-06f3b05bd9b1\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \n  }]\n}\n\n$(\"#highcharts_040ce98d-6a4d-465f-8543-06f3b05bd9b1\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_550377f5-c753-46a8-aa69-3eda50a6ec55\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \n  }]\n}\n\n$(\"#highcharts_550377f5-c753-46a8-aa69-3eda50a6ec55\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:32:59 AM",
-      "dateStarted": "Sep 11, 2016 11:49:20 AM",
-      "dateFinished": "Sep 11, 2016 11:49:22 AM",
+      "dateStarted": "Sep 12, 2016 5:29:34 AM",
+      "dateFinished": "Sep 12, 2016 5:29:37 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "All Fail Slaves",
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003e 0 \u0026\u0026 $\"passCount\" \u003d\u003d\u003d 0).\n    series(\n        \"name\" -\u003e \"builtOn\",\n        \"y\" -\u003e sum(\"failCount\"))\n    .orderBy(sum(\"failCount\").desc)\n    .take(20)).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:23 AM",
+      "dateUpdated": "Sep 12, 2016 5:29:39 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -132,18 +132,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_722d5879-30b7-4558-929b-e6d6d564c79f\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \n  }]\n}\n\n$(\"#highcharts_722d5879-30b7-4558-929b-e6d6d564c79f\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_e1064194-c3da-4c71-8517-cc46ac4749e6\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \n  }]\n}\n\n$(\"#highcharts_e1064194-c3da-4c71-8517-cc46ac4749e6\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:40:04 AM",
-      "dateStarted": "Sep 11, 2016 11:49:23 AM",
-      "dateFinished": "Sep 11, 2016 11:49:26 AM",
+      "dateStarted": "Sep 12, 2016 5:29:39 AM",
+      "dateFinished": "Sep 12, 2016 5:29:41 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Top Failing Jobs",
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003e 0).\n    series(\n        \"name\" -\u003e \"jobName\",\n        \"y\" -\u003e sum(\"failCount\"))\n    .orderBy(sum(\"failCount\").desc)\n    .take(20)).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:28 AM",
+      "dateUpdated": "Sep 12, 2016 5:29:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -168,18 +168,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_9f1abb53-1c27-4240-9cd9-62ac79b9841a\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"flink-github-ci\",\n      \"y\":2061\n    },{\n      \"name\":\"Flume-trunk-hbase-1\",\n      \"y\":193\n    },{\n      \"name\":\"Lucene-Solr-Tests-master\",\n      \"y\":46\n    },{\n      \"name\":\"ActiveMQ-Java8\",\n      \"y\":38\n    },{\n      \"name\":\"ZooKeeper-trunk\",\n      \"y\":27\n    },{\n      \"name\":\"kafka-trunk-jdk8\",\n      \"y\":12\n    },{\n      \"name\":\"Ambari-branch-2.5\",\n      \"y\":4\n    }]\n  }]\n}\n\n$(\"#highcharts_9f1abb53-1c27-4240-9cd9-62ac79b9841a\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_fb451676-9475-4aef-9906-eb8be44fc693\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"flink-github-ci\",\n      \"y\":2060\n    },{\n      \"name\":\"Flume-trunk-hbase-1\",\n      \"y\":173\n    },{\n      \"name\":\"Lucene-Solr-Tests-master\",\n      \"y\":47\n    },{\n      \"name\":\"ActiveMQ-Java8\",\n      \"y\":29\n    },{\n      \"name\":\"ZooKeeper-trunk\",\n      \"y\":27\n    },{\n      \"name\":\"Ambari-branch-2.5\",\n      \"y\":4\n    },{\n      \"name\":\"kafka-trunk-jdk8\",\n      \"y\":3\n    }]\n  }]\n}\n\n$(\"#highcharts_fb451676-9475-4aef-9906-eb8be44fc693\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:41:52 AM",
-      "dateStarted": "Sep 11, 2016 11:49:28 AM",
-      "dateFinished": "Sep 11, 2016 11:49:31 AM",
+      "dateStarted": "Sep 12, 2016 5:29:44 AM",
+      "dateFinished": "Sep 12, 2016 5:29:45 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Top Failing Slaves",
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003e 0).\n    series(\n        \"name\" -\u003e \"builtOn\",\n        \"y\" -\u003e sum(\"failCount\"))\n    .orderBy(sum(\"failCount\").desc)\n    .take(20)).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:33 AM",
+      "dateUpdated": "Sep 12, 2016 5:29:49 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -204,18 +204,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_a420e0ab-a9c7-4f8f-ae36-e72a884be619\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"ubuntu-us1\",\n      \"y\":1096\n    },{\n      \"name\":\"ubuntu-2\",\n      \"y\":868\n    },{\n      \"name\":\"ubuntu-4\",\n      \"y\":55\n    },{\n      \"name\":\"H11\",\n      \"y\":49\n    },{\n      \"name\":\"lucene\",\n      \"y\":46\n    },{\n      \"name\":\"ubuntu3\",\n      \"y\":39\n    },{\n      \"name\":\"H10\",\n      \"y\":31\n    },{\n      \"name\":\"ubuntu-1\",\n      \"y\":31\n    },{\n      \"name\":\"jenkins-test-a44\",\n      \"y\":26\n    },{\n      \"name\":\"ubuntu-5\",\n      \"y\":23\n    },{\n      \"name\":\"jenkins-test-8ce\",\n      \"y\":21\n    },{\n      \"name\":\"jenkins-test-9e1\",\n      \"y\":20\n    },{\n      \"name\":\"jenkins-test-9b4\",\n      \"y\":19\n    },{\n      \"name\":\"H9\",\n      \"y\":15\n    },{\n      \"name\":\"H7\",\n      \"y\":8\n    },{\n      \"name\":\"ubuntu-6\",\n      \"y\":8\n    },{\n      \"name\":\"H6\",\n      \"y\":8\n    },{\n      \"name\":\"jenkins-test-9a7\",\n      \"y\":4\n    },{\n      \"name\":\"jenkins-test-2f4\",\n      \"y\":4\n    },{\n      \"name\":\"jenkins-test-288\",\n      \"y\":3\n    }]\n  }]\n}\n\n$(\"#highcharts_a420e0ab-a9c7-4f8f-ae36-e72a884be619\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_8c1d01a1-8fdf-4e51-901c-29f1d5dabf4b\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"ubuntu-us1\",\n      \"y\":1096\n    },{\n      \"name\":\"ubuntu-2\",\n      \"y\":867\n    },{\n      \"name\":\"ubuntu-4\",\n      \"y\":55\n    },{\n      \"name\":\"H11\",\n      \"y\":49\n    },{\n      \"name\":\"lucene\",\n      \"y\":47\n    },{\n      \"name\":\"H10\",\n      \"y\":31\n    },{\n      \"name\":\"jenkins-test-a44\",\n      \"y\":26\n    },{\n      \"name\":\"ubuntu-5\",\n      \"y\":23\n    },{\n      \"name\":\"ubuntu-1\",\n      \"y\":21\n    },{\n      \"name\":\"jenkins-test-8ce\",\n      \"y\":21\n    },{\n      \"name\":\"ubuntu3\",\n      \"y\":20\n    },{\n      \"name\":\"jenkins-test-9e1\",\n      \"y\":20\n    },{\n      \"name\":\"jenkins-test-9b4\",\n      \"y\":19\n    },{\n      \"name\":\"H9\",\n      \"y\":15\n    },{\n      \"name\":\"H6\",\n      \"y\":8\n    },{\n      \"name\":\"H7\",\n      \"y\":8\n    },{\n      \"name\":\"ubuntu-6\",\n      \"y\":7\n    },{\n      \"name\":\"jenkins-test-9a7\",\n      \"y\":4\n    },{\n      \"name\":\"jenkins-test-288\",\n      \"y\":3\n    },{\n      \"name\":\"jenkins-test-5a\",\n      \"y\":1\n    }]\n  }]\n}\n\n$(\"#highcharts_8c1d01a1-8fdf-4e51-901c-29f1d5dabf4b\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:42:44 AM",
-      "dateStarted": "Sep 11, 2016 11:49:33 AM",
-      "dateFinished": "Sep 11, 2016 11:49:35 AM",
+      "dateStarted": "Sep 12, 2016 5:29:49 AM",
+      "dateFinished": "Sep 12, 2016 5:29:55 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Top Success Job",
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003d\u003d\u003d 0 \u0026\u0026 $\"passCount\" \u003e 0).\n    series(\n        \"name\" -\u003e \"jobName\",\n        \"y\" -\u003e sum(\"passCount\"))\n    .orderBy(sum(\"passCount\").desc)\n    .take(20)).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:43 AM",
+      "dateUpdated": "Sep 12, 2016 5:30:07 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -240,17 +240,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_545f7a4c-f87a-4bcf-aad8-4b5b20d1392a\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"Lucene-Solr-Tests-master\",\n      \"y\":341626\n    },{\n      \"name\":\"Ambari-branch-2.5\",\n      \"y\":62906\n    },{\n      \"name\":\"ZooKeeper-trunk\",\n      \"y\":48671\n    },{\n      \"name\":\"kafka-trunk-jdk8\",\n      \"y\":9472\n    }]\n  }]\n}\n\n$(\"#highcharts_545f7a4c-f87a-4bcf-aad8-4b5b20d1392a\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_73e84bf9-11af-44c6-a396-5cf219e31c0a\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"Lucene-Solr-Tests-master\",\n      \"y\":329279\n    },{\n      \"name\":\"Ambari-branch-2.5\",\n      \"y\":62906\n    },{\n      \"name\":\"ZooKeeper-trunk\",\n      \"y\":47667\n    },{\n      \"name\":\"kafka-trunk-jdk8\",\n      \"y\":12086\n    }]\n  }]\n}\n\n$(\"#highcharts_73e84bf9-11af-44c6-a396-5cf219e31c0a\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:35:32 AM",
-      "dateStarted": "Sep 11, 2016 11:49:43 AM",
-      "dateFinished": "Sep 11, 2016 11:49:45 AM",
+      "dateStarted": "Sep 12, 2016 5:30:07 AM",
+      "dateFinished": "Sep 12, 2016 5:30:09 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003e 0).withColumn(\"hour\", substring($\"timestamp\", 12, 2)).\n    series(\n        \"name\" -\u003e \"hour\",\n        \"y\" -\u003e sum(\"failCount\"))\n    .orderBy($\"hour\")\n    ).chart(Chart.spline).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:48 AM",
+      "dateUpdated": "Sep 12, 2016 5:30:18 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -274,17 +274,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_18545af6-29a6-45bd-8cb3-6d8587957640\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"00\",\n      \"y\":78\n    },{\n      \"name\":\"01\",\n      \"y\":399\n    },{\n      \"name\":\"02\",\n      \"y\":573\n    },{\n      \"name\":\"03\",\n      \"y\":7\n    },{\n      \"name\":\"04\",\n      \"y\":58\n    },{\n      \"name\":\"05\",\n      \"y\":47\n    },{\n      \"name\":\"06\",\n      \"y\":220\n    },{\n      \"name\":\"07\",\n      \"y\":17\n    },{\n      \"name\":\"08\",\n      \"y\":34\n    },{\n      \"name\":\"09\",\n      \"y\":32\n    },{\n      \"name\":\"10\",\n      \"y\":22\n    },{\n      \"name\":\"11\",\n      \"y\":26\n    },{\n      \"name\":\"12\",\n      \"y\":158\n    },{\n      \"name\":\"13\",\n      \"y\":37\n    },{\n      \"name\":\"14\",\n      \"y\":76\n    },{\n      \"name\":\"15\",\n      \"y\":85\n    },{\n      \"name\":\"16\",\n      \"y\":56\n    },{\n      \"name\":\"17\",\n      \"y\":50\n    },{\n      \"name\":\"18\",\n      \"y\":45\n    },{\n      \"name\":\"19\",\n      \"y\":76\n    },{\n      \"name\":\"20\",\n      \"y\":56\n    },{\n      \"name\":\"21\",\n      \"y\":104\n    },{\n      \"name\":\"22\",\n      \"y\":81\n    },{\n      \"name\":\"23\",\n      \"y\":44\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"spline\"\n  }\n}\n\n$(\"#highcharts_18545af6-29a6-45bd-8cb3-6d8587957640\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_2f343366-a4ba-4e3c-a19a-44746f5cafae\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"00\",\n      \"y\":80\n    },{\n      \"name\":\"01\",\n      \"y\":399\n    },{\n      \"name\":\"02\",\n      \"y\":569\n    },{\n      \"name\":\"03\",\n      \"y\":7\n    },{\n      \"name\":\"04\",\n      \"y\":57\n    },{\n      \"name\":\"05\",\n      \"y\":39\n    },{\n      \"name\":\"06\",\n      \"y\":219\n    },{\n      \"name\":\"07\",\n      \"y\":16\n    },{\n      \"name\":\"08\",\n      \"y\":37\n    },{\n      \"name\":\"09\",\n      \"y\":32\n    },{\n      \"name\":\"10\",\n      \"y\":21\n    },{\n      \"name\":\"11\",\n      \"y\":26\n    },{\n      \"name\":\"12\",\n      \"y\":158\n    },{\n      \"name\":\"13\",\n      \"y\":37\n    },{\n      \"name\":\"14\",\n      \"y\":74\n    },{\n      \"name\":\"15\",\n      \"y\":85\n    },{\n      \"name\":\"16\",\n      \"y\":56\n    },{\n      \"name\":\"17\",\n      \"y\":50\n    },{\n      \"name\":\"18\",\n      \"y\":45\n    },{\n      \"name\":\"19\",\n      \"y\":75\n    },{\n      \"name\":\"20\",\n      \"y\":53\n    },{\n      \"name\":\"21\",\n      \"y\":104\n    },{\n      \"name\":\"22\",\n      \"y\":60\n    },{\n      \"name\":\"23\",\n      \"y\":44\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"spline\"\n  }\n}\n\n$(\"#highcharts_2f343366-a4ba-4e3c-a19a-44746f5cafae\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:35:54 AM",
-      "dateStarted": "Sep 11, 2016 11:49:48 AM",
-      "dateFinished": "Sep 11, 2016 11:49:51 AM",
+      "dateStarted": "Sep 12, 2016 5:30:18 AM",
+      "dateFinished": "Sep 12, 2016 5:30:21 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "highcharts(apacheTestReportDF.filter($\"failCount\" \u003e 0).withColumn(\"day\", substring($\"timestamp\", 9, 2)).\n    series(\n        \"name\" -\u003e \"day\",\n        \"y\" -\u003e sum(\"failCount\"))\n    .orderBy($\"day\")\n    ).chart(Chart.areaspline).plot",
-      "dateUpdated": "Sep 11, 2016 11:49:54 AM",
+      "dateUpdated": "Sep 12, 2016 5:30:27 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -308,11 +308,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_3be43360-2393-4137-8ef4-c48439660baa\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"01\",\n      \"y\":86\n    },{\n      \"name\":\"02\",\n      \"y\":28\n    },{\n      \"name\":\"03\",\n      \"y\":36\n    },{\n      \"name\":\"04\",\n      \"y\":30\n    },{\n      \"name\":\"05\",\n      \"y\":40\n    },{\n      \"name\":\"06\",\n      \"y\":27\n    },{\n      \"name\":\"07\",\n      \"y\":19\n    },{\n      \"name\":\"08\",\n      \"y\":48\n    },{\n      \"name\":\"09\",\n      \"y\":159\n    },{\n      \"name\":\"10\",\n      \"y\":23\n    },{\n      \"name\":\"11\",\n      \"y\":45\n    },{\n      \"name\":\"12\",\n      \"y\":14\n    },{\n      \"name\":\"13\",\n      \"y\":29\n    },{\n      \"name\":\"14\",\n      \"y\":70\n    },{\n      \"name\":\"15\",\n      \"y\":39\n    },{\n      \"name\":\"16\",\n      \"y\":29\n    },{\n      \"name\":\"17\",\n      \"y\":43\n    },{\n      \"name\":\"18\",\n      \"y\":82\n    },{\n      \"name\":\"19\",\n      \"y\":39\n    },{\n      \"name\":\"20\",\n      \"y\":6\n    },{\n      \"name\":\"21\",\n      \"y\":12\n    },{\n      \"name\":\"22\",\n      \"y\":24\n    },{\n      \"name\":\"23\",\n      \"y\":9\n    },{\n      \"name\":\"24\",\n      \"y\":1065\n    },{\n      \"name\":\"25\",\n      \"y\":63\n    },{\n      \"name\":\"26\",\n      \"y\":65\n    },{\n      \"name\":\"27\",\n      \"y\":17\n    },{\n      \"name\":\"28\",\n      \"y\":106\n    },{\n      \"name\":\"29\",\n      \"y\":77\n    },{\n      \"name\":\"30\",\n      \"y\":27\n    },{\n      \"name\":\"31\",\n      \"y\":24\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"areaspline\"\n  }\n}\n\n$(\"#highcharts_3be43360-2393-4137-8ef4-c48439660baa\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_cd9a5ec8-ff55-4185-bb3d-b6061730c11d\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"01\",\n      \"y\":86\n    },{\n      \"name\":\"02\",\n      \"y\":28\n    },{\n      \"name\":\"03\",\n      \"y\":36\n    },{\n      \"name\":\"04\",\n      \"y\":29\n    },{\n      \"name\":\"05\",\n      \"y\":40\n    },{\n      \"name\":\"06\",\n      \"y\":24\n    },{\n      \"name\":\"07\",\n      \"y\":10\n    },{\n      \"name\":\"08\",\n      \"y\":42\n    },{\n      \"name\":\"09\",\n      \"y\":159\n    },{\n      \"name\":\"10\",\n      \"y\":23\n    },{\n      \"name\":\"11\",\n      \"y\":30\n    },{\n      \"name\":\"12\",\n      \"y\":15\n    },{\n      \"name\":\"13\",\n      \"y\":29\n    },{\n      \"name\":\"14\",\n      \"y\":70\n    },{\n      \"name\":\"15\",\n      \"y\":39\n    },{\n      \"name\":\"16\",\n      \"y\":29\n    },{\n      \"name\":\"17\",\n      \"y\":43\n    },{\n      \"name\":\"18\",\n      \"y\":82\n    },{\n      \"name\":\"19\",\n      \"y\":39\n    },{\n      \"name\":\"20\",\n      \"y\":6\n    },{\n      \"name\":\"21\",\n      \"y\":10\n    },{\n      \"name\":\"22\",\n      \"y\":22\n    },{\n      \"name\":\"23\",\n      \"y\":9\n    },{\n      \"name\":\"24\",\n      \"y\":1065\n    },{\n      \"name\":\"25\",\n      \"y\":63\n    },{\n      \"name\":\"26\",\n      \"y\":64\n    },{\n      \"name\":\"27\",\n      \"y\":17\n    },{\n      \"name\":\"28\",\n      \"y\":106\n    },{\n      \"name\":\"29\",\n      \"y\":77\n    },{\n      \"name\":\"30\",\n      \"y\":27\n    },{\n      \"name\":\"31\",\n      \"y\":24\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"areaspline\"\n  }\n}\n\n$(\"#highcharts_cd9a5ec8-ff55-4185-bb3d-b6061730c11d\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 10, 2016 1:53:48 AM",
-      "dateStarted": "Sep 11, 2016 11:49:54 AM",
-      "dateFinished": "Sep 11, 2016 11:49:57 AM",
+      "dateStarted": "Sep 12, 2016 5:30:27 AM",
+      "dateFinished": "Sep 12, 2016 5:30:30 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -346,24 +346,24 @@
   "name": "apache-jenkins-test-report",
   "id": "apache-jenkins-test-report-2BVVTJMUH",
   "angularObjects": {
-    "2BVNAKQM2:shared_process": [],
-    "2BXX7MRMF:shared_process": [],
-    "2BY1YW5VG:shared_process": [],
-    "2BXDVMHDE:shared_process": [],
-    "2BV6ANS5B:shared_process": [],
-    "2BW1FETTK:shared_process": [],
-    "2BX7RHTRY:shared_process": [],
-    "2BW6PC8RZ:shared_process": [],
-    "2BWB1ZHBK:shared_process": [],
-    "2BVBFU3ZJ:shared_process": [],
-    "2BVAMJ94N:shared_process": [],
-    "2BXJGDYDN:shared_process": [],
-    "2BY4VXMA8:shared_process": [],
-    "2BVW1NUSV:shared_process": [],
-    "2BWNGAUVU:shared_process": [],
-    "2BUYGXEWF:shared_process": [],
-    "2BXJ1CKJ9:shared_process": [],
-    "2BVN6XNJJ:shared_process": []
+    "2BUQFA4ZM:shared_process": [],
+    "2BV8NAVAZ:shared_process": [],
+    "2BVWGXCTE:shared_process": [],
+    "2BVJXCCDR:shared_process": [],
+    "2BXAJ4TR7:shared_process": [],
+    "2BV6GKZT4:shared_process": [],
+    "2BWWKGD8F:shared_process": [],
+    "2BUHTBDCP:shared_process": [],
+    "2BVAPF2G6:shared_process": [],
+    "2BVD3YD7M:shared_process": [],
+    "2BWKSAZJG:shared_process": [],
+    "2BWYHQAWS:shared_process": [],
+    "2BWYWW2G5:shared_process": [],
+    "2BV6HSMVJ:shared_process": [],
+    "2BXC2QJPX:shared_process": [],
+    "2BXMDF8HW:shared_process": [],
+    "2BV4N7AY5:shared_process": [],
+    "2BX6RF2F3:shared_process": []
   },
   "config": {
     "looknfeel": "default"

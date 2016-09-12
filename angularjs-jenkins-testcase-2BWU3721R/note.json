@@ -2,8 +2,8 @@
   "paragraphs": [
     {
       "title": "Load Data",
-      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.zeppelin.highcharts._\nimport com.knockdata.zeppelin.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval ngTestcaseFile \u003d \"/usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\"\n\nval ngTestcaseCompleteDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"false\").schema(testcaseSchema).load(ngTestcaseFile).cache\nngTestcaseCompleteDF.first",
-      "dateUpdated": "Sep 11, 2016 11:47:00 AM",
+      "text": "%spark\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nimport com.knockdata.spark.highcharts._\nimport com.knockdata.spark.highcharts.model._\n\n\nval testcaseSchema \u003d StructType(Array(\n    StructField(\"buildTimestamp\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseStatus\", StringType, nullable\u003dtrue),\n    StructField(\"duration\", DoubleType, nullable\u003dtrue),\n    StructField(\"buildNumber\", IntegerType, nullable\u003dtrue),\n    StructField(\"builtOn\", StringType, nullable\u003dtrue),\n    StructField(\"sut\", StringType, nullable\u003dtrue),\n    StructField(\"jobName\", StringType, nullable\u003dtrue),\n    StructField(\"className\", StringType, nullable\u003dtrue),\n    StructField(\"testCaseName\", StringType, nullable\u003dtrue)\n  ))\n    \n    \nval ngTestcaseFile \u003d \"/usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\"\n\nval ngTestcaseCompleteDF \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"false\").schema(testcaseSchema).load(ngTestcaseFile).cache\nngTestcaseCompleteDF.first",
+      "dateUpdated": "Sep 12, 2016 5:26:41 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -30,11 +30,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.zeppelin.highcharts._\n\nimport com.knockdata.zeppelin.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\nngTestcaseFile: String \u003d /usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\n\nngTestcaseCompleteDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres111: org.apache.spark.sql.Row \u003d [2016/09/08 15:31:51,PASSED,0.783,5010,,,angular.js-angular-master,$anchorScroll.basic functionality,should scroll to #bottom when clicking #top and vice versa]\n"
+        "msg": "\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions._\n\nimport com.knockdata.spark.highcharts._\n\nimport com.knockdata.spark.highcharts.model._\n\ntestcaseSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(buildTimestamp,StringType,true), StructField(testCaseStatus,StringType,true), StructField(duration,DoubleType,true), StructField(buildNumber,IntegerType,true), StructField(builtOn,StringType,true), StructField(sut,StringType,true), StructField(jobName,StringType,true), StructField(className,StringType,true), StructField(testCaseName,StringType,true))\n\nngTestcaseFile: String \u003d /usr/zeppelin/data/angularjs-jenkins-data/testCase.csv.gz\n\nngTestcaseCompleteDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n\nres0: org.apache.spark.sql.Row \u003d [2016/09/08 15:31:51,PASSED,0.783,5010,,,angular.js-angular-master,$anchorScroll.basic functionality,should scroll to #bottom when clicking #top and vice versa]\n"
       },
       "dateCreated": "Sep 8, 2016 4:52:49 AM",
-      "dateStarted": "Sep 11, 2016 11:47:00 AM",
-      "dateFinished": "Sep 11, 2016 11:47:05 AM",
+      "dateStarted": "Sep 12, 2016 5:26:41 AM",
+      "dateFinished": "Sep 12, 2016 5:27:55 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -69,7 +69,7 @@
     },
     {
       "text": "ngTestcaseCompleteDF.select(\"testCaseStatus\").distinct.collect\nngTestcaseCompleteDF.groupBy(\"testCaseStatus\").count.show",
-      "dateUpdated": "Sep 11, 2016 11:46:54 AM",
+      "dateUpdated": "Sep 12, 2016 5:28:15 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -93,46 +93,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "\nres59: Array[org.apache.spark.sql.Row] \u003d Array([PASSED], [FAILED], [FIXED])\n+--------------+-----+\n|testCaseStatus|count|\n+--------------+-----+\n|        PASSED|75696|\n|        FAILED|    3|\n|         FIXED|    3|\n+--------------+-----+\n\n"
+        "msg": "\nres2: Array[org.apache.spark.sql.Row] \u003d Array([PASSED], [FAILED], [FIXED])\n+--------------+-----+\n|testCaseStatus|count|\n+--------------+-----+\n|        PASSED|75696|\n|        FAILED|    3|\n|         FIXED|    3|\n+--------------+-----+\n\n"
       },
       "dateCreated": "Sep 8, 2016 6:33:20 AM",
-      "dateStarted": "Sep 11, 2016 10:56:29 AM",
-      "dateFinished": "Sep 11, 2016 10:56:31 AM",
+      "dateStarted": "Sep 12, 2016 5:28:15 AM",
+      "dateFinished": "Sep 12, 2016 5:28:21 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "title": "Unpersist",
-      "text": "ngTestcaseCompleteDF.unpersist",
-      "dateUpdated": "Sep 11, 2016 11:46:54 AM",
-      "config": {
-        "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        },
-        "enabled": true,
-        "editorMode": "ace/mode/scala",
-        "title": true
-      },
-      "settings": {
-        "params": {},
-        "forms": {}
-      },
-      "jobName": "paragraph_1473594396766_930638276",
-      "id": "20160911-114636_938535241",
-      "dateCreated": "Sep 11, 2016 11:46:36 AM",
-      "status": "READY",
-      "progressUpdateIntervalMs": 500
-    },
-    {
       "text": "val ngTestcaseDF \u003d ngTestcaseCompleteDF",
-      "dateUpdated": "Sep 11, 2016 11:47:09 AM",
+      "dateUpdated": "Sep 12, 2016 5:28:33 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -159,15 +130,15 @@
         "msg": "\nngTestcaseDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n"
       },
       "dateCreated": "Sep 11, 2016 11:46:22 AM",
-      "dateStarted": "Sep 11, 2016 11:47:09 AM",
-      "dateFinished": "Sep 11, 2016 11:47:15 AM",
+      "dateStarted": "Sep 12, 2016 5:28:34 AM",
+      "dateFinished": "Sep 12, 2016 5:28:35 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "TestCase Status",
       "text": "highcharts(ngTestcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.column).plot()",
-      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
+      "dateUpdated": "Sep 12, 2016 5:28:36 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -192,18 +163,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_1ffe54c3-bd49-481b-ba0e-bae42824fb0e\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"FIXED\",\n      \"y\":3\n    },{\n      \"name\":\"PASSED\",\n      \"y\":75696\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_1ffe54c3-bd49-481b-ba0e-bae42824fb0e\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_5dea38e6-9a11-4fc3-b421-b92873e4bb15\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"PASSED\",\n      \"y\":75696\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3\n    },{\n      \"name\":\"FIXED\",\n      \"y\":3\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"column\"\n  }\n}\n\n$(\"#highcharts_5dea38e6-9a11-4fc3-b421-b92873e4bb15\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 8, 2016 5:18:45 AM",
-      "dateStarted": "Sep 8, 2016 6:35:35 AM",
-      "dateFinished": "Sep 8, 2016 6:35:36 AM",
+      "dateStarted": "Sep 12, 2016 5:28:36 AM",
+      "dateFinished": "Sep 12, 2016 5:28:39 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "TestCase Status",
       "text": "highcharts(ngTestcaseDF\n  .series(\"name\" -\u003e \"testCaseStatus\", \"y\" -\u003e count(col(\"testCaseStatus\"))))\n  .chart(Chart.pie).plot()",
-      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
+      "dateUpdated": "Sep 12, 2016 5:28:44 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -228,18 +199,18 @@
       "result": {
         "code": "SUCCESS",
         "type": "ANGULAR",
-        "msg": "\n\u003cdiv id\u003d\"highcharts_a8a88fb8-6542-48d5-9547-4b95a64c2631\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"FIXED\",\n      \"y\":3\n    },{\n      \"name\":\"PASSED\",\n      \"y\":75696\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"pie\"\n  }\n}\n\n$(\"#highcharts_a8a88fb8-6542-48d5-9547-4b95a64c2631\").highcharts(data)\n});\n\u003c/script\u003e\n"
+        "msg": "\n\u003cdiv id\u003d\"highcharts_bab688ca-e53f-430d-a377-0f2b8d01008c\" style\u003d\"min-width: 310px; height: 400px; margin: 0 auto\"\u003e\u003c/div\u003e\n\n\u003cscript type\u003d\"text/javascript\"\u003e\n$(function () {\nvar data \u003d {\n  \"series\":[{\n    \"data\":[{\n      \"name\":\"PASSED\",\n      \"y\":75696\n    },{\n      \"name\":\"FAILED\",\n      \"y\":3\n    },{\n      \"name\":\"FIXED\",\n      \"y\":3\n    }]\n  }],\n  \"chart\":{\n    \"type\":\"pie\"\n  }\n}\n\n$(\"#highcharts_bab688ca-e53f-430d-a377-0f2b8d01008c\").highcharts(data)\n});\n\u003c/script\u003e\n"
       },
       "dateCreated": "Sep 8, 2016 6:31:20 AM",
-      "dateStarted": "Sep 8, 2016 6:35:47 AM",
-      "dateFinished": "Sep 8, 2016 6:35:48 AM",
+      "dateStarted": "Sep 12, 2016 5:28:44 AM",
+      "dateFinished": "Sep 12, 2016 5:28:51 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Not Passed TestCase",
       "text": "// testcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\").show\nval notpassed \u003d ngTestcaseDF.filter($\"testCaseStatus\" !\u003d\u003d \"PASSED\")\nprintln(notpassed.collect.mkString(\"\\n\"))",
-      "dateUpdated": "Sep 11, 2016 11:47:44 AM",
+      "dateUpdated": "Sep 12, 2016 5:28:57 AM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -264,11 +235,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "notpassed: org.apache.spark.sql.DataFrame \u003d [buildTimestamp: string, testCaseStatus: string, duration: double, buildNumber: int, builtOn: string, sut: string, jobName: string, className: string, testCaseName: string]\n[2016/07/20 21:57:18,FIXED,0.003,613,,,angular.js-angular-v1.2.x,jqLite Safari 6.2.8 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 21:57:18,FIXED,0.007,613,,,angular.js-angular-v1.2.x,jqLite Firefox 47.0.0 (Mac OS X 10.8.0).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 21:57:18,FIXED,0.008,613,,,angular.js-angular-v1.2.x,jqLite Chrome 49.0.2623 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.005,612,,,angular.js-angular-v1.2.x,jqLite Safari 6.2.8 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.013,612,,,angular.js-angular-v1.2.x,jqLite Chrome 49.0.2623 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.009,612,,,angular.js-angular-v1.2.x,jqLite Firefox 47.0.0 (Mac OS X 10.8.0).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n"
+        "msg": "\nwarning: there was one deprecation warning; re-run with -deprecation for details\n\nnotpassed: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [buildTimestamp: string, testCaseStatus: string ... 7 more fields]\n[2016/07/20 21:57:18,FIXED,0.003,613,,,angular.js-angular-v1.2.x,jqLite Safari 6.2.8 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 21:57:18,FIXED,0.007,613,,,angular.js-angular-v1.2.x,jqLite Firefox 47.0.0 (Mac OS X 10.8.0).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 21:57:18,FIXED,0.008,613,,,angular.js-angular-v1.2.x,jqLite Chrome 49.0.2623 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.005,612,,,angular.js-angular-v1.2.x,jqLite Safari 6.2.8 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.013,612,,,angular.js-angular-v1.2.x,jqLite Chrome 49.0.2623 (Mac OS X 10.8.5).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n[2016/07/20 18:22:16,FAILED,0.009,612,,,angular.js-angular-v1.2.x,jqLite Firefox 47.0.0 (Mac OS X 10.8.0).$compile a[href] sanitization,should use $$sanitizeUri when working with svg and xlink:href]\n"
       },
       "dateCreated": "Sep 8, 2016 6:35:46 AM",
-      "dateStarted": "Sep 8, 2016 7:00:43 AM",
-      "dateFinished": "Sep 8, 2016 7:00:44 AM",
+      "dateStarted": "Sep 12, 2016 5:28:57 AM",
+      "dateFinished": "Sep 12, 2016 5:28:59 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -374,24 +345,24 @@
   "name": "angularjs-jenkins-testcase",
   "id": "angularjs-jenkins-testcase-2BWU3721R",
   "angularObjects": {
-    "2BVNAKQM2:shared_process": [],
-    "2BXX7MRMF:shared_process": [],
-    "2BY1YW5VG:shared_process": [],
-    "2BXDVMHDE:shared_process": [],
-    "2BV6ANS5B:shared_process": [],
-    "2BW1FETTK:shared_process": [],
-    "2BX7RHTRY:shared_process": [],
-    "2BW6PC8RZ:shared_process": [],
-    "2BWB1ZHBK:shared_process": [],
-    "2BVBFU3ZJ:shared_process": [],
-    "2BVAMJ94N:shared_process": [],
-    "2BXJGDYDN:shared_process": [],
-    "2BY4VXMA8:shared_process": [],
-    "2BVW1NUSV:shared_process": [],
-    "2BWNGAUVU:shared_process": [],
-    "2BUYGXEWF:shared_process": [],
-    "2BXJ1CKJ9:shared_process": [],
-    "2BVN6XNJJ:shared_process": []
+    "2BUQFA4ZM:shared_process": [],
+    "2BV8NAVAZ:shared_process": [],
+    "2BVWGXCTE:shared_process": [],
+    "2BVJXCCDR:shared_process": [],
+    "2BXAJ4TR7:shared_process": [],
+    "2BV6GKZT4:shared_process": [],
+    "2BWWKGD8F:shared_process": [],
+    "2BUHTBDCP:shared_process": [],
+    "2BVAPF2G6:shared_process": [],
+    "2BVD3YD7M:shared_process": [],
+    "2BWKSAZJG:shared_process": [],
+    "2BWYHQAWS:shared_process": [],
+    "2BWYWW2G5:shared_process": [],
+    "2BV6HSMVJ:shared_process": [],
+    "2BXC2QJPX:shared_process": [],
+    "2BXMDF8HW:shared_process": [],
+    "2BV4N7AY5:shared_process": [],
+    "2BX6RF2F3:shared_process": []
   },
   "config": {
     "looknfeel": "default"
